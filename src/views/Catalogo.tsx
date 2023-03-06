@@ -2,8 +2,10 @@ import { defineComponent } from "vue";
 import { Call } from "../../helpers/calls/Call"
 interface Categoria {
     idCategoria: number,
-    nombre: string,
+    nombreCategoria: string,
     imagen: string,
+    base64: string,
+
     productos: []
 }
 
@@ -20,9 +22,11 @@ const Catalogo = defineComponent({
     methods: {
         async recuperar() {
             let oCall = new Call();
-            oCall.cenisFetch("GET", "api/Categoria/getall", "", "").then((respuesta) => {
+            oCall.cenisFetch("GET", "api/Categoria/getCategorias", "", "").then((respuesta) => {
+                console.log(this.categorias);
+                //response.Data.$values
                 if (respuesta.status === 200) {
-                    this.categorias = respuesta.Data
+                    this.categorias = respuesta.Data.$values
                     console.log(this.categorias);
 
                 }
@@ -88,9 +92,9 @@ const Catalogo = defineComponent({
                                     return (
                                         <div class="col-lg-4 col-sm-6" key={item.idCategoria}>
                                             <a class="portfolio-box" href="../src/assets/images/PastelInicio.jpg" title="Project Name">
-                                                <img class="img-fluid" src="../src/assets/images/PastelInicio.jpg" alt="..." />
+                                                <img class="img-fluid" src={`data:image/png;base64,${item.base64}`} alt="..." />
                                                 <div class="portfolio-box-caption">
-                                                    <div class="project-category text-white-50">{item.nombre}</div>
+                                                    <div class="project-category text-white-50">{item.nombreCategoria}</div>
                                                     <div class="project-name">Project Name</div>
                                                 </div>
                                             </a>
