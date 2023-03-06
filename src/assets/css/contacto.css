@@ -1,0 +1,26 @@
+.FondoContacto{
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 4.5rem);
+    background: linear-gradient(to bottom, rgba(44, 41, 38, 0.9) 0%,
+        rgba(92, 77, 66, 0.9) 100%), url("../images/Fondos/FondoContacto.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.ContactoFondoSolido{
+    background: #724a3a;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+    
+}
+
+.NumeroWhats{
+    font-size: 22px;
+    color: #25D366;
+    text-decoration: none;
+
+}
