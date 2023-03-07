@@ -123,7 +123,7 @@ const CategoriaCrud = defineComponent({
 
             <h2>CATEGORIAS</h2>
             <h6 style="width:600px">Las categorias te permiten administrar y controlar la vista de los productos que ofreces y tienes
-              disponibles en la sección del "Catálogo"</h6>
+              disponibles en la sección del "catalogo"</h6>
 
           </div>
           &nbsp;

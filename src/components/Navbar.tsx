@@ -75,7 +75,7 @@ const Navbar = defineComponent({
                                 </li>
 
                                 <li class="nav-item">
-                                    <router-link to="/catálogo" class="nav-link">Catálogo</router-link>
+                                    <router-link to="/catalogo" class="nav-link">catalogo</router-link>
                                 </li>
 
                                 <li class="nav-item">

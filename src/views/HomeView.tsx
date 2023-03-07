@@ -123,7 +123,7 @@ const HomeView = defineComponent({
                         </div>
                         &nbsp;
                         <div class="Container text-center">
-                            <router-link to="/catálogo" class="btn BtnCatalogo btnCat1">Ver más</router-link>
+                            <router-link to="/catalogo" class="btn BtnCatalogo btnCat1">Ver más</router-link>
                         </div>
                     </section>
                     <br />
