@@ -42,9 +42,14 @@ const CategoriaCrud = defineComponent({
 
     },
     async crearCategoria() {
+      var imagenElement = document.getElementById('imagen') as HTMLInputElement;
+      var imagen = await readFileAsBase64(imagenElement.files?.[0]);
+      const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
+      this.valores.nombre = nombre;
+      this.valores.imagenPrincipalchar = imagen;
 
       if (this.accion === "editar") {
-        oCall.cenisFetch('PUT', `api/Categoria/${this.id}`, "", this.valores)
+        oCall.cenisFetch('POST', `api/Categoria/create`, "", this.valores)
           .then((response) => {
             console.log(response) 
           })
@@ -54,11 +59,7 @@ const CategoriaCrud = defineComponent({
           });
       }
       else {
-        var imagenElement = document.getElementById('imagen') as HTMLInputElement;
-        var imagen = await readFileAsBase64(imagenElement.files?.[0]);
-        const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
-        this.valores.nombre = nombre;
-        this.valores.imagenPrincipalchar = imagen;
+
 
         oCall.cenisFetch('POST', 'api/Categoria/create', "", this.valores)
           .then((response) => {
@@ -66,8 +67,8 @@ const CategoriaCrud = defineComponent({
             if (response.status === 201) {
               console.log('Se ha creado una nueva categoría:', response.Data);
               console.log(response)
-              this.$router.push({ name: 'Catalogo' })
-
+              this.$router.push("/catalogo")
+              //alert(",jbakdakd")
 
             }
             else {
@@ -132,7 +133,7 @@ const CategoriaCrud = defineComponent({
 
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label LabelsForms">Nombre de la Categoria</label>
-                <input type="text" class="form-control" autocomplete="off" id="nombre" name="nombre" onChange={(e) => this.handlerchange(e)} aria-describedby="emailHelp" />
+                <input type="text" class="form-control" autocomplete="off" id="nombre" name="nombre" value={this.categoria.nombre} onChange={(e) => this.handlerchange(e)} aria-describedby="emailHelp" />
               </div>
 
               <div class="mb-3">

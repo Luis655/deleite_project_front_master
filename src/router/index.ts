@@ -18,7 +18,7 @@ const router = createRouter({
     },
 
     {
-      path: '/catálogo',
+      path: '/catalogo',
       name: 'catalogo',
 
       component: () => import('@/views/Catalogo')

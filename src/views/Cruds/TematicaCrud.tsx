@@ -47,7 +47,7 @@ const tematicaCrud = defineComponent({
                 oCall.cenisFetch('POST', 'api/Tematica/create', '', this.valores)
                     .then((response) => {
                         console.log(response)
-                        if (response.status === 200) {
+                        if (response.status === 201) {
                             console.log(response)
                             console.log("Se ha creado una nueva tematica")
                             console.log(response)

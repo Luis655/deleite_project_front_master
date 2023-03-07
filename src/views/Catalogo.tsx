@@ -92,7 +92,7 @@ const Catalogo = defineComponent({
                                     return (
                                         <div class="col-lg-4 col-sm-6" key={item.idCategoria}>
                                             <a class="portfolio-box" href="../src/assets/images/PastelInicio.jpg" title="Project Name">
-                                                <img class="rounded-circle mt-n3" src={`data:image/png;base64,${item.base64}`} alt="..." />
+                                                <img class="img-fluid" src={`data:image/png;base64,${item.base64}`} alt="..." />
                                                 <div class="portfolio-box-caption">
                                                     <div class="project-category text-white-50">{item.nombreCategoria}</div>
                                                     <div class="project-name">Project Name</div>
