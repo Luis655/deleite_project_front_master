@@ -71,13 +71,6 @@ const router = createRouter({
 
       component: () => import('@/views/Cruds/TematicaCrud')
     },
-    //CRUD PRODUCTOS
-    {
-      path: '/crearproducto/:id/:trueorfalse?',
-      name: 'crearproducto',
-
-      component: () => import('@/views/Cruds/Productos/ProductoCrud')
-    },
     
     {
       path: '/consultartematica',
@@ -86,8 +79,14 @@ const router = createRouter({
       component: () => import('@/views/Cruds/Tematicas/ConsultarTematica')
     },
     //CRUD PRODUCTOS
-    {
+    /*{
       path: '/crearproducto',
+      name: 'crearproducto',
+
+      component: () => import('@/views/Cruds/Productos/ProductoCrud')
+    },*/
+    {
+      path: '/crearproducto/:id/:trueorfalse?',
       name: 'crearproducto',
 
       component: () => import('@/views/Cruds/Productos/ProductoCrud')

@@ -2,7 +2,7 @@ import { Call } from "../../../helpers/calls/Call"
 import { defineComponent } from "vue";
 
 interface Login {
-    nombre?: string,
+    correo?: string,
     contraseña?: string
 }
 
@@ -25,7 +25,7 @@ const login = defineComponent({
         iniciarSesion(e: any) {
             e.preventDefault();
 
-            if (!this.valores.nombre) {
+            if (!this.valores.correo) {
                 alert('El Nombre de usuario/Correo es requerido');
                 return;
             }
@@ -81,8 +81,8 @@ const login = defineComponent({
                                     <h2 class="display-6 tituloLogin" style="color: #724a3a">INICIAR SESIÓN</h2>
                                     <br></br>
                                     <div class="form-outline mb-4">
-                                        <input for="validationCustom01" type="email" id="form3Example3" value={this.login.nombre} name="nombre" onChange={(e) => this.handlerchange(e)} class="form-control form-control-lg"
-                                            placeholder="Correo" aria-label="Correo" required />
+                                        <input for="validationCustom01" type="email" id="form3Example3" value={this.login.correo} name="correo" onChange={(e) => this.handlerchange(e)} class="form-control form-control-lg"
+                                            placeholder="Correo" aria-label="correo" required />
                                     </div>
 
                                     <div class="form-outline mb-3">

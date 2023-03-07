@@ -4,9 +4,27 @@ interface Categoria {
 
   idCategoria?: number,
   nombre?: string,
-  imagen?: string,
+  imagenPrincipalchar?: string,
 }
 let oCall = new Call();
+function readFileAsBase64(file?: File): Promise<string | undefined> {
+  return new Promise((resolve) => {
+    if (!file) {
+      resolve(undefined);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const base64Image = reader.result as string;
+      const base64 = base64Image.split(",")[1];
+      resolve(base64);
+      console.log(base64);
+    };
+  });
+}
 const CategoriaCrud = defineComponent({
   data() {
     return {
@@ -23,8 +41,7 @@ const CategoriaCrud = defineComponent({
       this.valores = ({ ...this.valores, [name]: value })
 
     },
-
-    crearCategoria() {
+    async crearCategoria() {
 
       if (this.accion === "editar") {
         oCall.cenisFetch('PUT', `api/Categoria/${this.id}`, "", this.valores)
@@ -37,15 +54,24 @@ const CategoriaCrud = defineComponent({
           });
       }
       else {
+        var imagenElement = document.getElementById('imagen') as HTMLInputElement;
+        var imagen = await readFileAsBase64(imagenElement.files?.[0]);
+        const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
+        this.valores.nombre = nombre;
+        this.valores.imagenPrincipalchar = imagen;
+
         oCall.cenisFetch('POST', 'api/Categoria/create', "", this.valores)
           .then((response) => {
             console.log(response)
             if (response.status === 201) {
               console.log('Se ha creado una nueva categoría:', response.Data);
               console.log(response)
+              this.$router.push({ name: 'Catalogo' })
+
 
             }
             else {
+              console.log(response)
 
             }
 
@@ -102,25 +128,22 @@ const CategoriaCrud = defineComponent({
           &nbsp;
           <div class="Create_Form">
 
-            <form>
+            <form method="POST" id="Formproduct" name="Formproduct">
 
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label LabelsForms">Nombre de la Categoria</label>
-                <input type="text" class="form-control" autocomplete="off" id="nombre" value={this.categoria.nombre} name="nombre" onChange={(e) => this.handlerchange(e)} aria-describedby="emailHelp" />
+                <input type="text" class="form-control" autocomplete="off" id="nombre" name="nombre" onChange={(e) => this.handlerchange(e)} aria-describedby="emailHelp" />
               </div>
 
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label LabelsForms">Imagen</label>
-                <input type="text" class="form-control" autocomplete="off" id="imagen" name="imagen" value={this.categoria.imagen} onChange={(e) => this.handlerchange(e)} />
+                <input type="file" class="form-control" id="imagen" name="imagen" required/>
               </div>
 
-              <div class="mb-3">
-                <label for="formFileMultiple" class="form-label LabelsForms">Imágenes</label>
-                <input class="form-control" type="file" id="formFileMultiple" multiple/>
-              </div>
+
 
               <div class="mb-3">
-                <button onClick={this.crearCategoria} class="btn btn-cruds">Enviar</button>
+                <button onClick={this.crearCategoria} type="button" class="btn btn-cruds">Enviar</button>
               </div>
 
             </form>

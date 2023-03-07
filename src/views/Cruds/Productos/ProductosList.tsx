@@ -18,7 +18,7 @@ interface Fotos {
   imagenPrincipalchar?: string
 };
 
-
+/*
 function borrarProducto() {
   alert("joasdasd");
   // Código para borrar el producto
@@ -44,7 +44,7 @@ function deshabilitarSalida() {
 }
 
 // Impedir que el usuario abandone la página al cargarla por primera vez
-deshabilitarSalida();
+deshabilitarSalida();*/
 
 
 // Para habilitar la salida, llama a la función habilitarSalida()
@@ -95,7 +95,9 @@ const ProductosList = defineComponent({
             const url = `api/Producto/delete/${id}`;
               oCall.cenisFetch('Delete', url, "", "")
               .then(async(response)=>{
-                console.log("Exito");
+                //console.log("Exito");
+                location.assign(window.location.href);
+
               })
           }
         });
@@ -127,7 +129,7 @@ const ProductosList = defineComponent({
                 <td>${item.ingredienteselect}</td>
                 <td>${item.nombreCategoria}</td>
                 <td>${item.nombreTematica}</td>
-                <td><img id="imagen${item.idProducto}" src="data:image/png;base64,${item.base64}"/></td>
+                <td><img id="imagen${item.idProducto}" src="data:image/png;base64,${item.base64}"  height="50" class="rounded-circle mt-n3"/></td>
                
                 </tr>
                 </tbody>

@@ -180,7 +180,12 @@ const Producto = defineComponent({
       const url = `api/Imagenes/delete/${id}`;
       oCall.cenisFetch('DELETE', url, "", "")
         .then(async (response) => {
-          console.log("EXUTI¡");
+          const url = `api/Producto/delete/${id}`;
+          oCall.cenisFetch('Delete', url, "", "")
+          .then(async(response)=>{
+            this.$router.push({ name: 'productsview' })
+            //console.log("Exito");
+          })
         })
       alert("joasdasd");
       // Código para borrar el producto
@@ -246,7 +251,7 @@ const Producto = defineComponent({
                           //console.log(response)
                           try {
                             if (response.status == 200) {
-                              alert("EXITO");
+                              this.$router.push({ name: 'productsview' })
                             } else {
                               console.log("Ha ocurrido un error")
                             }
