@@ -92,7 +92,8 @@ const DetalleProducto = defineComponent({
                 this.productoImagenes = response.Data.$values;
                 this.productoDatos = response.Data.$values[1];
                 if(this.productoDatos.ingredienteselect !==null){
-                    this.ingre = this.productoDatos.ingredienteselect.split(/\s*,\s*/);
+                    this.ingre = this.productoDatos.ingredienteselect?.split(/\s*,\s*/);
+                    
                     //.log(this.ingre[0])
                 }else{
                     this.ingre = [] 
