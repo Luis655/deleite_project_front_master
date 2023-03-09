@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'DeleiteWeb'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B2E58E1281D64D39B284075D8722E76A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_985718C0E5BE4A55A9EB5D73BFA51839 }}
           package: .
