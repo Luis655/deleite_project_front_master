@@ -274,7 +274,6 @@ const ProductosList = defineComponent({
                   <h6 style="width:600px">
                     Los productos que registres se categorizarán automáticamente según las preferencias y datos que registres
                   </h6>
-                  <button onClick={() => this.updateProducto(1, aa)} id="crear-inpust" type="button" class="btn btn-cruds">producto</button>
 
 
                 </div>
