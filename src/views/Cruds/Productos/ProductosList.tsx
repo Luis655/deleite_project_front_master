@@ -1,8 +1,16 @@
 import { defineComponent } from "vue";
 import { Call } from "../../../../helpers/calls/Call"
+import DataTable from 'datatables.net-dt'
+import jQuery from "jquery";
+import 'datatables.net-autofill-dt';
+import 'datatables.net-buttons-dt';
+import 'datatables.net-buttons/js/buttons.colVis.mjs';
+import 'datatables.net-buttons/js/buttons.html5.mjs';
+import 'datatables.net-keytable-dt';
+import 'datatables.net-select-dt';
 
 interface ProductImage {
-  IdProducto?: number;
+  idProducto?: number;
   idCategoria?: number;
   idTematica?: number;
   nombreP?: string;
@@ -13,6 +21,19 @@ interface ProductImage {
   ingredienteselect?: string;
   saludable?: boolean;
 };
+
+interface Produc {
+  idProducto?: number;
+  idConfirmacionT?: boolean;
+  nombreP?: string;
+  descripcionP?: string;
+  precio?: string;
+  ingredienteselect?: string;
+  nombreCategoria?: string;
+  nombreTematica?: string;
+  base64?: string;
+}
+
 interface Fotos {
   idProducto?: number,
   imagenPrincipalchar?: string
@@ -66,7 +87,8 @@ const ProductosList = defineComponent({
       valores: Object as ProductImage,
       categoria: Object as ProductImage,
       accion: Object as any,
-      id: Object as any
+      id: Object as any,
+      produc: [] as Produc[]
 
 
     }
@@ -77,7 +99,7 @@ const ProductosList = defineComponent({
       this.valores = ({ ...this.valores, [name]: value });
 
     },
-    updateProducto(id=1, idConfirmacionT:any) {
+    updateProducto(id:any, idConfirmacionT:any) {
       if(idConfirmacionT==null)
         idConfirmacionT=true;
       this.$router.push({ name: 'actualizarproducto', params: { id: id, trueorfalse: idConfirmacionT }})
@@ -104,137 +126,35 @@ const ProductosList = defineComponent({
       alert("joasdasd");
       // Código para borrar el producto
     },
+   dtatable(){
+
+     let ta = document.getElementById("miTabla") as HTMLElement;
+      let table = new DataTable(ta, {
+        searching: true,
+        paging: true,
+        pageLength: 3,
+        ordering:  true,
+        order: [[ 3, 'desc' ], [ 0, 'asc' ]]
+    });
+    
+
+
+    },
 
     async crearCategoria() {
-      const table = (document.getElementById('miTabla') as HTMLTableElement);
-
-      const cabecera = table.createTHead();
-  
-
       oCall.cenisFetch('GET', 'api/Producto/get', "", "")
         .then(async (response) => {
-          console.log(response.Data.$values);
-          if (response.Data.$values instanceof Array) {
-            response.Data.$values.forEach((item: any) => {
-              //const row = table.insertRow();
-
-              const cuerpo = table.createTBody();
-              const cuerpoRow = cuerpo.insertRow();
-              cuerpoRow.innerHTML = `
-              <tbody>
-              <tr>
-                <td>${item.nombreP}</td>
-                <td>${item.descripcionP}</td>
-                <td>${item.precio}</td>
-                <td>${item.ingredienteselect}</td>
-                <td>${item.nombreCategoria}</td>
-                <td>${item.nombreTematica}</td>
-                <td><img id="imagen${item.idProducto}" src="data:image/png;base64,${item.base64}"  height="50" class="rounded-circle mt-n3"/></td>
-               
-                </tr>
-                </tbody>
-              
-              `;
-
-              const nuevoBoton = document.createElement('button');
-              nuevoBoton.className = 'btn btn-cruds'; // Agrega la clase "btn" y "btn-cruds" al botón
-              nuevoBoton.type = 'button'; // Establece el tipo de botón en "button"
-              nuevoBoton.innerText = "Actualizar";
-              nuevoBoton.onclick = () => {
-                this.updateProducto(item.idProducto, item.idConfirmacionT);
-
-                // Agrega aquí la función que deseas ejecutar cuando se hace clic en el botón
-              };
-              cuerpoRow.appendChild(nuevoBoton);
-
-              const nuevoBoton2 = document.createElement('button');
-              nuevoBoton2.className = 'btn btn-cruds'; // Agrega la clase "btn" y "btn-cruds" al botón
-              nuevoBoton2.type = 'button'; // Establece el tipo de botón en "button"
-              nuevoBoton2.innerText = "Borrar";
-              nuevoBoton2.onclick = () => {
-                this.borrarProductos(item.idProducto);
-
-                // Agrega aquí la función que deseas ejecutar cuando se hace clic en el botón
-              };
-              cuerpoRow.appendChild(nuevoBoton2);
-
-
-              const nuevoBoton3 = document.createElement('button');
-              nuevoBoton3.className = 'btn btn-cruds'; // Agrega la clase "btn" y "btn-cruds" al botón
-              nuevoBoton3.type = 'button'; // Establece el tipo de botón en "button"
-              nuevoBoton3.innerText = "Ver Detalle";
-              nuevoBoton3.onclick = () => {
-                const id = parseInt(item.idProducto);
-              this.$router.push({ name: 'detalleproducto', params: { id: id}})
-
-
-                // Agrega aquí la función que deseas ejecutar cuando se hace clic en el botón
-              };
-              cuerpoRow.appendChild(nuevoBoton3);
-
-
-              console.log(item.nombreP);
-              // Agregar el nombre del producto
-              /*const nombreCell = row.insertCell();
-              nombreCell.appendChild(document.createTextNode(item.nombreP));
-
-              //Agregar descripcion del producto
-              const descripcion = row.insertCell();
-              descripcion.appendChild(document.createTextNode(item.descripcionP));
-
-              //Agregar descripcion del precio
-              const precio = row.insertCell();
-              precio.appendChild(document.createTextNode(item.precio));
-
-              //Agregar ingredienteselect del producto
-              const ingredienteselect = row.insertCell();
-              ingredienteselect.appendChild(document.createTextNode(item.ingredienteselect));
-
-              //Agregar nombreTematica del producto
-              const nombreTematica = row.insertCell();
-              nombreTematica.appendChild(document.createTextNode(item.nombreTematica));
-
-              //Agregar nombreCategoria del producto
-              const nombreCategoria = row.insertCell();
-              nombreCategoria.appendChild(document.createTextNode(item.nombreCategoria));
-
-              // Agregar la imagen del producto
-              const imagenCell = row.insertCell();
-              const imagen = new Image();
-              imagen.src = `data:image/png;base64,${item.base64}`;
-              imagenCell.appendChild(imagen);
-
-              const boton1 = row.insertCell();
-              const nuevoBoton = document.createElement('button');
-              nuevoBoton.className = 'btn btn-cruds'; // Agrega la clase "btn" y "btn-cruds" al botón
-              nuevoBoton.type = 'button'; // Establece el tipo de botón en "button"
-              nuevoBoton.innerText = "Actualizar";
-              nuevoBoton.onclick = () => {
-                this.updateProducto(item.idProducto);
-
-                // Agrega aquí la función que deseas ejecutar cuando se hace clic en el botón
-              };
-              boton1.appendChild(nuevoBoton);
-
-              /*const boton1 = row.insertCell();
-              boton1.appendChild(document.createElement('button'));
-              //boton1.classList.add('btn btn-danger');
-              boton1.innerText="Click me";
-              boton1.onclick = function() {
-                updateProducto();
- 
-              }*/
-            })
-
-
-          } else {
-            console.log("Error");
-          }
+          //console.log(response.Data.$values);
+          this.produc = await response.Data.$values;
+          
+          return Promise.resolve();
+          
         })
         .catch((error) => {
           console.error('Ha ocurrido un error al crear una nueva categoría:', error);
         });
     }
+   
   },
   /*get methods() {
     return this._methods;
@@ -242,15 +162,17 @@ const ProductosList = defineComponent({
   set methods(value) {
     this._methods = value;
   },*/
-  mounted() {
-    this.crearCategoria()
+
+ async mounted() {
+    await this.crearCategoria();
+    setTimeout(this.dtatable, 500);
+
   },
 
   render() {
     return (
       <>
         <body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-iI8eycE4bV1eXZMgfbV2+76cRupxvN/yB//wL7V/E8Wq1d7VKNtX9lnPjPhhG3q+k1SN+bT1T1Y36FgQ2qxBOg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <br />
 <br />
@@ -278,24 +200,79 @@ const ProductosList = defineComponent({
 
                 </div>
               </div>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <button onClick={this.dtatable} class="btn btn-cruds" id="whatsapp-button">tabla</button>
+
+              <br />
+              <br />
               <center>
                 <div class="col-11">
               <div class="table-responsive">
-              <table id="miTabla" class="table table-bordered">
-                <thead class="thead-dark">
-        <th>Producto</th>
-        <th>Descripcion</th>
-        <th>Precio</th>
-        <th>Ingredientes</th>
-        <th>Categoria</th>
-        <th>Tematica</th>
-        <th>Imagen</th>
-        <th>Acciones</th>
-      </thead>
+              <table id="miTabla" class="table table-bordered" data-order='[[ 1, "asc" ]]' data-page-length='3'>
+    <thead>
+    <tr>
+      <th scope="col">Producto</th>
+      <th scope="col">Descripcion</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Ingredientes</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Tematica</th>
+      <th scope="col">Imagen</th>
+      <th scope="col">Acciones</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {this.produc.map((item)=>{
+      return(
+    <tr>
+      <th scope="row">{item.nombreP}</th>
+      <td>{item.descripcionP}</td>
+      <td>{item.precio}</td>
+      <td>{item.ingredienteselect}</td>
+      <td>{item.nombreCategoria}</td>
+      <td>{item.nombreTematica}</td>
+      <td><img src={`data:image/png;base64,${item.base64}`} height="50" class="rounded-circle mt-n3" alt="N/A" /></td>
+      <td>
+        <div class="row">
+
+        <button onClick={() => {this.updateProducto(item.idProducto, item.idConfirmacionT)}} class="btn btn-cruds" id="whatsapp-button">Actualizar</button>
+        <button onClick={() => {this.borrarProductos(item.idProducto)}} class="btn btn-cruds" id="whatsapp-button">Borrar</button>
+
+        <button onClick={() => {
+          const id = item.idProducto;
+          this.$router.push({ name: 'detalleproducto', params: { id: id}})
+
+        }} class="btn btn-cruds" id="whatsapp-button">Detalles</button>
+
+        </div>
+        
+      </td>
+    </tr>
+      )
+    })}
+  </tbody>
+    
               </table>
+
+              
               </div>
+              
               </div>
               </center>
+
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
 
             </div>
           </div>

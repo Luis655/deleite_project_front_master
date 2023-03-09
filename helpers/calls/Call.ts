@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export class Call {
 
-    url = 'https://localhost:7058/';
+    url = 'https://apideleite.azurewebsites.net/';
     constructor() { }
 
     async cenisFetch(method: string, uri: string, token: string, body: {}) {
