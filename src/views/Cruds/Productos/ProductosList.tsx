@@ -159,6 +159,20 @@ const ProductosList = defineComponent({
               cuerpoRow.appendChild(nuevoBoton2);
 
 
+              const nuevoBoton3 = document.createElement('button');
+              nuevoBoton3.className = 'btn btn-cruds'; // Agrega la clase "btn" y "btn-cruds" al botón
+              nuevoBoton3.type = 'button'; // Establece el tipo de botón en "button"
+              nuevoBoton3.innerText = "Ver Detalle";
+              nuevoBoton3.onclick = () => {
+                const id = parseInt(item.idProducto);
+              this.$router.push({ name: 'detalleproducto', params: { id: id}})
+
+
+                // Agrega aquí la función que deseas ejecutar cuando se hace clic en el botón
+              };
+              cuerpoRow.appendChild(nuevoBoton3);
+
+
               console.log(item.nombreP);
               // Agregar el nombre del producto
               /*const nombreCell = row.insertCell();

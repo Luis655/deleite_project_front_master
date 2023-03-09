@@ -112,7 +112,7 @@ const router = createRouter({
     },
 
     {
-      path: '/detalleproducto',
+      path: '/detalleproducto/:id',
       name: 'detalleproducto',
 
       component: () => import('@/views/Cruds/Productos/DetalleProducto')
