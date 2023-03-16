@@ -1,13 +1,47 @@
-import { defineComponent } from "vue";
+import { faMound } from "@fortawesome/free-solid-svg-icons";
+import { defineComponent, onMounted } from "vue";
+import { Call } from "../../../../helpers/calls/Call"
+let oCall = new Call();
+interface Produc {
+  idProducto?: number;
+  idConfirmacionT?: boolean;
+  nombreP?: string;
+  descripcionP?: string;
+  precio?: string;
+  ingredienteselect?: string;
+  nombreCategoria?: string;
+  nombreTematica?: string;
+  base64?: string;
+}
 
 const ConsultarProducto = defineComponent({
+    data() {
+        return{
+            produc: [] as Produc[]
+        }},
+    methods:{
+    async llamarProductos(){
+        oCall.cenisFetch('GET', 'api/Producto/get', "", "" )
+        .then(async (response) =>{
+            this.produc = await response.Data.$values;
+            console.log(this.produc);
+            return Promise.resolve();
+        })
+        .catch((error)=>{
+            console.log(error.Data);
+            
+        })
+    },
+},
+    async mounted(){
+        await this.llamarProductos();
+    },
     render() {
         return (
             <>
                 <body>
                     <div class="ConsultaProductos">
                         <div class="ListadoProductos">
-
                             <div class="FiltroPor">
                                 <div>
                                     <select class="form-select" aria-label="Default select example">
@@ -34,20 +68,26 @@ const ConsultarProducto = defineComponent({
                             <div class="container container-fluid">
                                 <div class="row rowcards">
 
+
+
+                                    {this.produc.map((item)=>{
+                                    return(
+                                 
+
                                     <div class="col-md-4  centercards">
                                         <div class="card item" style="width: 18rem;">
 
                                             <div class="imgsize">
-                                                <img src="src/assets/images/favoritos/favoritos1.jpg" class="card-img-top" />
+                                                <img src={item.base64} class="card-img-top" />
                                             </div>
 
                                             <div class="card-body">
-                                                <h5 class="card-title">PASTEL DE QUESO</h5>
-                                                <p class="card-text">$ 200.00</p>
+                                                <h5 class="card-title">{item.nombreP}</h5>
+                                                <p class="card-text">$ {item.precio}</p>
 
                                                 <div>
                                                     <h6 style="font-size: 15px">Temática</h6>
-                                                    <p class="card-text text-muted" style="font-size: 12px">14 de febrero</p>
+                                                    <p class="card-text text-muted" style="font-size: 12px">{item.nombreTematica}</p>
                                                 </div>
                                                 &nbsp;
                                                 <div>
@@ -57,126 +97,10 @@ const ConsultarProducto = defineComponent({
 
                                         </div>
                                     </div>
+                                    )
 
-                                    <div class="col-md-4  centercards">
-                                        <div class="card item" style="width: 18rem;">
+})}
 
-                                            <div class="imgsize">
-                                                <img src="src/assets/images/favoritos/favoritos2.jpg" class="card-img-top" />
-                                            </div>
-
-                                            <div class="card-body">
-                                                <h5 class="card-title">PASTEL DE QUESO</h5>
-                                                <p class="card-text">$ 200.00</p>
-
-                                                <div>
-                                                    <h6 style="font-size: 15px">Temática</h6>
-                                                    <p class="card-text text-muted" style="font-size: 12px">14 de febrero</p>
-                                                </div>
-                                                &nbsp;
-                                                <div>
-                                                    <a><router-link class="btn btn-productos btn-productos2" to="/detalleproducto">Ver más</router-link></a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4  centercards">
-                                        <div class="card item" style="width: 18rem;">
-
-                                            <div class="imgsize">
-                                                <img src="src/assets/images/favoritos/favoritos3.jpg" class="card-img-top" />
-                                            </div>
-
-                                            <div class="card-body">
-                                                <h5 class="card-title">PASTEL DE QUESO</h5>
-                                                <p class="card-text">$ 200.00</p>
-
-                                                <div>
-                                                    <h6 style="font-size: 15px">Temática</h6>
-                                                    <p class="card-text text-muted" style="font-size: 12px">14 de febrero</p>
-                                                </div>
-                                                &nbsp;
-                                                <div>
-                                                    <a><router-link class="btn btn-productos btn-productos2" to="/detalleproducto">Ver más</router-link></a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4  centercards">
-                                        <div class="card item" style="width: 18rem;">
-
-                                            <div class="imgsize">
-                                                <img src="src/assets/images/favoritos/favoritos4.jpg" class="card-img-top" />
-                                            </div>
-
-                                            <div class="card-body">
-                                                <h5 class="card-title">PASTEL DE QUESO</h5>
-                                                <p class="card-text">$ 200.00</p>
-
-                                                <div>
-                                                    <h6 style="font-size: 15px">Temática</h6>
-                                                    <p class="card-text text-muted" style="font-size: 12px">14 de febrero</p>
-                                                </div>
-                                                &nbsp;
-                                                <div>
-                                                    <a><router-link class="btn btn-productos btn-productos2" to="/detalleproducto">Ver más</router-link></a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4  centercards">
-                                        <div class="card item" style="width: 18rem;">
-
-                                            <div class="imgsize">
-                                                <img src="src/assets/images/favoritos/favoritos5.jpg" class="card-img-top" />
-                                            </div>
-
-                                            <div class="card-body">
-                                                <h5 class="card-title">PASTEL DE QUESO</h5>
-                                                <p class="card-text">$ 200.00</p>
-
-                                                <div>
-                                                    <h6 style="font-size: 15px">Temática</h6>
-                                                    <p class="card-text text-muted" style="font-size: 12px">14 de febrero</p>
-                                                </div>
-                                                &nbsp;
-                                                <div>
-                                                    <a><router-link class="btn btn-productos btn-productos2" to="/detalleproducto">Ver más</router-link></a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4  centercards">
-                                        <div class="card item" style="width: 18rem;">
-
-                                            <div class="imgsize">
-                                                <img src="src/assets/images/favoritos/favoritos6.jpg" class="card-img-top" />
-                                            </div>
-
-                                            <div class="card-body">
-                                                <h5 class="card-title">PASTEL DE QUESO</h5>
-                                                <p class="card-text">$ 200.00</p>
-
-                                                <div>
-                                                    <h6 style="font-size: 15px">Temática</h6>
-                                                    <p class="card-text text-muted" style="font-size: 12px">14 de febrero</p>
-                                                </div>
-                                                &nbsp;
-                                                <div>
-                                                    <a><router-link class="btn btn-productos btn-productos2" to="/detalleproducto">Ver más</router-link></a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
                                    
                                 </div>
                             </div>

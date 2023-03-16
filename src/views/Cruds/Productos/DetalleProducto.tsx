@@ -152,14 +152,14 @@ const DetalleProducto = defineComponent({
                                           
                                             <div class="col-lg-4 col-sm-6">
                                             <a href="#" data-bs-toggle="modal" data-bs-target={`#modalImage2${cont++}`}>
-                                                <img src={`data:image/png;base64,${item.base64}`} height="600" width="600" class="img-min item"/>
+                                                <img src={item.base64} height="600" width="600" class="img-min item"/>
                                             </a>
                                             
                                             <div tabindex="-1" aria-labelledby="modalImage1" arial-hidden="true" class="modal fade" id={`modalImage2${cont++ -1}`}>
                                             <div class="modal-dialog modal-lg modal-dialog-center">
                                                 <div class="modal-content">
                                                     <center>
-                                                    <img height="600" width="600" src={`data:image/png;base64,${item.base64}`} />
+                                                    <img height="600" width="600" src={item.base64} />
                                                     </center>
                                                 </div>
                                             </div>
@@ -178,7 +178,7 @@ const DetalleProducto = defineComponent({
                                             </div>
                                             <div class="row g-0 d-flex justify-content-center">
                                         <a href="#" data-bs-toggle="modal" data-bs-target={`#modalImage1`}>
-                                            <img src={`data:image/png;base64,${this.productoDatos.base64Origihal}`} class="img-min2 item" />
+                                            <img src={this.productoDatos.base64Origihal} class="img-min2 item" />
                                         </a>
                                     </div>
                                       
@@ -252,7 +252,7 @@ const DetalleProducto = defineComponent({
                 <div tabindex="-1" aria-labelledby="modalImage1" arial-hidden="true" class="modal fade" id="modalImage1">
                     <div class="modal-dialog modal-lg modal-dialog-center">
                         <div class="modal-content">
-                            <img src={`data:image/png;base64,${this.productoDatos.base64Origihal}`}  />
+                            <img src={this.productoDatos.base64Origihal}  />
                         </div>
                     </div>
                 </div>

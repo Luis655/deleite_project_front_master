@@ -8,7 +8,10 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default {
   server: {
     mimeTypes: {
-      'text/typescript': ['ts']
+      'text/typescript': ['ts'],
+      'text/x-typescript': ['ts'],
+      'ts': 'application/typescript',
+      'tsx': 'application/typescript'
     }
   },
   plugins: [vue(), vueJsx()],

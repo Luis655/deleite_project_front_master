@@ -238,7 +238,7 @@ const ProductosList = defineComponent({
       <td>{item.ingredienteselect}</td>
       <td>{item.nombreCategoria}</td>
       <td>{item.nombreTematica}</td>
-      <td><img src={`data:image/png;base64,${item.base64}`} height="50" class="rounded-circle mt-n3" alt="N/A" /></td>
+      <td><img src={item.base64} height="50" class="rounded-circle mt-n3" alt="N/A" /></td>
       <td>
         <div class="row">
 

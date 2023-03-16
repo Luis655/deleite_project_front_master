@@ -92,7 +92,7 @@ const Catalogo = defineComponent({
                                     return (
                                         <div class="col-lg-4 col-sm-6" key={item.idCategoria}>
                                             <a class="portfolio-box" href="../src/assets/images/PastelInicio.jpg" title="Project Name">
-                                                <img class="img-fluid" src={`data:image/png;base64,${item.base64}`} alt="..." />
+                                                <img class="img-fluid" src={item.base64} alt="..." />
                                                 <div class="portfolio-box-caption">
                                                     <div class="project-category text-white-50">{item.nombreCategoria}</div>
                                                     <div class="project-name">Project Name</div>
@@ -101,18 +101,15 @@ const Catalogo = defineComponent({
                                             <a class="btn btn-danger" onClick={() => this.eliminarCategoria(item.idCategoria)}>
                                                 Eliminar
                                             </a>
-
                                             <a class="btn btn-danger" onClick={() => this.Editar(item.idCategoria)}>
                                                 Editar
                                             </a>
                                         </div>
                                     )
-
                                 })}
                             </div>
                         </div>
                     </div>
-
                 </div>
             </>
         )

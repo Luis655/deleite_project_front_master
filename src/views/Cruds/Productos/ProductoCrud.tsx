@@ -34,9 +34,10 @@ function guardarDatosAntesDeSalir(event: BeforeUnloadEvent) {
       })
     alert("joasdasd");
 
-    borrarProducto()
     // Código para borrar el producto
   }
+  borrarProducto()
+
   // Guardar los datos del formulario en el almacenamiento local (si es necesario)
   // Mostrar un mensaje al usuario para confirmar si desea salir de la página o no
   event.preventDefault();
@@ -318,8 +319,11 @@ const Producto = defineComponent({
           popular.value = response.Data["popular"] ? "1" : "";
           saludable.value = response.Data["saludable"] ? "1" : "";
 
+          /*oCall.cenisFetch().then(()=>{
 
+          }).catch(()=>{
 
+          })*/
         })
         .catch((error) => {
           console.log(error);
