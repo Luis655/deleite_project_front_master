@@ -90,7 +90,10 @@ function readFileAsBase64(file?: File): Promise<string | undefined> {
     };
   });
 }
-const Producto = defineComponent({
+//const Producto = defineComponent({
+const ProductoCrud = defineComponent({
+
+  
   data() {
     return {
       valores: {} as ProductImage,
@@ -424,7 +427,6 @@ const Producto = defineComponent({
       }
     },
 
-
     updateProductos() {
       const nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
       var id = parseInt(nombreid);
@@ -655,4 +657,5 @@ const Producto = defineComponent({
   }
 })
 
-export default Producto
+//export default Producto
+export default ProductoCrud

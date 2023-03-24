@@ -2,6 +2,32 @@ import { faMound } from "@fortawesome/free-solid-svg-icons";
 import { defineComponent, onMounted } from "vue";
 import { Call } from "../../../../helpers/calls/Call"
 let oCall = new Call();
+let nombre = ''
+interface Produc {
+    $values: lsProduct[]
+    $id: number,
+
+}
+interface response {
+    $id: number,
+    idCategoria: number,
+    nombre: string,
+    imagen: string,
+    productos: Produc
+
+}
+
+interface lsProduct {
+    idProducto?: number;
+    idConfirmacionT?: boolean;
+    nombreP?: string;
+    descripcionP?: string;
+    precio?: string;
+    ingredienteselect?: string;
+    nombreCategoria?: string;
+    nombreTematica?: string;
+    base64?: string;
+}
 interface Produc {
   idProducto?: number;
   idConfirmacionT?: boolean;
@@ -21,7 +47,10 @@ const elementosDisplay = 6;
 const ConsultarProducto = defineComponent({
     data() {
         return{
-            produc: [] as Produc[]
+            produc: [] as Produc[],
+            id: Object as any,
+            Response: {} as response,
+            nombreCategoria: String as any
         }},
     methods:{
     async llamarProductos(){
@@ -59,6 +88,66 @@ const ConsultarProducto = defineComponent({
                         <div>
                             <h6 style="font-size: 15px">Temática</h6>
                             <p class="card-text text-muted" style="font-size: 12px">${response.Data.$values[index].nombreTematica}</p>
+                            </div>
+                            &nbsp;
+                            <div>
+                                <a><router-link class="btn btn-productos btn-productos2" to="/detalleproducto">Ver más</router-link></a>
+                            </div>
+                        </div>
+    
+                    </div>
+                    
+                    `;
+                    
+                
+            
+                productosDiv?.appendChild(newDiv);
+            }else{
+                console.log("hola");
+                
+            }
+        }    //console.log(this.produc);
+        return Promise.resolve();
+
+            })
+            .catch((error)=>{
+                console.log(error.Data);
+            })},
+
+        async llamarProductosCategorias() {
+            this.id = this.$route.query.id
+            oCall.cenisFetch('GET', `api/Categoria/${this.id}`, "", "")
+                .then(async (response) => {
+                    // this.Response = await response.Data.Productos.$Values
+                    console.log(response.Data.$values)
+                    this.nombreCategoria = this.$route.query.nombreCategoria;
+                    const nombreP = document.getElementById('nombreP') as HTMLInputElement;
+                    const productosDiv = document.getElementById('productospaginados') as HTMLElement;
+                    console.log(response.Data.$values[0].nombreCategoria)
+                    nombre = response.Data.$values[0].nombreCategoria
+
+                    response.Data.$values.map((item: any) => {
+                        
+
+                        const newDiv = document.createElement('div');
+                        newDiv.id = `divproductos$`;
+                        newDiv.className = 'col-md-4  centercards';
+
+                        newDiv.innerHTML =
+                            `
+                <div class="card item" style="width: 18rem;">
+                <h2 class="display-4"></h2>
+                    <div class="imgsize">
+                        <img src=${item.base64} class="card-img-top" />
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">${item.nombreP}</h5>
+                        <p class="card-text">$ ${item.precio}</p>
+
+                        <div>
+                            <h6 style="font-size: 15px">Temática</h6>
+                            <p class="card-text text-muted" style="font-size: 12px">${item.nombreTematica}</p>
                         </div>
                         &nbsp;
                         <div>
@@ -70,27 +159,11 @@ const ConsultarProducto = defineComponent({
                 
                 `;
                 productosDiv?.appendChild(newDiv);
-                }else{
-                    console.log("hola");
-                    
-                }
-            }
-
-        //});
+                    })
+                })
+            
+        },
     
-
-
-
-            
-
-            //console.log(this.produc);
-            return Promise.resolve();
-        })
-        .catch((error)=>{
-            console.log(error.Data);
-            
-        })
-    },
     paginacion(){
         const elements = this.produc.length;
         const numlipagination =  Math.ceil(elements/elementosDisplay)
@@ -143,8 +216,10 @@ const ConsultarProducto = defineComponent({
 
     },
 },
+    async mounted() {
+        if (this.$route.query.idCategoria) {
 
-    async mounted(){
+        }
         await this.llamarProductos();
     },
     render() {
@@ -167,7 +242,7 @@ const ConsultarProducto = defineComponent({
                             </div>
 
                             <div>
-                                <h2 class="display-4">PASTELES</h2>
+                                <h2 class="display-4">{this.nombreCategoria ? this.nombreCategoria : 'No disponible' }</h2>
                                 <h5>Del horno a tu mesa</h5>
                                 <di class="d-flex justify-content-center">
                                     <hr class="solid" />

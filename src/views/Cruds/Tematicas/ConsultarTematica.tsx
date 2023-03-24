@@ -7,7 +7,8 @@ interface Tematica {
     productos: []
 }
 
-const Tematica = defineComponent({
+//const Tematica = defineComponent({
+const ConsultarTematica = defineComponent({
     data() {
         return {
             tematicas: [] as Tematica[]
@@ -92,4 +93,5 @@ const Tematica = defineComponent({
     }
 })
 
-export default Tematica
+//export default Tematica
+export default ConsultarTematica

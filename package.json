@@ -26,6 +26,7 @@
     "pdfmake": "^0.2.7",
     "pinia": "^2.0.28",
     "simplelightbox": "^2.12.1",
+    "sweetalert2": "^11.7.3",
     "update": "^0.4.2",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",

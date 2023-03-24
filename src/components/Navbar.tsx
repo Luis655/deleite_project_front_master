@@ -75,7 +75,7 @@ const Navbar = defineComponent({
                                 </li>
 
                                 <li class="nav-item">
-                                    <router-link to="/catalogo" class="nav-link">catalogo</router-link>
+                                    <router-link to="/views/Catalogo" class="nav-link">Catálogo</router-link>
                                 </li>
 
                                 <li class="nav-item">
@@ -104,9 +104,9 @@ const Navbar = defineComponent({
 
                                             <li><hr class="dropdown-divider" /></li>
 
-                                            <li><router-link class="dropdown-item" to="/crearproducto">Crear producto</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/consultarproducto">Consultar productos</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/detalleproducto">Detalle productos</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/views/Cruds/Productos/ProductoCrud">Crear producto</router-link></li>
+                                            <li><router-link class="dropdown-item" to="../views/Cruds/Productos/ConsultarProducto">Consultar productos</router-link></li>
+                                            <li><router-link class="dropdown-item" to="../views/Cruds/Productos/ConsultarProducto">Detalle productos</router-link></li>
 
                                             <li><hr class="dropdown-divider" /></li>
 
@@ -114,8 +114,8 @@ const Navbar = defineComponent({
 
                                             <li><hr class="dropdown-divider" /></li>
 
-                                            <li><router-link class="dropdown-item" to="/creartematica">Crear tematica</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/consultartematica">Consultar Temáticas</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/views/Cruds/Tematicas/TematicaCrud">Crear tematica</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/views/Cruds/Tematicas/CosultarTematica">Consultar Temáticas</router-link></li>
 
                                             <li><hr class="dropdown-divider" /></li>
 

@@ -35,10 +35,6 @@ const Catalogo = defineComponent({
                     console.log("Sin recuperar")
                 })
         },
-        async GoToConsultarProducto(id: number){
-
-            this.$router.push({path:'../views/Cruds/Productos/ConsultarProducto',query:{id:id}})
-        },
         async eliminarCategoria(id: number) {
             let oCall = new Call();
             oCall.cenisFetch("DELETE", `api/Categoria/delete/${id}`, "", "").then((respuesta) => {
@@ -107,9 +103,6 @@ const Catalogo = defineComponent({
                                             </a>
                                             <a class="btn btn-danger" onClick={() => this.Editar(item.idCategoria)}>
                                                 Editar
-                                            </a>
-                                            <a class="btn btn-danger" onClick={() => this.GoToConsultarProducto(item.idCategoria)}>
-                                                Ver mas
                                             </a>
                                         </div>
                                     )
