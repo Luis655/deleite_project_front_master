@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
+.Montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+header.masthead {
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 4.5rem);
+  background: linear-gradient(to bottom, rgba(44, 41, 38, 0.9) 0%,
+      rgba(92, 77, 66, 0.9) 100%), url("../images/Fondos/PortadaHome.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
+header.masthead h1,
+header.masthead .h1 {
+  font-size: 2.25rem;
+}
+
+@media (min-width: 992px) {
+  header.masthead {
+    height: 100vh;
+    min-height: 40rem;
+    padding-top: 4.5rem;
+    padding-bottom: 0;
+  }
+
+  header.masthead p {
+    font-size: 1.15rem;
+  }
+
+  header.masthead h1,
+  header.masthead .h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+
+  header.masthead h1,
+  header.masthead .h1 {
+    font-size: 3.5rem;
+  }
+}
+
+.BtnPortada {
+  border-radius: 0% !important;
+  border-color: white !important;
+  border-style: solid !important;
+  border-width: 2px !important;
+  background-color: transparent !important;
+  cursor: pointer;
+
+  width: 300px;
+  font-size: 18px !important;
+
+}
+
+.BtnPortada:focus {
+  outline: 0;
+}
+
+.BtnPortada1 {
+  border-color: #ffffff;
+  transition: box-shadow 0.2s ease-in-out;
+
+}
+
+.BtnPortada1:hover {
+  box-shadow: 0 0 40px 40px #ffffff inset;
+  border-color: #ffffff !important;
+  color: rgb(0, 0, 0) !important;
+}
+
+/*Si el movil mide menos de___ se aplica*/
+@media(max-width: 700px) {
+
+  .imgCelebra {
+    width: 100%;
+    height: 100%;
+  }
+
+  .favoritos {
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+
+  .img-fluid2 {
+    width: 100%;
+    height: 300px !important;
+  }
+}
+
+/*Si el movil más menos de___ se aplica*/
+@media(min-width: 700px) {
+  .favoritos {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+  .img-fluid2 {
+
+    width: 450px !important;
+    height: 400px !important;
+
+  }
+}
+
+.BtnCatalogo {
+  border-radius: 0% !important;
+  border-color: black !important;
+  border-style: solid !important;
+  border-width: 2px !important;
+  background-color: transparent !important;
+  cursor: pointer;
+
+  width: 300px;
+  font-size: 18px !important;
+
+}
+
+.BtnCatalogo:focus {
+  outline: 0;
+}
+
+.btnCat1 {
+  border-color: #724a3a;
+  transition: box-shadow 0.2s ease-in-out;
+
+}
+
+.btnCat1:hover {
+  box-shadow: 0 0 40px 40px #724a3a inset;
+  border-color: #724a3a !important;
+  color: white !important;
+}
+
+
+.Favoritos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: 5%;
+  margin-right: 5%;
+
+}
+
+.TerceraSeccionChild {
+  color: white;
+  width: 70%;
+}
+
+.TerceraSeccion {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  background: linear-gradient(to bottom,
+      rgba(34, 34, 34, 0.8) 0%, rgba(34, 34, 34, 0.8)100%),
+    url(../images/Fondos/FondoTerceraSecc.jpg);
+
+  background-attachment: scroll;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
