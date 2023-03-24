@@ -112,6 +112,7 @@ const ConsultarProducto = defineComponent({
                                 <div>
                                     <select class="form-select" aria-label="Default select example">
                                         <option selected>Filtrar por</option>
+                                        
                                         <option value="4">Lo más pedido</option>
                                         <option value="1">Nombre</option>
                                         <option value="2">Precio</option>
