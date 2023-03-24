@@ -47,7 +47,11 @@ const Catalogo = defineComponent({
                 path: '/crearcategoria',
                 query: { accion: "editar", id: element }
             });
-        }
+        },
+        async GoToConsultarProducto(id: number, nombreCategoria: string){
+
+            this.$router.push({path:'../views/Cruds/Productos/ConsultarProducto',query:{idCategoria:id, nombreCategoria: nombreCategoria}})
+        },
     },
     render() {
         return (
@@ -103,6 +107,9 @@ const Catalogo = defineComponent({
                                             </a>
                                             <a class="btn btn-danger" onClick={() => this.Editar(item.idCategoria)}>
                                                 Editar
+                                            </a>
+                                            <a class="btn btn-danger" onClick={() => this.GoToConsultarProducto(item.idCategoria, item.nombreCategoria)}>
+                                                Ver mas
                                             </a>
                                         </div>
                                     )

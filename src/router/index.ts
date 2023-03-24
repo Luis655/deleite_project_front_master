@@ -123,16 +123,51 @@ import Catalogo from '../views/Catalogo';
 import TematicaCrud from '../views/Cruds/Tematicas/TematicaCrud'
 import ConsultarTematica from '../views/Cruds/Tematicas/ConsultarTematica'
 import ProductoCrud from '../views/Cruds/Productos/ProductoCrud';
+import CrearProducto from '../views/Cruds/Productos/ProductoCrud'
+import ActualizarProductos from '../views/Cruds/Productos/ProductoCrud'
+import VerProductos from '../views/Cruds/Productos/ProductosList'
+import detalleproducto from '../views/Cruds/Productos/DetalleProducto'
 import ConsultarProducto from '../views/Cruds/Productos/ConsultarProducto'
+
+
+import Error404 from '../Error404'
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+      //Crud productos
+        {
+        path: '/Crearproducto', //URL
+        name: 'ProductoCrud',
+        component: CrearProducto
+        },
+        {
+          path: '/Actualizarproducto', //URL
+          name: 'ProductoCrudActualizar',
+          component: ActualizarProductos
+          },
+          {
+            path: '/products/view', //URL
+            name: 'productsview',
+            component: VerProductos
+            },
+            {
+              path: '/detalleproducto/:id', //URL
+              name: 'detalleproducto',
+              component: detalleproducto
+              },
+        //End productos
         {
             path: '/', //URL
             name: 'Inicio',
             component: Inicio
         },
+        {
+          path: '/Error404', //URL
+          name: 'Error404',
+          component: Error404
+      },
         {
             path: '/views/Catalogo', //URL
             name: 'Catalogo',
@@ -150,7 +185,7 @@ const router = createRouter({
     },
     {
         path: '/views/Cruds/Productos/ProductoCrud', //URL
-        name: 'ProductoCrud',
+        name: 'ProductoCrudAntu¿as',
         component: ProductoCrud
     },
     {

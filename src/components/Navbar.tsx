@@ -32,7 +32,7 @@ const Navbar = defineComponent({
                     if (response.status === 200) {
                         console.log('Se ha creado una nueva categoría:', response.Data.idProducto);
                         console.log(response)
-                        this.$router.push({ name: 'crearproducto', params: { id: response.Data.idProducto, trueorfalse: response.Data.idConfirmacionT } })
+                        this.$router.push({ name: 'ProductoCrud', params: { id: response.Data.idProducto, trueorfalse: response.Data.idConfirmacionT } })
                     }
                     else {
                         console.log("Error")

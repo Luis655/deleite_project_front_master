@@ -53,21 +53,33 @@ const ConsultarProducto = defineComponent({
             nombreCategoria: String as any
         }},
     methods:{
-    async llamarProductos(){
+    async llamarProductos(consulta:any){
         const productosDiv = document.getElementById('productospaginados') as HTMLElement;
-
-        oCall.cenisFetch('GET', 'api/Producto/get', "", "" )
+        let url ='api/Producto/get';
+        if (this.$route.query.idCategoria) {
+            this.nombreCategoria = this.$route.query.nombreCategoria;
+            url = `api/Categoria/${this.$route.query.idCategoria}`
+        }else if (this.$route.query.idTematica) {
+            url = `api/Categoria/${this.$route.query.idTematica}`
+        }else if(consulta) {
+            url = 'api/Producto/get';
+        }else{
+            url = 'api/Producto/get';
+        }
+        oCall.cenisFetch('GET', url, "", "" )
         .then(async (response) =>{
            //console.log(response.Data.$values);
            this.produc = await response.Data.$values;
 
            this.paginacion();
 
-           console.log(this.produc);
+           //console.log(this.produc);
+           console.log(this.nombreCategoria );
+           
                 for (let index = 0; index <= this.produc.length; index++) {
-                    console.log(response.Data.$values[index].base64);
                     
                 if(index>=inicioPagina &&index<=finalPagina){
+                
 
                 const newDiv = document.createElement('div');
                 newDiv.id=`divproductos${index}`;
@@ -89,11 +101,16 @@ const ConsultarProducto = defineComponent({
                             <h6 style="font-size: 15px">Temática</h6>
                             <p class="card-text text-muted" style="font-size: 12px">${response.Data.$values[index].nombreTematica}</p>
                             </div>
+                            <div>
+                            <h6 style="font-size: 15px">Categoria</h6>
+                            <p class="card-text text-muted" style="font-size: 12px">${response.Data.$values[index].nombreCategoria}</p>
+                            </div>
                             &nbsp;
                             <div>
                                 <a><router-link class="btn btn-productos btn-productos2" to="/detalleproducto">Ver más</router-link></a>
                             </div>
                         </div>
+                        
     
                     </div>
                     
@@ -113,56 +130,6 @@ const ConsultarProducto = defineComponent({
             .catch((error)=>{
                 console.log(error.Data);
             })},
-
-        async llamarProductosCategorias() {
-            this.id = this.$route.query.id
-            oCall.cenisFetch('GET', `api/Categoria/${this.id}`, "", "")
-                .then(async (response) => {
-                    // this.Response = await response.Data.Productos.$Values
-                    console.log(response.Data.$values)
-                    this.nombreCategoria = this.$route.query.nombreCategoria;
-                    const nombreP = document.getElementById('nombreP') as HTMLInputElement;
-                    const productosDiv = document.getElementById('productospaginados') as HTMLElement;
-                    console.log(response.Data.$values[0].nombreCategoria)
-                    nombre = response.Data.$values[0].nombreCategoria
-
-                    response.Data.$values.map((item: any) => {
-                        
-
-                        const newDiv = document.createElement('div');
-                        newDiv.id = `divproductos$`;
-                        newDiv.className = 'col-md-4  centercards';
-
-                        newDiv.innerHTML =
-                            `
-                <div class="card item" style="width: 18rem;">
-                <h2 class="display-4"></h2>
-                    <div class="imgsize">
-                        <img src=${item.base64} class="card-img-top" />
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title">${item.nombreP}</h5>
-                        <p class="card-text">$ ${item.precio}</p>
-
-                        <div>
-                            <h6 style="font-size: 15px">Temática</h6>
-                            <p class="card-text text-muted" style="font-size: 12px">${item.nombreTematica}</p>
-                        </div>
-                        &nbsp;
-                        <div>
-                            <a><router-link class="btn btn-productos btn-productos2" to="/detalleproducto">Ver más</router-link></a>
-                        </div>
-                    </div>
-
-                </div>
-                
-                `;
-                productosDiv?.appendChild(newDiv);
-                    })
-                })
-            
-        },
     
     paginacion(){
         const elements = this.produc.length;
@@ -192,15 +159,19 @@ const ConsultarProducto = defineComponent({
             const paginatelinum = document.createElement('li');
             paginatelinum.className = 'page-item';
             paginatelinum.innerHTML =  `<li class="page-item"><a class="page-link" href="#">${index}</a></li>`;
+
             paginatelinum.addEventListener('click', () => {
                 const numeroiniciopagina = index*elementosDisplay;
-                finalPagina = numeroiniciopagina;
-                inicioPagina = finalPagina-elementosDisplay;
+                finalPagina = numeroiniciopagina-1;
+                inicioPagina = finalPagina+1-elementosDisplay;
+                paginateul.remove();
+                //alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina);
+
                 for (let index = 0; index <= this.produc.length; index++) {
                 const divproductos = document.getElementById(`divproductos${index}`);
                 divproductos?.remove();
                 }
-                this.llamarProductos();
+                this.llamarProductos(null);
                 
             });
             paginateul.appendChild(paginatelinum);
@@ -217,10 +188,8 @@ const ConsultarProducto = defineComponent({
     },
 },
     async mounted() {
-        if (this.$route.query.idCategoria) {
-
-        }
-        await this.llamarProductos();
+        await this.llamarProductos(null);
+        
     },
     render() {
         return (
@@ -242,7 +211,7 @@ const ConsultarProducto = defineComponent({
                             </div>
 
                             <div>
-                                <h2 class="display-4">{this.nombreCategoria ? this.nombreCategoria : 'No disponible' }</h2>
+                                <h2 class="display-4">{this.nombreCategoria.name != "String" ? this.nombreCategoria : 'Catalogo Deleite' }</h2>
                                 <h5>Del horno a tu mesa</h5>
                                 <di class="d-flex justify-content-center">
                                     <hr class="solid" />

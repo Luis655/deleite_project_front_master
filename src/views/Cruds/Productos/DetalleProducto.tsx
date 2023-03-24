@@ -89,6 +89,7 @@ const DetalleProducto = defineComponent({
             oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
               .then(async (response) => {
                 //console.log(response.Data.$values);
+                if(response.status ==200){
                 this.productoImagenes = response.Data.$values;
                 this.productoDatos = response.Data.$values[1];
                 if(this.productoDatos.ingredienteselect !==null){
@@ -98,6 +99,10 @@ const DetalleProducto = defineComponent({
                 }else{
                     this.ingre = [] 
                 }
+            }else{
+                this.$router.push({name:'Error404'})
+
+            }
 
                 //console.log(this.productoDatos.precio);
                 //console.log(response.Data.$values[1].nombreP);
@@ -116,6 +121,7 @@ const DetalleProducto = defineComponent({
      
     mounted() {
         this.id = this.$route.params.id;
+        console.log("sdflsldfksd " + this.id)
         this.crearCategoria()
     },
     render() {

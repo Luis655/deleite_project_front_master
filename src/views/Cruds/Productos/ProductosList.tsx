@@ -102,7 +102,7 @@ const ProductosList = defineComponent({
     updateProducto(id:any, idConfirmacionT:any) {
       if(idConfirmacionT==null)
         idConfirmacionT=true;
-      this.$router.push({ name: 'actualizarproducto', params: { id: id, trueorfalse: idConfirmacionT }})
+      this.$router.push({ name: 'ProductoCrudActualizar', params: { id: id, trueorfalse: idConfirmacionT }})
 
       alert(id);
     },
@@ -247,6 +247,7 @@ const ProductosList = defineComponent({
 
         <button onClick={() => {
           const id = item.idProducto;
+          alert(id)
           this.$router.push({ name: 'detalleproducto', params: { id: id}})
 
         }} class="btn btn-cruds" id="whatsapp-button">Detalles</button>
