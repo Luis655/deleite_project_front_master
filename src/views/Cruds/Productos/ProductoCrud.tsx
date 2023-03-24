@@ -21,7 +21,7 @@ interface Fotos {
 
 
 
-function guardarDatosAntesDeSalir(event: BeforeUnloadEvent) {
+/*function guardarDatosAntesDeSalir(event: BeforeUnloadEvent) {
 
  function borrarProducto() {
 
@@ -52,10 +52,10 @@ function habilitarSalida() {
 function deshabilitarSalida() {
   // Impedir que el usuario abandone la página
   window.addEventListener("beforeunload", guardarDatosAntesDeSalir);
-}
+}*/
 
 // Impedir que el usuario abandone la página al cargarla por primera vez
-deshabilitarSalida();
+//deshabilitarSalida();
 
 
 // Para habilitar la salida, llama a la función habilitarSalida()
@@ -63,9 +63,12 @@ deshabilitarSalida();
 
 
 let oCall = new Call();
-let inputCount = 0;
+let inputCount = 0; 
+let countimages = 0;
+let numImagenes = 0; 
 
-
+const $seleccionArchivos = document.querySelector("#seleccionArchivos"),
+$imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion");
 
 
 
@@ -90,30 +93,103 @@ function readFileAsBase64(file?: File): Promise<string | undefined> {
 const Producto = defineComponent({
   data() {
     return {
-      valores: Object as ProductImage,
+      valores: {} as ProductImage,
       categoria: Object as ProductImage,
       accion: Object as any,
-      id: Object as any
+      id: Object as any,
+      countimagesArray: [] as []
 
     }
   },
   methods: {
     handlerchange(e: any) {
-      const { name, value } = e.target;
-      this.valores = ({ ...this.valores, [name]: value })
+      //const { name, value } = e.target;
+      //this.valores = ({ ...this.valores, [name]: value })
 
     },
 
-    async AgregarFotos() {
+    async llenarimagenes(){
+      oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
+      .then((response)=>{
+        const datos: [] = response.Data.$values;
+        console.log(response.Data.$values);
+        this.countimagesArray = [];
+        this.countimagesArray =  response.Data.$values;
+
+      })
+    },
+
+    async AgregarFotos(imagen: any, idimagen:any) {
+      console.log(numImagenes);
+
+
 
       const container = document.getElementById('contenedor-inputs');
       const addInputBtn = document.getElementById('crear-input');
-
+      const mensageimagen = document.getElementById('mensajeimagenes');
+      if(imagen){
+        mensageimagen?.remove();
+        if (container) {
+          if(numImagenes >=3){
+            const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
+            imagenButtonAdd.disabled =true;
+            imagenButtonAdd.innerText = 'solo puedes tener 3 imagenes por productodd'
+          }
+          const img = document.createElement('img');
+          img.src = imagen;
+  
+          img.alt = 'selecciona una imagen';
+          img.width = 100;
+          img.id =`img-${++inputCount}`;
+  
+          const deleteBtn = document.createElement('button');
+          deleteBtn.textContent = 'Eliminar';
+          deleteBtn.className ='btn btn-cruds';
+          deleteBtn.style.margin ='4px';
+          deleteBtn.addEventListener('click', () => {
+            deleteInputImagen(idimagen, deleteBtn);
+          });
+  
+          const wrapper = document.createElement('div');
+          wrapper.id = `div-${idimagen}`;
+          wrapper.className = 'col-4'
+          wrapper.appendChild(deleteBtn);
+          wrapper.appendChild(img);
+  
+  
+          container.appendChild(wrapper);
+        } else {
+          alert("Error total 2")
+        }
+    }else{
+      countimages++;
+      numImagenes = this.countimagesArray.length + countimages;
+      if(numImagenes >=3){
+        const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
+        imagenButtonAdd.disabled =true;
+        imagenButtonAdd.innerText = 'solo puedes tener 3 imagenes por productodd'
+      }
+      mensageimagen?.remove();
       if (addInputBtn && container) {
         const input = document.createElement('input');
+        const img = document.createElement('img');
+          input.innerText='...'
+          img.src = imagen;
+
+        img.alt = 'selecciona una imagen';
+        img.width = 100;
+        img.id =`img-${++inputCount}`;
+
+
         input.type = 'file';
-        input.id = `input-${++inputCount}`;
-        input.name = `input-${++inputCount}`;
+        input.id = `input-${inputCount}`;
+        input.name = `input-${inputCount}`;
+        const cont = inputCount;
+        input.addEventListener('change', () => {
+          console.log(`input-${cont}`, `img-${cont}`)
+          mostrarImagen(`input-${cont}`, `img-${cont}`)
+
+        });
 
 
         const deleteBtn = document.createElement('button');
@@ -125,22 +201,77 @@ const Producto = defineComponent({
         const wrapper = document.createElement('div');
         wrapper.appendChild(input);
         wrapper.appendChild(deleteBtn);
+        wrapper.appendChild(img);
+
 
         container.appendChild(wrapper);
       } else {
-        alert("Error total")
+        alert("Error total 1")
       }
-      function deleteInput(input: HTMLInputElement, button: HTMLButtonElement) {
+      
+    
+      }
+      const deleteInputImagen = (id: any, button: HTMLButtonElement) => {
         const wrapper = button.parentElement;
         if (wrapper) {
+          numImagenes--;
+          console.log(countimages);
+          if(numImagenes <= 2){
+            const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
+            imagenButtonAdd.disabled =false;
+            imagenButtonAdd.innerText = 'Agregar imagenes';
+          }
+          wrapper.remove();
+          oCall.cenisFetch('DELETE', `api/Imagenes/borrarimagen/${id}`, "", "")
+          .then(async(response)=>{
+            this.llenarimagenes();
+
+            console.log(response);
+          }).catch((error) =>{
+            alert("error al borrar la imagen.")
+          });
+        } else {
+          alert("Error");
+        }
+      }
+      
+      
+      const deleteInput = (input: HTMLInputElement, button: HTMLButtonElement) => {
+        const wrapper = button.parentElement;
+        if (wrapper) {
+          countimages--;
+          numImagenes--;
+          if(numImagenes <= 2){
+            const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
+            imagenButtonAdd.disabled =false;
+            imagenButtonAdd.innerText = 'Agregar imagenes';
+          }
+          this.llenarimagenes();
           wrapper.remove();
         } else {
           alert("Error");
         }
       }
+      function mostrarImagen(inputid: any, imagenid: any){
+        const $seleccionArchivos = document.querySelector(`#${inputid}`) as HTMLInputElement, 
+        $imagenPrevisualizacion = document.querySelector(`#${imagenid}`) as HTMLImageElement;
+
+        console.log($seleccionArchivos, $imagenPrevisualizacion);
+        if($seleccionArchivos!=null){
+            const archivos = $seleccionArchivos.files;
+            if (!archivos || !archivos.length) {
+                  $imagenPrevisualizacion.src = "";
+                  return;
+            }
+            const firstImage = archivos[0];
+            const objectUrl = URL.createObjectURL(firstImage);
+            $imagenPrevisualizacion.src=objectUrl;
+  
+            }
+        
+      }
 
     },
-
     llenarCategorias() {
       const select = document.getElementById("idcategoria") as HTMLSelectElement;
       oCall.cenisFetch('GET', "api/Categoria/getall", "", "")
@@ -158,8 +289,6 @@ const Producto = defineComponent({
         })
       // Código para borrar el producto
     },
-
-
     llenarTematica() {
       const select = document.getElementById("idtematica") as HTMLSelectElement;
       oCall.cenisFetch('GET', "api/Tematica/getall", "", "")
@@ -192,7 +321,8 @@ const Producto = defineComponent({
       // Código para borrar el producto
     },
     async crearCategoria() {
-      var imagenElement = document.getElementById('imagen') as HTMLInputElement;
+      this.handlerchange;
+      var imagenElement = document.getElementById('file-5') as HTMLInputElement;
       var imagen = await readFileAsBase64(imagenElement.files?.[0]);
       var nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
 
@@ -216,7 +346,7 @@ const Producto = defineComponent({
       this.valores.popular = Boolean(popular);
       this.valores.ingredienteselect = ingredienteselect;
       this.valores.saludable = Boolean(saludable);
-      console.log(this.valores.saludable);
+      console.log(this.valores);
       this.valores.ImagenPrincipalchar = imagen;
 
 
@@ -252,7 +382,7 @@ const Producto = defineComponent({
                           //console.log(response)
                           try {
                             if (response.status == 200) {
-                              this.$router.push({ name: 'productsview' })
+                              //this.$router.push({ name: 'productsview' })
                             } else {
                               console.log("Ha ocurrido un error")
                             }
@@ -276,7 +406,8 @@ const Producto = defineComponent({
 
               }
               else {
-                console.log("Error en el registro");
+                alert("Ha ocurrido un error: " + response.Data.title);
+                console.log(response.Data.title);
                 console.log(response)
               }
             } catch (error) {
@@ -293,6 +424,7 @@ const Producto = defineComponent({
       }
     },
 
+
     updateProductos() {
       const nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
       var id = parseInt(nombreid);
@@ -301,7 +433,7 @@ const Producto = defineComponent({
       const ingredienteselect = document.getElementById('ingredienteselect') as HTMLInputElement;
       const precio = document.getElementById('precio') as HTMLInputElement;
       const descripcionP = document.getElementById('descripcionP') as HTMLInputElement;
-
+      const imagen = document.getElementById('imagenPrevisualizacion') as HTMLImageElement;
 
       const select = document.getElementById("idtematica") as HTMLSelectElement;
       const select2 = document.getElementById("idcategoria") as HTMLSelectElement;
@@ -318,7 +450,24 @@ const Producto = defineComponent({
           select2.value = response.Data["idCategoria"];
           popular.value = response.Data["popular"] ? "1" : "";
           saludable.value = response.Data["saludable"] ? "1" : "";
-
+          imagen.src = response.Data["imagenPrincipal"];
+          oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
+          .then((response)=>{
+            this.countimagesArray = response.Data.$values;
+            console.log("numero de imagenes = " + this.countimagesArray.length);
+            if (response.Data.$values.length >= 3) {
+              const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
+              imagenButtonAdd.disabled =true;
+              imagenButtonAdd.innerText = 'solo puedes tener 3 imagenes por productosssssss'
+              
+            }
+            response.Data.$values.map((data: any)=>{
+              console.log(data['base64']);
+              this.AgregarFotos(data['base64'], data['idimgProducto']);
+            
+            })
+          
+          })
           /*oCall.cenisFetch().then(()=>{
 
           }).catch(()=>{
@@ -328,13 +477,32 @@ const Producto = defineComponent({
         .catch((error) => {
           console.log(error);
         })
-    }
+    },
+    mostrarImagen(){
+      const $seleccionArchivos = document.querySelector("#file-5") as HTMLInputElement, 
+      $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion") as HTMLImageElement;
+      if($seleccionArchivos!=null){
+          const archivos = $seleccionArchivos.files;
+          if (!archivos || !archivos.length) {
+                $imagenPrevisualizacion.src = "";
+                return;
+          }
+          const firstImage = archivos[0];
+          const objectUrl = URL.createObjectURL(firstImage);
+          $imagenPrevisualizacion.src=objectUrl;
 
+          }
+      
+    },
+
+    imagensvg(){},
 
   },
   mounted() {
     this.llenarCategorias(),
       this.llenarTematica()
+      this.id = this.$route.params.id;
+
     if (this.$route.params.id !== null && Boolean(this.$route.params.trueorfalse) == true) {
 
       this.updateProductos()
@@ -404,6 +572,12 @@ const Producto = defineComponent({
                     <label class="LabelsForms">Nombre</label>
                     <input type="text" class="form-control" name="nombreP" id="nombreP" onChange={(e) => this.handlerchange(e)} required />
                   </div>
+                  <div class="mb-3">
+                  <div class="row" id="contenedor-inputs">
+                      <div id="mensajeimagenes" class="col-3">sin imagenes</div>
+                      
+                    </div>
+                  </div>
                 </form>
               </div>
 
@@ -424,20 +598,37 @@ const Producto = defineComponent({
                     <textarea rows="3" class="form-control" type="text" id="descripcionP" name="descripcionP" onChange={(e) => this.handlerchange(e)} required />
                   </div>
 
-                  <div class="mb-3" style="display: flex; flex-direction: row;">
-                    <input type="file" class="form-control" id="imagen" onChange={(e) => this.handlerchange(e)} name="imagen" required />
+            
 
-                    <div>
-                      <button onClick={this.AgregarFotos} id="crear-input" type="button" onChange={(e) => this.handlerchange(e)} class="btn btn-cruds">Añadir otra</button>
-                    </div>
+
+<br />
+<br /><br />
+
+                  <div class="row">
+                    <center>
+                  <label class="LabelsForms" for="popular">Imagen por defecto o principal</label>
+                  </center>
+
+<div class="col-6">
+<input type="file" name="file-5" id="file-5" class="inputfile inputfile-5" onChange={() => this.mostrarImagen()} />
+<label id="label5" for="file-5">
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+</figure>
+</label>
+</div>
+<div class="col-6">
+<img id="imagenPrevisualizacion" alt="sin imagenes seleccionadas"/>
+</div>
+
+
                   </div>
 
                   <div class="mb-3">
+                      <button onClick={()=>this.AgregarFotos(null, null)} id="crear-input" type="button" onChange={(e) => this.handlerchange(e)} class="btn btn-cruds">Añadir otra</button>
                     <input type="text" value={this.$route.params.id} class="form-control" style="display:none" />
 
-                    <div class="mb-3" id="contenedor-inputs">
-                      
-                    </div>
+
                   </div>
 
                 </form>
