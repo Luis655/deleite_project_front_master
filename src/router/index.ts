@@ -118,7 +118,7 @@ const router = createRouter({
 export default router
 */
 import { createRouter, createWebHistory } from 'vue-router';
-import Inicio from '../components/Inicio';
+import Inicio from '../views/HomeView';
 import Catalogo from '../views/Catalogo';
 import TematicaCrud from '../views/Cruds/Tematicas/TematicaCrud'
 import ConsultarTematica from '../views/Cruds/Tematicas/ConsultarTematica'
@@ -130,7 +130,7 @@ import detalleproducto from '../views/Cruds/Productos/DetalleProducto'
 import ConsultarProducto from '../views/Cruds/Productos/ConsultarProducto'
 
 
-import Error404 from '../Error404'
+//import Error404 from '../Error404'
 
 
 const router = createRouter({
@@ -138,12 +138,12 @@ const router = createRouter({
     routes: [
       //Crud productos
         {
-        path: '/Crearproducto', //URL
+        path: '/Crearproducto/:id/:trueorfalse', //URL
         name: 'ProductoCrud',
         component: CrearProducto
         },
         {
-          path: '/Actualizarproducto', //URL
+          path: '/Actualizarproducto/:id/:trueorfalse', //URL
           name: 'ProductoCrudActualizar',
           component: ActualizarProductos
           },
@@ -163,11 +163,11 @@ const router = createRouter({
             name: 'Inicio',
             component: Inicio
         },
-        {
+       /* {
           path: '/Error404', //URL
           name: 'Error404',
           component: Error404
-      },
+        }*/
         {
             path: '/views/Catalogo', //URL
             name: 'Catalogo',

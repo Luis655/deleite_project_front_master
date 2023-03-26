@@ -1,5 +1,7 @@
 import { defineComponent, readonly } from "vue";
 import { Call } from "../../../../helpers/calls/Call"
+import {validaciones} from "../../../../helpers/calls/Validaciones"
+import { swalAlert } from "@/components/alerts";
 
 interface ProductImage {
   IdProducto?: number;
@@ -21,41 +23,12 @@ interface Fotos {
 
 
 
-/*function guardarDatosAntesDeSalir(event: BeforeUnloadEvent) {
-
- function borrarProducto() {
-
-    var nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
-    const id = parseInt(nombreid)
-    const url = `api/Imagenes/delete/${id}`;
-    oCall.cenisFetch('DELETE', url, "", "")
-      .then(async (response) => {
-        console.log("EXUTI¡");
-      })
-    alert("joasdasd");
-
-    // Código para borrar el producto
-  }
-  borrarProducto()
-
-  // Guardar los datos del formulario en el almacenamiento local (si es necesario)
-  // Mostrar un mensaje al usuario para confirmar si desea salir de la página o no
-  event.preventDefault();
-  event.returnValue = "¿lmhjhjhhghggvgvgvgvgvgvgvgvgvgvgv?";
+function alerta(){
+  alert("sweet alert");
 }
 
-function habilitarSalida() {
-  // Permitir que el usuario abandone la página
-  window.removeEventListener("beforeunload", guardarDatosAntesDeSalir);
-}
 
-function deshabilitarSalida() {
-  // Impedir que el usuario abandone la página
-  window.addEventListener("beforeunload", guardarDatosAntesDeSalir);
-}*/
 
-// Impedir que el usuario abandone la página al cargarla por primera vez
-//deshabilitarSalida();
 
 
 // Para habilitar la salida, llama a la función habilitarSalida()
@@ -63,6 +36,7 @@ function deshabilitarSalida() {
 
 
 let oCall = new Call();
+let validate = new validaciones();
 let inputCount = 0; 
 let countimages = 0;
 let numImagenes = 0; 
@@ -338,7 +312,23 @@ const ProductoCrud = defineComponent({
       const popular = (document.getElementById('popular') as HTMLSelectElement).value;
       const ingredienteselect = (document.getElementById('ingredienteselect') as HTMLInputElement).value;
       const saludable = (document.getElementById('saludable') as HTMLSelectElement).value;
-
+    let ArrayValidate=[]
+    //ArrayValidate.push(validate.FormValidate('input', 'idProducto', 'idProductovalicacion'))
+    ArrayValidate.push(validate.FormValidate('input', 'nombreP', 'nombrePvalidacion'))
+    ArrayValidate.push( validate.FormValidate('input', 'ingredienteselect', 'ingredienteselectvalidacion'))
+    ArrayValidate.push(validate.FormValidate('inputNumber', 'precio', 'preciovalidacion'))
+    ArrayValidate.push(validate.FormValidate('input', 'descripcionP', 'descripcionPvalidacion'))
+      //validate.FormValidate('input', 'imagenElement', 'imagenPrevisualizacionvalidacion');
+    ArrayValidate.push(validate.FormValidate('select', 'idtematica', 'idtematicavalidacion'))
+    ArrayValidate.push(validate.FormValidate('select', 'idcategoria', 'idcategoriavalidacion'))
+    ArrayValidate.push(validate.FormValidate('select', 'popular', 'popularvalidacion'))
+    ArrayValidate.push(validate.FormValidate('select', 'saludable', 'saludablevalidacion'))
+    let validacion;
+    ArrayValidate.map((valido) =>{
+      if(!valido){
+        validacion = false;
+      }
+    })
 
       this.valores.nombreP = nombreP;
       this.valores.precio = precio;
@@ -346,21 +336,19 @@ const ProductoCrud = defineComponent({
       this.valores.IdProducto = parseInt(nombreid);
       this.valores.idCategoria = parseInt(idcategoria);
       this.valores.idTematica = parseInt(idtematica);
-      this.valores.popular = Boolean(popular);
+      this.valores.popular = popular === "1" ? Boolean(popular) : Boolean("");
       this.valores.ingredienteselect = ingredienteselect;
-      this.valores.saludable = Boolean(saludable);
-      console.log(this.valores);
+      this.valores.saludable = saludable == "1" ? Boolean(saludable) : Boolean("");
       this.valores.ImagenPrincipalchar = imagen;
 
 
 
-
-      if (this.valores.ImagenPrincipalchar !== null) {
+      if (this.valores.ImagenPrincipalchar !== null && validacion!==false) {
         oCall.cenisFetch('POST', 'api/Producto/create', "", this.valores)
           .then(async (response) => {
             //console.log(response)
             try {
-              if (response.status == 200) {
+              if (response.status == 201) {
 
 
                 /**
@@ -423,6 +411,7 @@ const ProductoCrud = defineComponent({
             console.error('Ha ocurrido un error al crear una nueva categoría:', error);
           });
       } else {
+        alert("llene todos los campos");
         console.log("Error al capturar los datos");
       }
     },
@@ -431,6 +420,7 @@ const ProductoCrud = defineComponent({
       const nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
       var id = parseInt(nombreid);
       const url = `api/Producto/get/${id}`;
+
       const nombreP = document.getElementById('nombreP') as HTMLInputElement;
       const ingredienteselect = document.getElementById('ingredienteselect') as HTMLInputElement;
       const precio = document.getElementById('precio') as HTMLInputElement;
@@ -442,16 +432,19 @@ const ProductoCrud = defineComponent({
       const popular = document.getElementById("popular") as HTMLSelectElement;
       const saludable = document.getElementById("saludable") as HTMLSelectElement;
 
+     
+
       oCall.cenisFetch("GET", url, "", "")
         .then(async (response) => {
+          console.log("askjnaksdja,sjdakjsda  " +response.Data["idCategoria"])
           nombreP.value = response.Data["nombreP"];
           ingredienteselect.value = response.Data["ingredienteselect"];
           precio.value = response.Data["precio"];
           descripcionP.value = response.Data["descripcionP"];
           select.value = response.Data["idTematica"];
           select2.value = response.Data["idCategoria"];
-          popular.value = response.Data["popular"] ? "1" : "";
-          saludable.value = response.Data["saludable"] ? "1" : "";
+          popular.value = response.Data["popular"] == "1" ? "1" : "0";
+          saludable.value = response.Data["saludable"] == "1" ? "1" : "0";
           imagen.src = response.Data["imagenPrincipal"];
           oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
           .then((response)=>{
@@ -501,13 +494,12 @@ const ProductoCrud = defineComponent({
 
   },
   mounted() {
-    this.llenarCategorias(),
+      this.llenarCategorias(),
       this.llenarTematica()
       this.id = this.$route.params.id;
 
-    if (this.$route.params.id !== null && Boolean(this.$route.params.trueorfalse) == true) {
-
-      this.updateProductos()
+    if (this.$route.params.id !== null && this.$route.params.trueorfalse == "true") {
+        this.updateProductos()
     }
   },
 
@@ -536,48 +528,54 @@ const ProductoCrud = defineComponent({
                 <form id="Formproduct" name="Formproduct">
 
                   <input id="idProducto" name="idProducto" type="number" value={this.$route.params.id} style="display:none" />
+                  <div id="idProductovalicacion"></div>
 
                   <div class="mb-3">
                     <label class="LabelsForms" for="idcategoria">Categoria</label>
                     <select class="form-select form-control" id="idcategoria" onChange={(e) => this.handlerchange(e)} aria-label="Default select example">
                     </select>
+                    <div id="idcategoriavalidacion"></div>
                   </div>
 
                   <div class="mb-3">
                     <label class="LabelsForms" for="idtematica">Tematica</label>
                     <select class="form-select" id="idtematica" onChange={(e) => this.handlerchange(e)} aria-label="Default select example">
                     </select>
+                    <div id="idtematicavalidacion"></div>
                   </div>
 
 
                   <div class="mb-3">
                     <label class="LabelsForms" for="popular">Popular</label>
                     <select class="form-select" id="popular" onChange={(e) => this.handlerchange(e)} aria-label="Default select example">
-                      <option selected>¿Es popular?</option>
+                      <option selected value="N/A">¿Es popular?</option>
                       <option value="1">SI</option>
-                      <option value="">NO</option>
+                      <option value="0">NO</option>
                     </select>
+                    <div id="popularvalidacion"></div>
                   </div>
 
 
                   <div class="mb-3">
                     <label class="LabelsForms" for="saludable">Saludable</label>
                     <select class="form-select" id="saludable" onChange={(e) => this.handlerchange(e)} aria-label="Default select example">
-                      <option selected>¿Es saludable?</option>
+                      <option selected value="N/A">¿Es saludable?</option>
                       <option value="1">SI</option>
-                      <option value="">NO</option>
+                      <option value="0">NO</option>
                     </select>
+                    <div id="saludablevalidacion"></div>
                   </div>
 
 
                   <div class="mb-3">
-                    <label class="LabelsForms">Nombre</label>
+                    <label class="LabelsForms" for="nombreP">Nombre</label>
                     <input type="text" class="form-control" name="nombreP" id="nombreP" onChange={(e) => this.handlerchange(e)} required />
+                    <div id="nombrePvalidacion"></div>
                   </div>
                   <div class="mb-3">
                   <div class="row" id="contenedor-inputs">
                       <div id="mensajeimagenes" class="col-3">sin imagenes</div>
-                      
+                    
                     </div>
                   </div>
                 </form>
@@ -588,16 +586,19 @@ const ProductoCrud = defineComponent({
                   <div class="mb-3">
                     <label class="LabelsForms">Ingredientes</label>
                     <input type="text" class="form-control" name="ingredienteselect" id="ingredienteselect" onChange={(e) => this.handlerchange(e)} required />
+                    <div id="ingredienteselectvalidacion"></div>
                   </div>
 
                   <div class="mb-3">
                     <label class="LabelsForms">Precio</label>
                     <input type="number" class="form-control" name="precio" id="precio" onChange={(e) => this.handlerchange(e)} required />
+                    <div id="preciovalidacion"></div>
                   </div>
 
                   <div class="mb-3">
                     <label class="LabelsForms">Descripción</label>
                     <textarea rows="3" class="form-control" type="text" id="descripcionP" name="descripcionP" onChange={(e) => this.handlerchange(e)} required />
+                    <div id="descripcionPvalidacion"></div>
                   </div>
 
             
@@ -620,7 +621,8 @@ const ProductoCrud = defineComponent({
 </label>
 </div>
 <div class="col-6">
-<img id="imagenPrevisualizacion" alt="sin imagenes seleccionadas"/>
+<img id="imagenPrevisualizacion" alt="sin imagenes seleccionadas" class="img-fluid"/>
+<div id="imagenPrevisualizacionvalidacion"></div>
 </div>
 
 

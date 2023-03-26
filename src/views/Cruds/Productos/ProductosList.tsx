@@ -109,7 +109,7 @@ const ProductosList = defineComponent({
     borrarProductos(idproducto:any) {
       //var nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
       const id = parseInt(idproducto);
-      const url = `api/Imagenes/delete/${id}`;
+      const url = `api/Imagenes/borrarimagenes/${id}`;
       oCall.cenisFetch('DELETE', url, "", "")
         .then(async (response) => {
           console.log("EXUTI¡");
@@ -118,12 +118,11 @@ const ProductosList = defineComponent({
               oCall.cenisFetch('Delete', url, "", "")
               .then(async(response)=>{
                 //console.log("Exito");
-                location.assign(window.location.href);
+                //location.assign(window.location.href);
 
               })
           }
         });
-      alert("joasdasd");
       // Código para borrar el producto
     },
    dtatable(){
@@ -142,18 +141,25 @@ const ProductosList = defineComponent({
     },
 
     async crearCategoria() {
+      
+
       oCall.cenisFetch('GET', 'api/Producto/get', "", "")
         .then(async (response) => {
           //console.log(response.Data.$values);
           this.produc = await response.Data.$values;
-          
           return Promise.resolve();
           
         })
         .catch((error) => {
           console.error('Ha ocurrido un error al crear una nueva categoría:', error);
         });
-    }
+    },
+    validarProducto(){
+      oCall.cenisFetch('GET', 'api/Producto/veriicarProductos', "", "")
+      .then((response) => {
+        response.Data;
+      })
+    },
    
   },
   /*get methods() {
@@ -164,9 +170,9 @@ const ProductosList = defineComponent({
   },*/
 
  async mounted() {
-    await this.crearCategoria();
+    this.validarProducto();
+    setTimeout(await this.crearCategoria, 200)
     setTimeout(this.dtatable, 500);
-
   },
 
   render() {
@@ -238,7 +244,7 @@ const ProductosList = defineComponent({
       <td>{item.ingredienteselect}</td>
       <td>{item.nombreCategoria}</td>
       <td>{item.nombreTematica}</td>
-      <td><img src={item.base64} height="50" class="rounded-circle mt-n3" alt="N/A" /></td>
+      <td><img src={item.base64} height="50" class="img-fluid rounded-circle mt-n3" alt="N/A" /></td>
       <td>
         <div class="row">
 

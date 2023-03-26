@@ -43,6 +43,8 @@ interface Produc {
 let inicioPagina = 0;
 let finalPagina = 5;
 const elementosDisplay = 6;
+let paginaSiguiente=2;
+let pagianAnterior=1;
 
 const ConsultarProducto = defineComponent({
     data() {
@@ -53,12 +55,18 @@ const ConsultarProducto = defineComponent({
             nombreCategoria: String as any
         }},
     methods:{
+        Detallerir(id:any){
+            alert(id);
+            //this.$router.push({ name: 'detalleproducto', params: { id: id}})
+        },
+        
+        
     async llamarProductos(consulta:any){
         const productosDiv = document.getElementById('productospaginados') as HTMLElement;
         let url ='api/Producto/get';
         if (this.$route.query.idCategoria) {
             this.nombreCategoria = this.$route.query.nombreCategoria;
-            url = `api/Categoria/${this.$route.query.idCategoria}`
+            url = `api/Categoria/productos/${this.$route.query.idCategoria}`
         }else if (this.$route.query.idTematica) {
             url = `api/Categoria/${this.$route.query.idTematica}`
         }else if(consulta) {
@@ -132,6 +140,9 @@ const ConsultarProducto = defineComponent({
             })},
     
     paginacion(){
+
+
+
         const elements = this.produc.length;
         const numlipagination =  Math.ceil(elements/elementosDisplay)
 
@@ -164,8 +175,10 @@ const ConsultarProducto = defineComponent({
                 const numeroiniciopagina = index*elementosDisplay;
                 finalPagina = numeroiniciopagina-1;
                 inicioPagina = finalPagina+1-elementosDisplay;
+                paginaSiguiente = paginaSiguiente > 2 ? index+1:paginaSiguiente;
+                pagianAnterior = pagianAnterior==1 ? pagianAnterior : pagianAnterior-1;
                 paginateul.remove();
-                //alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina);
+                alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + "pagina siguiente: " + paginaSiguiente);
 
                 for (let index = 0; index <= this.produc.length; index++) {
                 const divproductos = document.getElementById(`divproductos${index}`);
@@ -174,11 +187,44 @@ const ConsultarProducto = defineComponent({
                 this.llamarProductos(null);
                 
             });
+
             paginateul.appendChild(paginatelinum);
             
         }
 
+        paginationNxt.addEventListener('click', () => {
+            const numeroiniciopagina = paginaSiguiente*elementosDisplay;
+            finalPagina = numeroiniciopagina-1;
+            inicioPagina = finalPagina+1-elementosDisplay;
+            paginaSiguiente = paginaSiguiente > 2 ? paginaSiguiente+1:paginaSiguiente;
+            pagianAnterior = pagianAnterior==1 ? pagianAnterior : pagianAnterior-1;
+            paginateul.remove();
+            alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + ", pagina siguiente " + paginaSiguiente);
 
+            for (let index = 0; index <= this.produc.length; index++) {
+            const divproductos = document.getElementById(`divproductos${index}`);
+            divproductos?.remove();
+            }
+            this.llamarProductos(null);
+            
+        });
+
+        paginationBf.addEventListener('click', () => {
+            const numeroiniciopagina = pagianAnterior*elementosDisplay;
+            finalPagina = numeroiniciopagina-1;
+            inicioPagina = finalPagina+1-elementosDisplay;
+            paginaSiguiente = paginaSiguiente > 2 ? paginaSiguiente+1:paginaSiguiente;
+            pagianAnterior = pagianAnterior==1 ? pagianAnterior : pagianAnterior-1;
+            paginateul.remove();
+            alert("final pagina; " + finalPagina + ", inicio pagina: " + pagianAnterior + ", pagina siguiente " + pagianAnterior);
+
+            for (let index = 0; index <= this.produc.length; index++) {
+            const divproductos = document.getElementById(`divproductos${index}`);
+            divproductos?.remove();
+            }
+            this.llamarProductos(null);
+            
+        });
       
         paginateul.appendChild(paginationNxt);
         paginatecontent.appendChild(paginateul);
@@ -189,7 +235,8 @@ const ConsultarProducto = defineComponent({
 },
     async mounted() {
         await this.llamarProductos(null);
-        
+        oCall.cenisFetch('GET', 'api/Producto/veriicarProductos', "", "")
+        .then((response) => {});
     },
     render() {
         return (

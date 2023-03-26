@@ -29,10 +29,10 @@ const Navbar = defineComponent({
             oCall.cenisFetch('POST', 'api/Producto/create', "", { "idProducto": null })
                 .then((response) => {
                     console.log(response)
-                    if (response.status === 200) {
-                        console.log('Se ha creado una nueva categoría:', response.Data.idProducto);
+                    if (response.status === 201) {
+                        console.log('Se ha creado una nueva categoría:', response.Data);
                         console.log(response)
-                        this.$router.push({ name: 'ProductoCrud', params: { id: response.Data.idProducto, trueorfalse: response.Data.idConfirmacionT } })
+                        this.$router.push({ name: 'ProductoCrud', params: { id: response.Data, trueorfalse: "false" } })
                     }
                     else {
                         console.log("Error")
@@ -57,6 +57,10 @@ const Navbar = defineComponent({
 
         },
     },
+    mounted() {
+        oCall.cenisFetch('GET', 'api/Producto/veriicarProductos', "", "")
+        .then((response) => {})
+    },
     render() {
         return (
             <>
@@ -71,7 +75,7 @@ const Navbar = defineComponent({
                         <div class="collapse navbar-collapse" id="navbarResponsive">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/inicio">Inicio</a>
+                                    <a class="nav-link" href="/">Inicio</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -105,7 +109,7 @@ const Navbar = defineComponent({
                                             <li><hr class="dropdown-divider" /></li>
 
                                             <li><router-link class="dropdown-item" to="/views/Cruds/Productos/ProductoCrud">Crear producto</router-link></li>
-                                            <li><router-link class="dropdown-item" to="../views/Cruds/Productos/ConsultarProducto">Consultar productos</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/views/Cruds/Productos/ConsultarProducto">Consultar productos</router-link></li>
                                             <li><router-link class="dropdown-item" to="../views/Cruds/Productos/ConsultarProducto">Detalle productos</router-link></li>
 
                                             <li><hr class="dropdown-divider" /></li>
