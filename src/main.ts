@@ -21,6 +21,8 @@ import './assets/css/productos.css'
 import './assets/css/tematicas.css'
 import './assets/css/micuenta.css'
 import './assets/css/imagenes.css'
+import './assets/css/catalogo.css'
+import './assets/css/responsivo.css'
 
 
 import './assets/css/cruds.css'

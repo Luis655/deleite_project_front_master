@@ -26,12 +26,12 @@ const login = defineComponent({
             e.preventDefault();
 
             if (!this.valores.correo) {
-                alert('El Nombre de usuario/Correo es requerido');
+                alert('El Correo es requerido');
                 return;
             }
 
             if (!this.valores.contraseña) {
-                alert('La contraseña es requerida');
+                alert('La Contraseña es requerida');
                 return;
             }
 
@@ -44,7 +44,7 @@ const login = defineComponent({
                         // Almacena el token en el local storage
                         localStorage.setItem("token", token);
                         console.log(response.Data)
-                        this.$router.push("/inicio")
+                        this.$router.push("/")
                     }
 
                     else {
@@ -90,14 +90,8 @@ const login = defineComponent({
                                             placeholder="Contraseña" required />
                                     </div>
 
-                                    <div class="d-flex justify-content-between align-items-center">
-
-                                        <div class="form-check mb-0">
-                                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-
-                                            <label class="form-check-label" for="form2Example3">Recuerdame</label>
-                                        </div>
-                                        <a href="#!" class="text-body">Olvidaste tu contraseña?</a>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <span>¿No tienes cuenta? <a href="/Registro" class="text-body">Registrate</a></span>
                                     </div>
 
                                     <div class="text-center text-lg-start mt-4 pt-2">

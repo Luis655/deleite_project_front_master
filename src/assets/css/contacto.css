@@ -24,3 +24,23 @@
     text-decoration: none;
 
 }
+
+.icoFB {
+    background: #4267B2;
+    color: white;
+}
+
+.icoINST {
+    background: #E1306C;
+    color: white;
+}
+
+.icoTIK {
+    background-color: black;
+    color: white;
+}
+
+.icoWHATS{
+    background-color: #25D366;
+    color: white;
+}

@@ -23,12 +23,6 @@ interface Fotos {
 
 
 
-function alerta(){
-  alert("sweet alert");
-}
-
-
-
 
 
 // Para habilitar la salida, llama a la función habilitarSalida()
@@ -420,7 +414,6 @@ const ProductoCrud = defineComponent({
       const nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
       var id = parseInt(nombreid);
       const url = `api/Producto/get/${id}`;
-
       const nombreP = document.getElementById('nombreP') as HTMLInputElement;
       const ingredienteselect = document.getElementById('ingredienteselect') as HTMLInputElement;
       const precio = document.getElementById('precio') as HTMLInputElement;
@@ -642,6 +635,11 @@ const ProductoCrud = defineComponent({
                 <button onClick={this.crearCategoria} type="button" class="btn btn-cruds" onChange={(e) => this.handlerchange(e)}>Enviar</button>
                 &nbsp;
                 <button onClick={this.borrarProducto} id="crear-inpust" type="button" class="btn btn-cruds">Cancelar</button>
+                &nbsp;
+                <div>
+                  <button onClick={() => this.AgregarFotos(null, null)} id="crear-input" type="button" onChange={(e) => this.handlerchange(e)} class="btn btn-cruds">Añadir otra</button>
+                  <input type="text" value={this.$route.params.id} class="form-control" style="display:none" />
+                </div>
               </div>
 
 

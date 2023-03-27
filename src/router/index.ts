@@ -120,80 +120,121 @@ export default router
 import { createRouter, createWebHistory } from 'vue-router';
 import Inicio from '../views/HomeView';
 import Catalogo from '../views/Catalogo';
+import Contacto from '../views/Contacto';
+
 import TematicaCrud from '../views/Cruds/Tematicas/TematicaCrud'
 import ConsultarTematica from '../views/Cruds/Tematicas/ConsultarTematica'
-import ProductoCrud from '../views/Cruds/Productos/ProductoCrud';
 import CrearProducto from '../views/Cruds/Productos/ProductoCrud'
 import ActualizarProductos from '../views/Cruds/Productos/ProductoCrud'
 import VerProductos from '../views/Cruds/Productos/ProductosList'
 import detalleproducto from '../views/Cruds/Productos/DetalleProducto'
 import ConsultarProducto from '../views/Cruds/Productos/ConsultarProducto'
+import CrearCategoria from '../views/Cruds/CategoriaCrud'
 
 
-//import Error404 from '../Error404'
+
+import Error404 from '../Error404'
+import Testimonios from '@/views/Testimonios';
+import login from '@/views/Login/Login';
+import registrarse from '@/views/Login/Registrarse';
 
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes: [
-      //Crud productos
-        {
-        path: '/Crearproducto/:id/:trueorfalse', //URL
-        name: 'ProductoCrud',
-        component: CrearProducto
-        },
-        {
-          path: '/Actualizarproducto/:id/:trueorfalse', //URL
-          name: 'ProductoCrudActualizar',
-          component: ActualizarProductos
-          },
-          {
-            path: '/products/view', //URL
-            name: 'productsview',
-            component: VerProductos
-            },
-            {
-              path: '/detalleproducto/:id', //URL
-              name: 'detalleproducto',
-              component: detalleproducto
-              },
-        //End productos
-        {
-            path: '/', //URL
-            name: 'Inicio',
-            component: Inicio
-        },
-       /* {
-          path: '/Error404', //URL
-          name: 'Error404',
-          component: Error404
-        }*/
-        {
-            path: '/views/Catalogo', //URL
-            name: 'Catalogo',
-            component: Catalogo
-        },
-        {
-          path: '/views/Cruds/Tematicas/TematicaCrud', //URL
-          name: 'TematicaCrud',
-          component: TematicaCrud
-      },
-      {
-        path: '/views/Cruds/Tematicas/CosultarTematica', //URL
-        name: 'ConsultarTematica',
-        component: ConsultarTematica
-    },
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    //Crud productos
     {
-        path: '/views/Cruds/Productos/ProductoCrud', //URL
-        name: 'ProductoCrudAntu¿as',
-        component: ProductoCrud
+      path: '/Crearproducto', //URL
+      name: 'ProductoCrud',
+      component: CrearProducto
     },
+
     {
-        path: '/views/Cruds/Productos/ConsultarProducto', //URL
-        name: 'ConsultarProducto',
-        component: ConsultarProducto
+      path: '/CrearCategoria', //URL
+      name: 'CrearCategoria',
+      component: CrearCategoria
     },
-    ]
+
+    {
+      path: '/Actualizarproducto', //URL
+      name: 'ProductoCrudActualizar',
+      component: ActualizarProductos
+    },
+
+    {
+      path: '/VistaDeProductos_Tabla', //URL
+      name: 'Productos_tabla',
+      component: VerProductos
+    },
+
+    {
+      path: '/detalleproducto/:id', //URL
+      name: 'detalleproducto',
+      component: detalleproducto
+    },
+
+    //End productos
+    {
+      path: '/', //URL
+      name: 'Inicio',
+      component: Inicio
+    },
+
+    {
+      path: '/Login', //URL
+      name: 'Login',
+      component: login
+    },
+
+    {
+      path: '/Registro', //URL
+      name: 'Registro',
+      component: registrarse
+    },
+
+    {
+      path: '/Contacto', //URL
+      name: 'Contacto',
+      component: Contacto
+    },
+
+    {
+      path: '/Testimonios', //URL
+      name: 'Testimonios',
+      component: Testimonios
+    },
+
+    {
+      path: '/Error404', //URL
+      name: 'Error404',
+      component: Error404
+    },
+
+    {
+      path: '/Catalogo', //URL
+      name: 'Catalogo',
+      component: Catalogo
+    },
+
+    {
+      path: '/CrearTematica', //URL
+      name: 'TematicaCrud',
+      component: TematicaCrud
+    },
+
+    {
+      path: '/Tematicas', //URL
+      name: 'ConsultarTematicas',
+      component: ConsultarTematica
+    },
+
+    {
+      path: '/ConsultarProducto', //URL
+      name: 'ConsultarProducto',
+      component: ConsultarProducto
+    },
+
+  ]
 })
 
 export default router;

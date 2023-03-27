@@ -53,8 +53,8 @@ const TematicaCrud = defineComponent({
                             console.log(response, "Holaaaaaaaa")
                             console.log("Se ha creado una nueva tematica")
                         
-                            this.$router.push("/views/Cruds/Tematicas/CosultarTematica")
-                            swalAlert("Exito", "Se actualizo correctamente la tematica")
+                            this.$router.push("/Tematicas")
+                            swalAlert("Exito", "Creado exitosamente")
 
                         }
                         else {

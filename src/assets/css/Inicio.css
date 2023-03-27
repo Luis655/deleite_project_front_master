@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
 
+
 .Montserrat {
   font-family: 'Montserrat', sans-serif;
 }
@@ -97,8 +98,8 @@ header.masthead .h1 {
 /*Si el movil más menos de___ se aplica*/
 @media(min-width: 700px) {
   .favoritos {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
   }
 
   .img-fluid2 {
@@ -172,4 +173,8 @@ header.masthead .h1 {
   background-repeat: no-repeat;
   background-size: cover;
 
+}
+
+.txts-inicio{
+  text-align: justify;
 }

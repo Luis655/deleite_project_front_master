@@ -114,9 +114,10 @@ const ConsultarProducto = defineComponent({
                             <p class="card-text text-muted" style="font-size: 12px">${response.Data.$values[index].nombreCategoria}</p>
                             </div>
                             &nbsp;
-                            <div>
-                                <a><router-link class="btn btn-productos btn-productos2" to="/detalleproducto">Ver más</router-link></a>
+                            <div>                          
+                                <a class="btn btn-productos btn-productos2" href="/detalleproducto/${response.Data.$values[index].idProducto}">Ver más</a>
                             </div>
+
                         </div>
                         
     
@@ -244,21 +245,9 @@ const ConsultarProducto = defineComponent({
                 <body>
                     <div class="ConsultaProductos">
                         <div class="ListadoProductos">
-                            <div class="FiltroPor">
-                                <div>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>Filtrar por</option>
-                                        <option value="4">Lo más pedido</option>
-                                        <option value="1">Nombre</option>
-                                        <option value="2">Precio</option>
-                                        <option value="3">Temática</option>
-
-                                    </select>
-                                </div>
-                            </div>
 
                             <div>
-                                <h2 class="display-4">{this.nombreCategoria.name != "String" ? this.nombreCategoria : 'Catalogo Deleite' }</h2>
+                                <h2 class="display-4">{this.nombreCategoria.name != "String" ? this.nombreCategoria : 'Catalogo Deleite'}</h2>
                                 <h5>Del horno a tu mesa</h5>
                                 <di class="d-flex justify-content-center">
                                     <hr class="solid" />

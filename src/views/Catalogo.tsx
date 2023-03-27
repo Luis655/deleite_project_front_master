@@ -1,5 +1,11 @@
 import { defineComponent } from "vue";
 import { Call } from "../../helpers/calls/Call"
+
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+AOS.init();
+
+
 interface Categoria {
     idCategoria: number,
     nombreCategoria: string,
@@ -9,17 +15,23 @@ interface Categoria {
     productos: []
 }
 
+
 const Catalogo = defineComponent({
     data() {
         return {
-            categorias: [] as Categoria[]
+            token: "" as any,
+            categorias: [] as Categoria[],
+
         }
     },
 
     mounted() {
         this.recuperar()
+        this.MostrarAcciones()
     },
+
     methods: {
+
         async recuperar() {
             let oCall = new Call();
             oCall.cenisFetch("GET", "api/Categoria/getCategorias", "", "").then((respuesta) => {
@@ -44,24 +56,44 @@ const Catalogo = defineComponent({
 
         Editar(element: number) {
             this.$router.push({
-                path: '/crearcategoria',
+                path: '/CrearCategoria',
                 query: { accion: "editar", id: element }
             });
         },
-        async GoToConsultarProducto(id: number, nombreCategoria: string){
+        async GoToConsultarProducto(id: number, nombreCategoria: string) {
 
-            this.$router.push({path:'../views/Cruds/Productos/ConsultarProducto',query:{idCategoria:id, nombreCategoria: nombreCategoria}})
+            this.$router.push({ path: '/ConsultarProducto', query: { idCategoria: id, nombreCategoria: nombreCategoria } })
         },
+
+        async MostrarAcciones() {
+            const tokenJSON = localStorage.getItem('token');
+            if (tokenJSON) {
+                try {
+                    this.token = (tokenJSON);
+                    console.log('Token actualizado:', this.token);
+                } catch (error) {
+                    console.error('Error al analizar el token JSON: ', error);
+                }
+
+            }
+            else {
+                this.token = "";
+            }
+        }
     },
+
+
+
     render() {
         return (
             <>
-                &nbsp;
-                <br />
-                <br />
-                <br />
                 <section>
-                    <div class="CarouselInicio">
+                    &nbsp;
+                    <div>
+                        <h2 class="Ticatalogo display-3" style="font-weight: 600" data-aos="zoom-out" data-aos-duration="3000">EL PAN DEL BUEN SABOR</h2>
+                    </div>
+                    &nbsp;
+                    <div class="CarouselInicio"  data-aos="fade" data-aos-duration="3000" data-aos-delay="1000">
                         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
@@ -88,36 +120,52 @@ const Catalogo = defineComponent({
                     </div>
                 </section>
                 &nbsp;
-                <div>
+                <section>
+                    &nbsp;
+                    <div>
+                        <h2 class="Ticatalogo2 display-4" style="font-weight: 500" data-aos="fade" data-aos-duration="2000" data-aos-delay="1000">CATÁLOGO</h2>
+                        &nbsp;
+                        <h4 class="NF-titulo2" style="color: #724a3a;" data-aos="fade" data-aos-duration="2000" data-aos-delay="1200">El olor a pan deberia ser patrimonio de la humanidad</h4>
+                    </div>
+
                     <div id="portfolio">
-                        <div class="container-fluid p-5">
+                        <div class="container-fluid p-5 container-movil" data-aos="fade" data-aos-duration="2000" data-aos-delay="1500">
                             <div class="row g-1">
                                 {this.categorias.map((item) => {
                                     return (
-                                        <div class="col-lg-4 col-sm-6" key={item.idCategoria}>
-                                            <a class="portfolio-box" href="../src/assets/images/PastelInicio.jpg" title="Project Name">
-                                                <img class="img-fluid" src={item.base64} alt="..." />
-                                                <div class="portfolio-box-caption">
-                                                    <div class="project-category text-white-50">{item.nombreCategoria}</div>
-                                                    <div class="project-name">Project Name</div>
+                                        <div class="col-lg-4 col-sm-6 padre" key={item.idCategoria}>
+
+                                            <div class="hijo">
+                                                <a type="button" class="portfolio-box" title="Project Name" onClick={() => this.GoToConsultarProducto(item.idCategoria, item.nombreCategoria)}>
+                                                    <img class="img-fluid img-catalogo" src={item.base64} />
+                                                    <div class="portfolio-box-caption">
+                                                        <div class="project-name">{item.nombreCategoria}</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            {this.token !== "" ?
+
+                                                <div class="div-btn-catalogo">
+                                                    <a class="btn btn-catalogo btn-catalogo2" onClick={() => this.eliminarCategoria(item.idCategoria)}>
+                                                        Eliminar
+                                                    </a>
+                                                    &nbsp;
+                                                    <a class="btn btn-catalogo btn-catalogo2" onClick={() => this.Editar(item.idCategoria)}>
+                                                        Editar
+                                                    </a>
                                                 </div>
-                                            </a>
-                                            <a class="btn btn-danger" onClick={() => this.eliminarCategoria(item.idCategoria)}>
-                                                Eliminar
-                                            </a>
-                                            <a class="btn btn-danger" onClick={() => this.Editar(item.idCategoria)}>
-                                                Editar
-                                            </a>
-                                            <a class="btn btn-danger" onClick={() => this.GoToConsultarProducto(item.idCategoria, item.nombreCategoria)}>
-                                                Ver mas
-                                            </a>
+                                                : ""
+                                            }
+
+
                                         </div>
                                     )
                                 })}
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </>
         )
     }

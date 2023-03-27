@@ -42,6 +42,40 @@ const registrarse = defineComponent({
                     .catch((error) => {
                         console.error("Error al crear usuario", error)
                     })
+            e.preventDefault();
+            if (!this.valores.correo) {
+                alert('El Correo es requerido');
+                return;
+            }
+
+            if (!this.valores.contraseña) {
+                alert('La Contraseña es requerida');
+                return;
+            }
+
+            if (!this.valores.nombre) {
+                alert('El Nombre es requerido');
+                return;
+            }
+            oCall.cenisFetch('POST', 'api/Usuario/create', "", this.valores)
+                .then((Response) => {
+                    console.log(Response)
+                    if (Response.status === 201) {
+
+                        console.log(Response),
+                            console.log("Se ha creado un nuevo usuario", Response)
+                        console.log(Response)
+                        this.$router.push("/inicio")
+
+                    }
+                    else {
+                        console.log("Error")
+                    }
+
+                })
+                .catch((error) => {
+                    console.error("Error al crear usuario", error)
+                })
         }
     },
     render() {
@@ -79,6 +113,10 @@ const registrarse = defineComponent({
                                     <div class="form-outline mb-3">
                                         <input type="password" id="form3Example3" class="form-control form-control-lg"
                                             placeholder="Contraseña" name="contraseña" onChange={(e) => this.handlerchange(e)} value={this.registrar.contraseña} />
+                                    </div>
+
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <span>¿Ya tienes cuenta? <a href="/Login" class="text-body">Iniciar sesión</a></span>
                                     </div>
 
                                     <div class="text-center text-lg-start mt-4 pt-2">

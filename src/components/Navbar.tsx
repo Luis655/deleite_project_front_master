@@ -30,9 +30,9 @@ const Navbar = defineComponent({
                 .then((response) => {
                     console.log(response)
                     if (response.status === 201) {
-                        console.log('Se ha creado una nueva categoría:', response.Data);
+                        console.log('Se ha creado una nueva categoría:', response.Data.idProducto);
                         console.log(response)
-                        this.$router.push({ name: 'ProductoCrud', params: { id: response.Data, trueorfalse: "false" } })
+                        this.$router.push({ name: 'ProductoCrud', params: { id: response.Data.idProducto, trueorfalse: response.Data.idConfirmacionT } })
                     }
                     else {
                         console.log("Error")
@@ -54,6 +54,10 @@ const Navbar = defineComponent({
                     console.error('Error al analizar el token JSON: ', error);
                 }
             }
+            else {
+                this.token = "";
+            }
+
 
         },
     },
@@ -68,7 +72,6 @@ const Navbar = defineComponent({
                 &nbsp;
                 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
                     <div class="container px-4">
-                        <a href="/Inicio"><img src="src/assets/D_Deleite.svg" width="50" /></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
                                 class="navbar-toggler-icon"></span></button>
@@ -79,56 +82,41 @@ const Navbar = defineComponent({
                                 </li>
 
                                 <li class="nav-item">
-                                    <router-link to="/views/Catalogo" class="nav-link">Catálogo</router-link>
+                                    <router-link to="/Catalogo" class="nav-link">Catálogo</router-link>
                                 </li>
 
                                 <li class="nav-item">
-                                    <router-link to="/contacto" class="nav-link">Contacto</router-link>
+                                    <router-link to="/Contacto" class="nav-link">Contacto</router-link>
                                 </li>
 
                                 <li class="nav-item">
-                                    <router-link to="/testimonios" class="nav-link">Testimonios</router-link>
+                                    <router-link to="/Testimonios" class="nav-link">Testimonios</router-link>
                                 </li>
 
-                                <li class="nav-item">
 
-                                </li>
                                 {this.token !== "" ?
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Administrador</a>
                                         <ul class="dropdown-menu">
 
-                                            <li><router-link class="dropdown-item" to="/micuenta">Mi cuenta</router-link></li>
+                                            <li><button class="dropdown-item" onClick={this.crearProducto}>Crear Producto</button></li>
+                                            <li><router-link class="dropdown-item" to="/CrearCategoria">Crear Categoria</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/CrearTematica">Crear Temática</router-link></li>
 
                                             <li><hr class="dropdown-divider" /></li>
-
-                                            <li><router-link class="dropdown-item" to="/login">Iniciar sesión</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/registro">Registrar</router-link></li>
-                                            <li><a class="dropdown-item" onClick={this.cerrarsesion}>Cerrar sesión</a></li>
-
-                                            <li><hr class="dropdown-divider" /></li>
-
-                                            <li><router-link class="dropdown-item" to="/views/Cruds/Productos/ProductoCrud">Crear producto</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/views/Cruds/Productos/ConsultarProducto">Consultar productos</router-link></li>
-                                            <li><router-link class="dropdown-item" to="../views/Cruds/Productos/ConsultarProducto">Detalle productos</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/Tematicas">Temáticas</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/ConsultarProducto">Productos</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/VistaDeProductos_Tabla">Tabla de Productos</router-link ></li>
 
                                             <li><hr class="dropdown-divider" /></li>
-
-                                            <li><router-link to="/crearcategoria" class="dropdown-item">Crear categoria</router-link></li>
-
-                                            <li><hr class="dropdown-divider" /></li>
-
-                                            <li><router-link class="dropdown-item" to="/views/Cruds/Tematicas/TematicaCrud">Crear tematica</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/views/Cruds/Tematicas/CosultarTematica">Consultar Temáticas</router-link></li>
-
-                                            <li><hr class="dropdown-divider" /></li>
-
-                                            <li><button class="dropdown-item" onClick={this.crearProducto}>Crear producto</button></li>
-                                            <li><router-link class="dropdown-item" to="/products/view">Ver Productos</router-link ></li>
+                                            <li><button class="dropdown-item" onClick={this.cerrarsesion}>Cerrar sesión</button></li>
 
                                         </ul>
                                     </li>
-                                    : ""
+                                    :
+                                    <li class="nav-item">
+                                        <router-link to="/Login" class="nav-link">Iniciar sesión</router-link>
+                                    </li>
                                 }
 
                             </ul>
