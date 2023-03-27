@@ -158,7 +158,20 @@ const router = createRouter({
     {
       path: '/Actualizarproducto/:id/:trueorfalse', //URL
       name: 'ProductoCrudActualizar',
-      component: ActualizarProductos
+      component: ActualizarProductos,
+      props: true,
+      beforeEnter: (to, from, next)=>{
+        const id = Array.isArray(to.params.id) ? to.params.id.join('') : to.params.id;
+        const trueOrFalse = Array.isArray(to.params.trueorfalse) ? to.params.trueorfalse.join('') : to.params.trueorfalse;
+        const idPattern = /^[a-zA-Z0-9]+$/;
+        const trueOrFalsePattern = /^(true|false)$/;
+        if (idPattern.test(id) && trueOrFalsePattern.test(trueOrFalse)) {
+          next();
+        } else {
+          next('/Error404');
+        }
+      }
+      
     },
 
     {
@@ -208,6 +221,11 @@ const router = createRouter({
       path: '/Error404', //URL
       name: 'Error404',
       component: Error404
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: Error404,
     },
 
     {

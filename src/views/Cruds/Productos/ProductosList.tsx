@@ -9,6 +9,10 @@ import 'datatables.net-buttons/js/buttons.html5.mjs';
 import 'datatables.net-keytable-dt';
 import 'datatables.net-select-dt';
 import { swalAlert } from "@/components/alerts";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 239e5c6f9c5cc8ac2bedbc43ae1de6d43fc5f2c6
 
 interface ProductImage {
   idProducto?: number;
@@ -72,16 +76,19 @@ const ProductosList = defineComponent({
     borrarProductos(idproducto: any) {
       //var nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
       const id = parseInt(idproducto);
-      const url = `api/Imagenes/delete/${id}`;
+      const url = `api/Imagenes/borrarimagenes/${id}`;
       oCall.cenisFetch('DELETE', url, "", "")
         .then(async (response) => {
-          console.log("EXUTI¡");
           if (response.status == 200) {
             const url = `api/Producto/delete/${id}`;
             oCall.cenisFetch('Delete', url, "", "")
               .then(async (response) => {
-                //console.log("Exito");
                 location.assign(window.location.href);
+<<<<<<< HEAD
+=======
+                swalAlert("Exito", "se borro exitosamente el producto");
+
+>>>>>>> 239e5c6f9c5cc8ac2bedbc43ae1de6d43fc5f2c6
               })
 
             swalAlert("Exito", "Se eliminó exitosamente")
@@ -193,8 +200,12 @@ const ProductosList = defineComponent({
                               <td>
                                 <div class="row">
 
-                                  <button onClick={() => { this.updateProducto(item.idProducto, item.idConfirmacionT) }} class="btn btn-cruds" id="whatsapp-button">Actualizar</button>
-                                  <button onClick={() => { this.borrarProductos(item.idProducto) }} class="btn btn-cruds" id="whatsapp-button">Borrar</button>
+                                  <button onClick={() => {
+                                    swalAlert("Confirmacion", "¿desea actualizar el producto?", ()=> this.updateProducto(item.idProducto, item.idConfirmacionT))
+                                    }} class="btn btn-cruds" id="whatsapp-button">Actualizar</button>
+                                  <button onClick={() => {
+                                    swalAlert("Confirmacion", "¿desea borrar este producto?", ()=> this.borrarProductos(item.idProducto))
+                                     }} class="btn btn-cruds" id="whatsapp-button">Borrar</button>
 
                                   <button onClick={() => {
                                     const id = item.idProducto; alert(id)

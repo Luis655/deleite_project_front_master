@@ -32,8 +32,6 @@ const Navbar = defineComponent({
                 .then((response) => {
                     console.log(response)
                     if (response.status === 201) {
-                        console.log('Se ha creado una nueva categoría:', response.Data);
-                        console.log(response)
                         this.$router.push({ name: 'ProductoCrud', params: { id: response.Data, trueorfalse: "false" } })
                     }
                     else {
@@ -97,7 +95,7 @@ const Navbar = defineComponent({
                                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Administrador</a>
                                         <ul class="dropdown-menu">
 
-                                            <li><button class="dropdown-item" onClick={this.crearProducto}>Crear Producto</button></li>
+                                            <li><button class="dropdown-item" onClick={ () => this.crearProducto()}>Crear Producto</button></li>
                                             <li><router-link class="dropdown-item" to="/CrearCategoria">Crear Categoria</router-link></li>
                                             <li><router-link class="dropdown-item" to="/CrearTematica">Crear Temática</router-link></li>
 

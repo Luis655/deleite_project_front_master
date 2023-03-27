@@ -6,7 +6,7 @@ const Error404 = defineComponent({
             <>
                 <body style="Padding: 10%;">
                     <div class="row">
-                        <img src="src/assets/images/PastelInicio.jpg" alt="sin imagen" />
+                        <img src="src/assets/images/error404.jpg" alt="sin imagen" />
                     </div>
                 </body>
             </>

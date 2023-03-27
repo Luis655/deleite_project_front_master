@@ -41,10 +41,9 @@ interface Produc {
 }
 
 let inicioPagina = 0;
-let finalPagina = 5;
-const elementosDisplay = 6;
-let paginaSiguiente = 2;
-let pagianAnterior = 1;
+let finalPagina = 11;
+const elementosDisplay = 12;
+let indexActula = 1;
 
 const ConsultarProducto = defineComponent({
     data() {
@@ -174,35 +173,35 @@ const ConsultarProducto = defineComponent({
                 paginatelinum.className = 'page-item';
                 paginatelinum.innerHTML = `<li class="page-item"><a class="page-link" href="#">${index}</a></li>`;
 
-                paginatelinum.addEventListener('click', () => {
-                    const numeroiniciopagina = index * elementosDisplay;
-                    finalPagina = numeroiniciopagina - 1;
-                    inicioPagina = finalPagina + 1 - elementosDisplay;
-                    paginaSiguiente = paginaSiguiente > 2 ? index + 1 : paginaSiguiente;
-                    pagianAnterior = pagianAnterior == 1 ? pagianAnterior : pagianAnterior - 1;
-                    paginateul.remove();
-                    alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + "pagina siguiente: " + paginaSiguiente);
+            paginatelinum.addEventListener('click', () => {
+                const numeroiniciopagina = index*elementosDisplay;
+                finalPagina = numeroiniciopagina-1;
+                inicioPagina = finalPagina+1-elementosDisplay;
+                paginaSiguiente = paginaSiguiente > 2 ? index+1:paginaSiguiente;
+                pagianAnterior = pagianAnterior==1 ? pagianAnterior : pagianAnterior-1;
+                paginateul.remove();
+                alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + "pagina siguiente: " + paginaSiguiente);
 
-                    for (let index = 0; index <= this.produc.length; index++) {
-                        const divproductos = document.getElementById(`divproductos${index}`);
-                        divproductos?.remove();
-                    }
-                    this.llamarProductos(null);
-
-                });
+                for (let index = 0; index <= this.produc.length; index++) {
+                const divproductos = document.getElementById(`divproductos${index}`);
+                divproductos?.remove();
+                }
+                this.llamarProductos(null);
+                
+            });
 
                 paginateul.appendChild(paginatelinum);
 
             }
 
-            paginationNxt.addEventListener('click', () => {
-                const numeroiniciopagina = paginaSiguiente * elementosDisplay;
-                finalPagina = numeroiniciopagina - 1;
-                inicioPagina = finalPagina + 1 - elementosDisplay;
-                paginaSiguiente = paginaSiguiente > 2 ? paginaSiguiente + 1 : paginaSiguiente;
-                pagianAnterior = pagianAnterior == 1 ? pagianAnterior : pagianAnterior - 1;
-                paginateul.remove();
-                alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + ", pagina siguiente " + paginaSiguiente);
+        paginationNxt.addEventListener('click', () => {
+            const numeroiniciopagina = paginaSiguiente*elementosDisplay;
+            finalPagina = numeroiniciopagina-1;
+            inicioPagina = finalPagina+1-elementosDisplay;
+            paginaSiguiente = paginaSiguiente > 2 ? paginaSiguiente+1:paginaSiguiente;
+            pagianAnterior = pagianAnterior==1 ? pagianAnterior : pagianAnterior-1;
+            paginateul.remove();
+            alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + ", pagina siguiente " + paginaSiguiente);
 
                 for (let index = 0; index <= this.produc.length; index++) {
                     const divproductos = document.getElementById(`divproductos${index}`);
@@ -212,14 +211,16 @@ const ConsultarProducto = defineComponent({
 
             });
 
-            paginationBf.addEventListener('click', () => {
-                const numeroiniciopagina = pagianAnterior * elementosDisplay;
-                finalPagina = numeroiniciopagina - 1;
-                inicioPagina = finalPagina + 1 - elementosDisplay;
-                paginaSiguiente = paginaSiguiente > 2 ? paginaSiguiente + 1 : paginaSiguiente;
-                pagianAnterior = pagianAnterior == 1 ? pagianAnterior : pagianAnterior - 1;
-                paginateul.remove();
-                alert("final pagina; " + finalPagina + ", inicio pagina: " + pagianAnterior + ", pagina siguiente " + pagianAnterior);
+        paginationBf.addEventListener('click', () => {
+            
+            if(indexActula<=1){
+                indexActula =2;
+            }
+            const numeroiniciopagina = (indexActula-1)*elementosDisplay;
+            finalPagina = numeroiniciopagina-1;
+            inicioPagina = finalPagina+1-elementosDisplay;
+            paginateul.remove();
+            indexActula--;
 
                 for (let index = 0; index <= this.produc.length; index++) {
                     const divproductos = document.getElementById(`divproductos${index}`);

@@ -6,6 +6,7 @@ interface Categoria {
   idCategoria?: number,
   nombre?: string,
   imagenPrincipalchar?: string,
+  imagen?: string
 }
 let oCall = new Call();
 function readFileAsBase64(file?: File): Promise<string | undefined> {
@@ -86,11 +87,26 @@ const CategoriaCrud = defineComponent({
       }
 
     },
+    mostrarImagen(){
+      const $seleccionArchivos = document.querySelector("#imagen") as HTMLInputElement, 
+      $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion") as HTMLImageElement;
+      if($seleccionArchivos!=null){
+          const archivos = $seleccionArchivos.files;
+          if (!archivos || !archivos.length) {
+                $imagenPrevisualizacion.src = "";
+                return;
+          }
+          const firstImage = archivos[0];
+          const objectUrl = URL.createObjectURL(firstImage);
+          $imagenPrevisualizacion.src=objectUrl;
+          }
+      
+    },
 
     firtRefresh() {
       this.accion = this.$route.query.accion || "";
       this.id = this.$route.query.id;
-
+ 
       if (this.accion === "editar") {
         oCall.cenisFetch('GET', `api/Categoria/${this.id}`, "", '')
           .then((response) => {
@@ -98,6 +114,7 @@ const CategoriaCrud = defineComponent({
             if (response.status === 200) {
               this.categoria = response.Data
               this.valores = response.Data
+
             }
             else {
 
@@ -140,7 +157,12 @@ const CategoriaCrud = defineComponent({
 
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label LabelsForms">Imagen</label>
+<<<<<<< HEAD
                 <input type="file" class="form-control" id="imagen" name="imagen" required />
+=======
+                <input type="file" class="form-control" id="imagen" name="imagen" required onChange={() => this.mostrarImagen()}/>
+                <img id="imagenPrevisualizacion" src={this.categoria.imagen} alt="sin imagenes seleccionadas" class="img-fluid"/>
+>>>>>>> 239e5c6f9c5cc8ac2bedbc43ae1de6d43fc5f2c6
               </div>
 
 
