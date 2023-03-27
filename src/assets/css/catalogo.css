@@ -1,0 +1,96 @@
+header.masthead {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 4.5rem);
+    background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../public/assets/images/PastelInicio.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+}
+
+header.masthead h1,
+header.masthead .h1 {
+    font-size: 2.25rem;
+}
+
+@media (min-width: 992px) {
+    header.masthead {
+        height: 100vh;
+        min-height: 40rem;
+        padding-top: 4.5rem;
+        padding-bottom: 0;
+    }
+
+    header.masthead p {
+        font-size: 1.15rem;
+    }
+
+    header.masthead h1,
+    header.masthead .h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    header.masthead h1,
+    header.masthead .h1 {
+        font-size: 3.5rem;
+    }
+}
+
+.btn-xl {
+    padding: 1.25rem 2.25rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 10rem;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #f4623a;
+    border-color: #f4623a;
+}
+
+.btn-catalogo {
+    color: black;
+
+    border-radius: 0%;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+
+    background-color: transparent;
+    width: 150px;
+
+
+}
+
+.btn-catalogo:focus {
+    outline: 0;
+}
+
+.btn-catalogo2 {
+    border-color: black;
+    transition: box-shadow 0.2s ease-in-out;
+
+}
+
+.btn-catalogo2:hover {
+    box-shadow: 0 0 40px 40px #724a3a inset;
+    border-color: #724a3a !important;
+    color: white !important;
+    background-color: #724a3a;
+}
+
+.img-catalogo {
+    width: 100%;
+    height: 400px;
+}
+
+.div-btn-catalogo{
+    padding-bottom: 2%;
+    padding-top: 2%;
+}
