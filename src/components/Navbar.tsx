@@ -1,6 +1,7 @@
 import { Call } from "../../helpers/calls/Call";
 
 import { defineComponent } from "vue";
+import { swalAlert } from "@/components/alerts";
 
 import router from "@/router";
 interface producto {
@@ -22,6 +23,7 @@ const Navbar = defineComponent({
         cerrarsesion() {
             localStorage.removeItem("token");
             this.$router.push("/login")
+            swalAlert("Exito", "Sesión cerrada exitosamente")
 
         },
 
@@ -36,6 +38,7 @@ const Navbar = defineComponent({
                     }
                     else {
                         console.log("Error")
+
                     }
                 })
                 .catch((error) => {
@@ -63,7 +66,7 @@ const Navbar = defineComponent({
     },
     mounted() {
         oCall.cenisFetch('GET', 'api/Producto/veriicarProductos', "", "")
-        .then((response) => {})
+            .then((response) => { })
     },
     render() {
         return (
@@ -88,11 +91,6 @@ const Navbar = defineComponent({
                                 <li class="nav-item">
                                     <router-link to="/Contacto" class="nav-link">Contacto</router-link>
                                 </li>
-
-                                <li class="nav-item">
-                                    <router-link to="/Testimonios" class="nav-link">Testimonios</router-link>
-                                </li>
-
 
                                 {this.token !== "" ?
                                     <li class="nav-item dropdown">

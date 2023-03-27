@@ -58,7 +58,7 @@ const TematicaCrud = defineComponent({
         },
 
 
-       async crearTematica() {
+        async crearTematica() {
             let esvalido = await this.SchemaValidation()
             if (esvalido == 0) {
                 return
@@ -89,7 +89,7 @@ const TematicaCrud = defineComponent({
                         if (response.status === 201) {
                             console.log(response, "Holaaaaaaaa")
                             console.log("Se ha creado una nueva tematica")
-                        
+
                             this.$router.push("/Tematicas")
                             swalAlert("Exito", "Creado exitosamente")
 
@@ -131,7 +131,7 @@ const TematicaCrud = defineComponent({
     },
     mounted() {
         this.firtRefresh()
-      },
+    },
     render() {
         return (
             <>
@@ -150,7 +150,7 @@ const TematicaCrud = defineComponent({
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label LabelsForms">Nombre de la Tematica</label>
-                                <input type="text"class={`form-control ${this.errors['nombreT'] ? "is-invalid" : ""}`} autocomplete="off" value={this.tematica.nombreT} name="nombreT" onChange={(e) => this.handlerChange(e)} aria-describedby="emailHelp" />
+                                <input type="text" class={`form-control ${this.errors['nombreT'] ? "is-invalid" : ""}`} autocomplete="off" value={this.tematica.nombreT} name="nombreT" onChange={(e) => this.handlerChange(e)} aria-describedby="emailHelp" />
                                 <div class="invalid-feedback">
                                     {this.errors['nombreT']}
                                 </div>
@@ -167,4 +167,4 @@ const TematicaCrud = defineComponent({
     }
 
 })
-export default TematicaCrud
+export default TematicaCrud

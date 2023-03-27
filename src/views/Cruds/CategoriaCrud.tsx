@@ -1,5 +1,6 @@
 import { Call } from "../../../helpers/calls/Call"
 import { defineComponent } from "vue";
+import { swalAlert } from "@/components/alerts";
 interface Categoria {
 
   idCategoria?: number,
@@ -51,7 +52,9 @@ const CategoriaCrud = defineComponent({
       if (this.accion === "editar") {
         oCall.cenisFetch('POST', `api/Categoria/create`, "", this.valores)
           .then((response) => {
-            console.log(response) 
+            console.log(response)
+            this.$router.push("Catalogo")
+            swalAlert("Exito", "Se modificó la categoria exitosamente")
           })
 
           .catch((error) => {
@@ -67,13 +70,12 @@ const CategoriaCrud = defineComponent({
             if (response.status === 201) {
               console.log('Se ha creado una nueva categoría:', response.Data);
               console.log(response)
-              this.$router.push("/catalogo")
-              //alert(",jbakdakd")
+              this.$router.push("Catalogo")
+              swalAlert("Exito", "Se creó la categoria exitosamente")
 
             }
             else {
               console.log(response)
-
             }
 
           })
@@ -138,7 +140,7 @@ const CategoriaCrud = defineComponent({
 
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label LabelsForms">Imagen</label>
-                <input type="file" class="form-control" id="imagen" name="imagen" required/>
+                <input type="file" class="form-control" id="imagen" name="imagen" required />
               </div>
 
 

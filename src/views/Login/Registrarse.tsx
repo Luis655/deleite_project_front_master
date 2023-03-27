@@ -1,6 +1,7 @@
 import { defineComponent } from "vue";
 import { Call } from "../../../helpers/calls/Call"
 import * as yup from 'yup'
+import { swalAlert } from "@/components/alerts";
 
 
 interface Resgistrar {
@@ -75,11 +76,12 @@ const registrarse = defineComponent({
                         console.log(Response),
                             console.log("Se ha creado un nuevo usuario", Response)
                         console.log(Response)
-                        this.$router.push("/inicio")
+                        this.$router.push("Login")
+                        swalAlert("Exito", "Registro completado exitosamente")
 
                     }
                     else {
-                        console.log("Error")
+                        swalAlert("Error", "Hubo un problema, intentelo de nuevo")
                     }
 
                 })
@@ -132,6 +134,11 @@ const registrarse = defineComponent({
                                         <div class="invalid-feedback">
                                             {this.errors['contraseña']}
                                         </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        ¿Ya tienes una cuenta?
+                                        <a href="/Login" class="text-body">Inicia sesión</a>
                                     </div>
 
                                     <div class="text-center text-lg-start mt-4 pt-2">

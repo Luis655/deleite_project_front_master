@@ -1,6 +1,7 @@
 import { Call } from "../../../helpers/calls/Call"
 import { defineComponent } from "vue";
 import * as yup from 'yup'
+import { swalAlert } from "@/components/alerts";
 
 interface Login {
     correo?: string,
@@ -76,10 +77,12 @@ const login = defineComponent({
                         localStorage.setItem("token", token);
                         console.log(response.Data)
                         this.$router.push("/")
+                        swalAlert("Exito", "¡Bienvenido! acceso correcto")
+                        
                     }
 
                     else {
-                        console.log("Error")
+                        swalAlert("Error", "Correo o Contraseña incorrectos")
                     }
 
                 })
@@ -127,14 +130,9 @@ const login = defineComponent({
                                         </div>
                                     </div>
 
-                                    <div class="d-flex justify-content-between align-items-center">
-
-                                        <div class="form-check mb-0">
-                                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-
-                                            <label class="form-check-label" for="form2Example3">Recuerdame</label>
-                                        </div>
-                                        <a href="#!" class="text-body">Olvidaste tu contraseña?</a>
+                                    <div class="d-flex justify-content-center">
+                                        ¿No tienes una cuenta?
+                                        <a href="/Registro" class="text-body">Registrate</a>
                                     </div>
 
                                     <div class="text-center text-lg-start mt-4 pt-2">
