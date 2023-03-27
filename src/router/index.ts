@@ -144,7 +144,11 @@ const router = createRouter({
   routes: [
     //Crud productos
     {
+<<<<<<< HEAD
       path: '/Crearproducto', //URL
+=======
+      path: '/Crearproducto/:id/:trueorfalse', //URL
+>>>>>>> 428a3d65da0c9dc667aaf9d92a5b0313dc13b8f5
       name: 'ProductoCrud',
       component: CrearProducto
     },
@@ -156,7 +160,11 @@ const router = createRouter({
     },
 
     {
+<<<<<<< HEAD
       path: '/Actualizarproducto', //URL
+=======
+      path: '/Actualizarproducto/:id/:trueorfalse', //URL
+>>>>>>> 428a3d65da0c9dc667aaf9d92a5b0313dc13b8f5
       name: 'ProductoCrudActualizar',
       component: ActualizarProductos
     },

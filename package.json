@@ -24,6 +24,7 @@
     "datatables.net-keytable-dt": "^2.8.1",
     "datatables.net-select-dt": "^1.6.1",
     "jquery": "^3.6.4",
+    "pdate": "^1.0.5",
     "pdfmake": "^0.2.7",
     "pinia": "^2.0.28",
     "simplelightbox": "^2.12.1",
