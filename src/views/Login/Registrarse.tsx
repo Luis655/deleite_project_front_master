@@ -1,5 +1,6 @@
 import { defineComponent } from "vue";
 import { Call } from "../../../helpers/calls/Call"
+import * as yup from 'yup'
 
 
 interface Resgistrar {
@@ -7,56 +8,65 @@ interface Resgistrar {
     correo?: string,
     contraseña?: string,
 }
+interface FormErrors {
+    [key: string]: string;
+}
 let oCall = new Call()
 const registrarse = defineComponent({
     data() {
         return {
-            valores: Object as Resgistrar,
-            registrar: Object as Resgistrar
+            valores: {} as Resgistrar,
+            registrar: Object as Resgistrar,
+            errors: {} as FormErrors
         }
     },
     methods: {
-        handlerchange(e: any) {
+        async handlerChange(e: any) {
             const { name, value } = e.target;
-            this.valores = ({ ...this.valores, [name]: value })
+            this.valores = ({ ...this.valores, [name]: value });
+            if (value.length > 0) {
+                delete this.errors[name];
+            }
+            else {
+                await this.SchemaValidation();
+            }
+        },
+        async SchemaValidation(): Promise<number> {
+            let isValid = 1;
+            try {
+                const schema = yup.object().shape({
+                    nombre: yup.string()
+                        .required('El nombre es requerido.'),
+                    correo: yup.string()
+                        .required('El correo es requerido.'),
+                    contraseña: yup.string()
+                        .required('La contraseña es requerida.'),
+
+                });
+                await schema.validate(this.valores, { abortEarly: false })
+            } catch (err) {
+                if (err instanceof yup.ValidationError) {
+                    const errors: FormErrors = {};
+                    err.inner.forEach((error) => {
+                        const path = error.path?.toString();
+                        if (path)
+                            errors[path] = error.message;
+                    });
+                    this.errors = errors;
+                    isValid = 0;
+                }
+            }
+            return Promise.resolve(isValid);
         },
 
-        Registrarse(e: any) {
-            e.preventDefault(),
-                oCall.cenisFetch('POST', 'api/Usuario/create', "", this.valores)
-                    .then((Response) => {
-                        console.log(Response)
-                        if (Response.status === 201) {
-
-                            console.log(Response),
-                                console.log("Se ha creado un nuevo usuario", Response)
-                            console.log(Response)
-                            this.$router.push("/inicio")
-
-                        }
-                        else {
-                            console.log("Error")
-                        }
-
-                    })
-                    .catch((error) => {
-                        console.error("Error al crear usuario", error)
-                    })
+        async Registrarse(e: any) {
             e.preventDefault();
-            if (!this.valores.correo) {
-                alert('El Correo es requerido');
-                return;
+            let esvalido = await this.SchemaValidation()
+            if (esvalido == 0) {
+                return
             }
 
-            if (!this.valores.contraseña) {
-                alert('La Contraseña es requerida');
-                return;
-            }
 
-            if (!this.valores.nombre) {
-                alert('El Nombre es requerido');
-                return;
-            }
             oCall.cenisFetch('POST', 'api/Usuario/create', "", this.valores)
                 .then((Response) => {
                     console.log(Response)
@@ -101,22 +111,27 @@ const registrarse = defineComponent({
                                     <br></br>
 
                                     <div class="form-outline mb-3">
-                                        <input id="form3Example1" class="form-control form-control-lg"
-                                            placeholder="Nombre" name="nombre" onChange={(e) => this.handlerchange(e)} value={this.registrar.nombre} />
+                                        <input id="form3Example1"
+                                            placeholder="Nombre" name="nombre" onChange={(e) => this.handlerChange(e)} value={this.registrar.nombre} class={`form-control ${this.errors['nombre'] ? "is-invalid" : ""}`} />
+                                        <div class="invalid-feedback">
+                                            {this.errors['nombre']}
+                                        </div>
                                     </div>
 
                                     <div class="form-outline mb-4">
-                                        <input type="email" id="form3Example2" class="form-control form-control-lg"
-                                            placeholder="Correo" name="correo" onChange={(e) => this.handlerchange(e)} value={this.registrar.correo} aria-label="Correo" />
+                                        <input type="email" id="form3Example2"
+                                            placeholder="Correo" name="correo" onChange={(e) => this.handlerChange(e)} value={this.registrar.correo} class={`form-control ${this.errors['correo'] ? "is-invalid" : ""}`} aria-label="Correo" />
+                                        <div class="invalid-feedback">
+                                            {this.errors['correo']}
+                                        </div>
                                     </div>
 
                                     <div class="form-outline mb-3">
-                                        <input type="password" id="form3Example3" class="form-control form-control-lg"
-                                            placeholder="Contraseña" name="contraseña" onChange={(e) => this.handlerchange(e)} value={this.registrar.contraseña} />
-                                    </div>
-
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <span>¿Ya tienes cuenta? <a href="/Login" class="text-body">Iniciar sesión</a></span>
+                                        <input type="password" id="form3Example3"
+                                            placeholder="Contraseña" name="contraseña" onChange={(e) => this.handlerChange(e)} value={this.registrar.contraseña} class={`form-control ${this.errors['contraseña'] ? "is-invalid" : ""}`} />
+                                        <div class="invalid-feedback">
+                                            {this.errors['contraseña']}
+                                        </div>
                                     </div>
 
                                     <div class="text-center text-lg-start mt-4 pt-2">

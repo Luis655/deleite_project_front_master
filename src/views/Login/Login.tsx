@@ -1,38 +1,69 @@
 import { Call } from "../../../helpers/calls/Call"
 import { defineComponent } from "vue";
+import * as yup from 'yup'
 
 interface Login {
     correo?: string,
     contraseña?: string
 }
 
-
+interface FormErrors {
+    [key: string]: string;
+}
 
 let oCall = new Call()
 const login = defineComponent({
     data() {
         return {
-            valores: Object as Login,
-            login: Object as Login
+            valores: {} as Login,
+            login: Object as Login,
+            errors: {} as FormErrors
         }
     },
 
     methods: {
-        handlerchange(e: any) {
+        async handlerChange(e: any) {
             const { name, value } = e.target;
-            this.valores = ({ ...this.valores, [name]: value })
+            this.valores = ({ ...this.valores, [name]: value });
+            if (value.length > 0) {
+                delete this.errors[name];
+            }
+            else {
+                await this.SchemaValidation();
+            }
         },
-        iniciarSesion(e: any) {
+
+        async SchemaValidation(): Promise<number> {
+            let isValid = 1;
+            try {
+                const schema = yup.object().shape({
+                    correo: yup.string()
+                        .required('El correo es requerido.'),
+                    contraseña: yup.string()
+                        .required('La contraseña es requerida.'),
+
+                });
+                await schema.validate(this.valores, { abortEarly: false })
+            } catch (err) {
+                if (err instanceof yup.ValidationError) {
+                    const errors: FormErrors = {};
+                    err.inner.forEach((error) => {
+                        const path = error.path?.toString();
+                        if (path)
+                            errors[path] = error.message;
+                    });
+                    this.errors = errors;
+                    isValid = 0;
+                }
+            }
+            return Promise.resolve(isValid);
+        },
+        async iniciarSesion(e: any) {
             e.preventDefault();
 
-            if (!this.valores.correo) {
-                alert('El Correo es requerido');
-                return;
-            }
-
-            if (!this.valores.contraseña) {
-                alert('La Contraseña es requerida');
-                return;
+            let esvalido = await this.SchemaValidation()
+            if (esvalido == 0) {
+                return
             }
 
             oCall.cenisFetch('POST', 'api/Usuario/login', "", this.valores)
@@ -81,17 +112,29 @@ const login = defineComponent({
                                     <h2 class="display-6 tituloLogin" style="color: #724a3a">INICIAR SESIÓN</h2>
                                     <br></br>
                                     <div class="form-outline mb-4">
-                                        <input for="validationCustom01" type="email" id="form3Example3" value={this.login.correo} name="correo" onChange={(e) => this.handlerchange(e)} class="form-control form-control-lg"
+                                        <input for="validationCustom01" type="email" id="form3Example3" name="correo" value={this.login.correo}  onChange={(e) => this.handlerChange(e)} class={`form-control ${this.errors['correo'] ? "is-invalid" : ""}`}
                                             placeholder="Correo" aria-label="correo" required />
+                                        <div class="invalid-feedback">
+                                            {this.errors['correo']}
+                                        </div>
                                     </div>
 
                                     <div class="form-outline mb-3">
-                                        <input type="password" id="form3Example4" value={this.login.contraseña} name="contraseña" onChange={(e) => this.handlerchange(e)} class="form-control form-control-lg"
+                                        <input type="password" id="form3Example4" value={this.login.contraseña} name="contraseña" onChange={(e) => this.handlerChange(e)} class={`form-control ${this.errors['contraseña'] ? "is-invalid" : ""}`}
                                             placeholder="Contraseña" required />
+                                        <div class="invalid-feedback">
+                                            {this.errors['contraseña']}
+                                        </div>
                                     </div>
 
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <span>¿No tienes cuenta? <a href="/Registro" class="text-body">Registrate</a></span>
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+
+                                            <label class="form-check-label" for="form2Example3">Recuerdame</label>
+                                        </div>
+                                        <a href="#!" class="text-body">Olvidaste tu contraseña?</a>
                                     </div>
 
                                     <div class="text-center text-lg-start mt-4 pt-2">

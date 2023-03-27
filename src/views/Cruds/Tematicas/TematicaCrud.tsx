@@ -1,47 +1,84 @@
 import { swalAlert } from "@/components/alerts";
 import { defineComponent } from "vue";
 import { Call } from "../../../../helpers/calls/Call"
+import * as yup from 'yup'
 
 interface Tematica {
 
     idTematica?: number,
     nombreT?: string,
 }
+interface FormErrors {
+    [key: string]: string;
+}
 let oCall = new Call()
 const TematicaCrud = defineComponent({
     data() {
         return {
-            valores: Object as Tematica,
+            valores: {} as Tematica,
             tematica: Object as Tematica,
             accion: Object as any,
-            id: Object as any
+            id: Object as any,
+            errors: {} as FormErrors
         }
     },
     methods: {
-        handlerchange(e: any) {
+        async handlerChange(e: any) {
             const { name, value } = e.target;
-            this.valores = ({ ...this.valores, [name]: value })
-
+            this.valores = ({ ...this.valores, [name]: value });
+            if (value.length > 0) {
+                delete this.errors[name];
+            }
+            else {
+                await this.SchemaValidation();
+            }
         },
 
-        crearTematica() {
+        async SchemaValidation(): Promise<number> {
+            let isValid = 1;
+            try {
+                const schema = yup.object().shape({
+                    nombreT: yup.string()
+                        .required('El nombre es requerido.'),
+                });
+                await schema.validate(this.valores, { abortEarly: false })
+            } catch (err) {
+                if (err instanceof yup.ValidationError) {
+                    const errors: FormErrors = {};
+                    err.inner.forEach((error) => {
+                        const path = error.path?.toString();
+                        if (path)
+                            errors[path] = error.message;
+                    });
+                    this.errors = errors;
+                    isValid = 0;
+                }
+            }
+            return Promise.resolve(isValid);
+        },
 
+
+       async crearTematica() {
+            let esvalido = await this.SchemaValidation()
+            if (esvalido == 0) {
+                return
+            }
             if (this.accion === 'editar') {
-                
-                    oCall.cenisFetch("PUT", `api/Tematica/${this.id}`, "", this.valores)
-                        .then((Response) => {
-                            console.log("Mensaje DE Tematicas: " + Response)
-                            if(Response.status === 200){
-                                console.log(Response),
+
+                oCall.cenisFetch("PUT", `api/Tematica/${this.id}`, "", this.valores)
+                    .then((Response) => {
+                        console.log("Mensaje DE Tematicas: " + Response)
+                        if (Response.status === 200) {
+                            console.log(Response),
                                 console.log("Se ha editado la tematica")
-                                console.log(Response),
+                            console.log(Response),
                                 this.$router.push("/Cruds/Tematicas/CosultarTematica")
-                                swalAlert("Exito", "Se actualizo correctamente la tematica")
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Ha ocurrido un error al crear una nueva categoria', error)
-                        });
+                            swalAlert("Exito", "Se actualizo correctamente la tematica")
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Ha ocurrido un error al crear una nueva categoria', error)
+                    });
 
 
             }
@@ -113,7 +150,10 @@ const TematicaCrud = defineComponent({
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label LabelsForms">Nombre de la Tematica</label>
-                                <input type="text" class="form-control" autocomplete="off" value={this.tematica.nombreT} name="nombreT" onChange={(e) => this.handlerchange(e)} aria-describedby="emailHelp" />
+                                <input type="text"class={`form-control ${this.errors['nombreT'] ? "is-invalid" : ""}`} autocomplete="off" value={this.tematica.nombreT} name="nombreT" onChange={(e) => this.handlerChange(e)} aria-describedby="emailHelp" />
+                                <div class="invalid-feedback">
+                                    {this.errors['nombreT']}
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <a onClick={() => this.crearTematica()} class="btn btn-cruds">Enviar</a>
