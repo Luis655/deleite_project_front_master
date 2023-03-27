@@ -1,0 +1,330 @@
+.ConsultaProductos {
+    padding-top: 80px;
+
+}
+
+.FiltroPor {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 50px;
+}
+
+.Paginacion {
+    display: flex;
+    justify-content: center;
+
+
+}
+
+.solid {
+    border-width: 5px;
+    width: 300px;
+    color: #724a3a;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.centercards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-bottom: 50px;
+
+
+}
+
+.rowcards {
+    padding: 5%;
+}
+
+.card {
+    border-radius: 0%;
+}
+
+.card-img-top {
+    border-radius: 0%;
+    height: 100%;
+    width: 100%;
+}
+
+.imgsize {
+    height: 300px;
+    width: 100%;
+}
+
+.card-title {
+    font-weight: 500;
+    color: #724a3a;
+}
+
+.page-link {
+    color: #724a3a;
+}
+
+.btn-productos {
+    color: black;
+
+    border-radius: 0%;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+
+    background-color: transparent;
+    width: 200px;
+
+    border-width: 1px;
+
+
+}
+
+.btn-productos:focus {
+    outline: 0;
+}
+
+.btn-productos2 {
+    border-color: black;
+    transition: box-shadow 0.2s ease-in-out;
+    border-width: 1px;
+}
+
+.btn-productos2:hover {
+    box-shadow: 0 0 40px 40px #724a3a inset;
+    border-color: #724a3a !important;
+    color: white !important;
+    background-color: #724a3a;
+}
+
+#portfolio .container-fluid,
+#portfolio .container-sm,
+#portfolio .container-md,
+#portfolio .container-lg,
+#portfolio .container-xl,
+#portfolio .container-xxl {
+    max-width: 1920px;
+}
+
+#portfolio .container-fluid .portfolio-box,
+#portfolio .container-sm .portfolio-box,
+#portfolio .container-md .portfolio-box,
+#portfolio .container-lg .portfolio-box,
+#portfolio .container-xl .portfolio-box,
+#portfolio .container-xxl .portfolio-box {
+    position: relative;
+    display: block;
+}
+
+#portfolio .container-fluid .portfolio-box .portfolio-box-caption,
+#portfolio .container-sm .portfolio-box .portfolio-box-caption,
+#portfolio .container-md .portfolio-box .portfolio-box-caption,
+#portfolio .container-lg .portfolio-box .portfolio-box-caption,
+#portfolio .container-xl .portfolio-box .portfolio-box-caption,
+#portfolio .container-xxl .portfolio-box .portfolio-box-caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    opacity: 0;
+    color: #fff;
+    background: rgba(114, 74, 58, 0.9);
+    transition: opacity 0.25s ease;
+    text-align: center;
+
+}
+
+.imgProductos {
+    width: 500px;
+    height: 500px;
+
+}
+
+.filtroBox {
+    display: flex;
+    justify-content: center;
+
+}
+
+#portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-category,
+#portfolio .container-sm .portfolio-box .portfolio-box-caption .project-category,
+#portfolio .container-md .portfolio-box .portfolio-box-caption .project-category,
+#portfolio .container-lg .portfolio-box .portfolio-box-caption .project-category,
+#portfolio .container-xl .portfolio-box .portfolio-box-caption .project-category,
+#portfolio .container-xxl .portfolio-box .portfolio-box-caption .project-category {
+    font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name,
+#portfolio .container-sm .portfolio-box .portfolio-box-caption .project-name,
+#portfolio .container-md .portfolio-box .portfolio-box-caption .project-name,
+#portfolio .container-lg .portfolio-box .portfolio-box-caption .project-name,
+#portfolio .container-xl .portfolio-box .portfolio-box-caption .project-name,
+#portfolio .container-xxl .portfolio-box .portfolio-box-caption .project-name {
+    font-size: 1.2rem;
+}
+
+#portfolio .container-fluid .portfolio-box:hover .portfolio-box-caption,
+#portfolio .container-sm .portfolio-box:hover .portfolio-box-caption,
+#portfolio .container-md .portfolio-box:hover .portfolio-box-caption,
+#portfolio .container-lg .portfolio-box:hover .portfolio-box-caption,
+#portfolio .container-xl .portfolio-box:hover .portfolio-box-caption,
+#portfolio .container-xxl .portfolio-box:hover .portfolio-box-caption {
+    opacity: 1;
+}
+
+/*DETALLES PRODUCTOS*/
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    justify-content: center;
+    align-content: center;
+    grid-gap: 10px;
+    height: 100vh;
+}
+
+.grid img {
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+}
+
+#lightbox {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .8);
+    display: none;
+}
+
+#lightbox.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#lightbox img {
+    max-width: 90%;
+    max-height: 80%;
+    padding: 4px;
+    background-color: black;
+    border: 2px solid white;
+}
+
+.imgMiniaturas {
+    width: 100px;
+    height: 100px;
+}
+
+.miniaturasContainer {
+    display: flex;
+    justify-content: center;
+
+}
+
+.ContainerDetalles {
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 80px;
+
+    margin-right: 15%;
+    margin-left: 15%;
+
+
+}
+
+.DetallesChild {
+    border-radius: 0%;
+    border-color: #724a3a;
+    border-width: 2px;
+    border-style: solid;
+
+    padding-bottom: 30px;
+    
+}
+
+.col-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img-min {
+
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+}
+
+.img-min2 {
+    width: 350px;
+    height: 350px;
+    margin: 5px;
+}
+
+.descripcionProducto {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.descripcionProducto2 {
+    padding-top: 2%;
+    padding-left: 25%;
+    padding-right: 25%;
+    text-align: justify;
+}
+
+.badge{
+    border-radius: 0%;
+}
+
+.ingredientes{
+    display: flex;
+    justify-content: center;
+}
+
+.bg-deleite{
+    background-color: #724a3ab7;
+}
+
+.bg-tipo{
+   background-color: #f5f5f5;
+   color: #25D366; 
+}
+
+.bg-tipo2{
+    background-color: #f5f5f5;
+    color: #ff9090; 
+ }
+
+ .alert-deleite{
+    background-color: #724a3a75;
+    border-radius: 0%;
+    color: #f5f5f5;
+    
+    margin-bottom: 0%;
+ }
+
+ .recomendado{
+    background-color: #f5f5f5;
+    color: #724a3a;
+ }

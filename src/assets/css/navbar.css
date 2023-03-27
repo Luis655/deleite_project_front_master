@@ -1,0 +1,53 @@
+#mainNav {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+#mainNav .navbar-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #212529;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link {
+  color: #6c757d;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  padding: 0.75rem 0;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link:hover,
+#mainNav .navbar-nav .nav-item .nav-link:active {
+  color: #f4623a;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link.active {
+  color: #f4623a !important;
+}
+
+@media (min-width: 992px) {
+
+  #mainNav .navbar-nav .nav-item .nav-link {
+    /*color: rgba(255, 255, 255, 0.7);*/
+    padding: 0 1rem;
+  }
+
+
+  #mainNav.navbar-shrink {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+  }
+
+  #mainNav.navbar-shrink .navbar-brand:hover {
+    color: #f4623a;
+  }
+
+  #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link {
+    color: #212529;
+  }
+
+  #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link:hover {
+    color: #f4623a;
+  }
+}

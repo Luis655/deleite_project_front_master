@@ -1,0 +1,56 @@
+
+.FormCuenta{
+    display: flex;
+    justify-content: center;
+
+
+}
+
+
+.MicuentaBody{
+    padding-top: 6%;
+    padding-bottom: 6%;
+}
+
+.ContainerCuenta{
+    border-style: solid;
+    border-color: #724a3a;
+
+    padding-top: 3%;
+    padding-bottom: 3%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.btn-cuenta {
+    color: black;
+
+    border-radius: 0%;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+
+    background-color: transparent;
+    width: auto;
+
+    border-width: 1px;
+
+
+}
+
+.btn-cuenta:focus {
+    outline: 0;
+}
+
+.btn-cuenta2 {
+    border-color: black;
+    transition: box-shadow 0.2s ease-in-out;
+    border-width: 1px;
+}
+
+.btn-cuenta2:hover {
+    box-shadow: 0 0 40px 40px #724a3a inset;
+    border-color: #724a3a !important;
+    color: white !important;
+    background-color: #724a3a;
+}
