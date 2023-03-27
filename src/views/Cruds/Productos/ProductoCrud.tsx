@@ -21,7 +21,7 @@ interface Fotos {
 };
 
 
-
+window.localStorage.removeItem
 
 
 
@@ -54,7 +54,6 @@ function readFileAsBase64(file?: File): Promise<string | undefined> {
       const base64Image = reader.result as string;
       const base64 = base64Image.split(",")[1];
       resolve(base64);
-      console.log(base64);
     };
   });
 }
@@ -83,7 +82,6 @@ const ProductoCrud = defineComponent({
       oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
       .then((response)=>{
         const datos: [] = response.Data.$values;
-        console.log(response.Data.$values);
         this.countimagesArray = [];
         this.countimagesArray =  response.Data.$values;
 
@@ -91,10 +89,6 @@ const ProductoCrud = defineComponent({
     },
 
     async AgregarFotos(imagen: any, idimagen:any) {
-      console.log(numImagenes);
-
-
-
       const container = document.getElementById('contenedor-inputs');
       const addInputBtn = document.getElementById('crear-input');
       const mensageimagen = document.getElementById('mensajeimagenes');
@@ -130,7 +124,7 @@ const ProductoCrud = defineComponent({
   
           container.appendChild(wrapper);
         } else {
-          alert("Error total 2")
+          swalAlert("Error", "Hubo un error al cargar sus imagenes");
         }
     }else{
       countimages++;
@@ -157,7 +151,6 @@ const ProductoCrud = defineComponent({
         input.name = `input-${inputCount}`;
         const cont = inputCount;
         input.addEventListener('change', () => {
-          console.log(`input-${cont}`, `img-${cont}`)
           mostrarImagen(`input-${cont}`, `img-${cont}`)
 
         });
@@ -177,7 +170,7 @@ const ProductoCrud = defineComponent({
 
         container.appendChild(wrapper);
       } else {
-        alert("Error total 1")
+        swalAlert("Error", "Hubo un error al cargar sus imagenes");
       }
       
     
@@ -186,7 +179,6 @@ const ProductoCrud = defineComponent({
         const wrapper = button.parentElement;
         if (wrapper) {
           numImagenes--;
-          console.log(countimages);
           if(numImagenes <= 2){
             const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
             imagenButtonAdd.disabled =false;
@@ -196,13 +188,11 @@ const ProductoCrud = defineComponent({
           oCall.cenisFetch('DELETE', `api/Imagenes/borrarimagen/${id}`, "", "")
           .then(async(response)=>{
             this.llenarimagenes();
-
-            console.log(response);
           }).catch((error) =>{
-            alert("error al borrar la imagen.")
+            swalAlert("Error", "Error al borrar las imagenes");
           });
         } else {
-          alert("Error");
+          swalAlert("Error", "Ha ocurrido un herror con el servidor");
         }
       }
       
@@ -220,14 +210,12 @@ const ProductoCrud = defineComponent({
           this.llenarimagenes();
           wrapper.remove();
         } else {
-          alert("Error");
+          swalAlert("Error", "Error al eliminar el elemento");
         }
       }
       function mostrarImagen(inputid: any, imagenid: any){
         const $seleccionArchivos = document.querySelector(`#${inputid}`) as HTMLInputElement, 
         $imagenPrevisualizacion = document.querySelector(`#${imagenid}`) as HTMLImageElement;
-
-        console.log($seleccionArchivos, $imagenPrevisualizacion);
         if($seleccionArchivos!=null){
             const archivos = $seleccionArchivos.files;
             if (!archivos || !archivos.length) {
@@ -285,10 +273,8 @@ const ProductoCrud = defineComponent({
           oCall.cenisFetch('Delete', url, "", "")
           .then(async(response)=>{
             this.$router.push({ name: 'productsview' })
-            //console.log("Exito");
           })
         })
-      alert("joasdasd");
       // Código para borrar el producto
     },
     async crearCategoria() {
@@ -340,17 +326,11 @@ const ProductoCrud = defineComponent({
       if (this.valores.ImagenPrincipalchar !== null && validacion!==false) {
         oCall.cenisFetch('POST', 'api/Producto/create', "", this.valores)
           .then(async (response) => {
-            //console.log(response)
             try {
               if (response.status == 201) {
-
-
                 /**
-                 * 
                  * insertar las imagenes relacionadas al producto
                  */
-
-
                 for (let index = 0; index <= inputCount; index++) {
                   const idimagen = `input-${index}`;
                   var imagenes = document.getElementById(idimagen) as HTMLInputElement;
@@ -361,52 +341,39 @@ const ProductoCrud = defineComponent({
                         idProducto: parseInt(nombreid),
                         imagenPrincipalchar: imagens
                       }
-
                       oCall.cenisFetch('POST', 'api/Producto/addImage', "", fotos)
                         .then((response) => {
-                          //console.log(response)
                           try {
                             if (response.status == 200) {
-                              //this.$router.push({ name: 'productsview' })
+
                             } else {
-                              console.log("Ha ocurrido un error")
+                              swalAlert("Error", "Ha ocurrido un Error al hacer el registro1");
                             }
                           } catch (error) {
-                            console.log("Ha ocurrido un herror" + error);
+                            swalAlert("Error", "Ha ocurrido un Error al hacer el registro2");
                           }
-
                         })
                     }
-                    //console.log("imagenes en base 64" + index + imagens + "      " + idimagen);
                   }
                 }
-                console.log("las fotos se agregaron correctamente ");
+                swalAlert("Exito", "se ha agregado correctamente el registro");
 
-
-
-
-                //console.log('Se ha creado una nueva categoría:', response);
-                //console.log(response);
-                alert("exito");
-
+                this.$router.push({ name: 'Productos_tabla' })
               }
               else {
-                alert("Ha ocurrido un error: " + response.Data.title);
-                console.log(response.Data.title);
-                console.log(response)
+                swalAlert("Error", "Ha ocurrido un Error al hacer el registro3");
               }
             } catch (error) {
-              console.log("Ha ocurrido un herror" + error);
+              console.log(error);
+              
+              swalAlert("Error", "Ha ocurrido un Error al hacer el registro4");
             }
-
           })
-
           .catch((error) => {
-            console.error('Ha ocurrido un error al crear una nueva categoría:', error);
+            swalAlert("Error", "Ha ocurrido un Error al hacer el registro5");
           });
       } else {
-        alert("llene todos los campos");
-        console.log("Error al capturar los datos");
+        swalAlert("Error", "Ha ocurrido un Error al hacer el registro6");
       }
     },
 
@@ -429,7 +396,7 @@ const ProductoCrud = defineComponent({
 
       oCall.cenisFetch("GET", url, "", "")
         .then(async (response) => {
-          console.log("askjnaksdja,sjdakjsda  " +response.Data["idCategoria"])
+          if(response.status ==200){
           nombreP.value = response.Data["nombreP"];
           ingredienteselect.value = response.Data["ingredienteselect"];
           precio.value = response.Data["precio"];
@@ -442,28 +409,22 @@ const ProductoCrud = defineComponent({
           oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
           .then((response)=>{
             this.countimagesArray = response.Data.$values;
-            console.log("numero de imagenes = " + this.countimagesArray.length);
             if (response.Data.$values.length >= 3) {
               const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
               imagenButtonAdd.disabled =true;
               imagenButtonAdd.innerText = 'solo puedes tener 3 imagenes por productosssssss'
-              
             }
             response.Data.$values.map((data: any)=>{
-              console.log(data['base64']);
               this.AgregarFotos(data['base64'], data['idimgProducto']);
-            
             })
           
           })
-          /*oCall.cenisFetch().then(()=>{
-
-          }).catch(()=>{
-
-          })*/
+        }else{
+          this.$router.push({name:'Error404'})
+        }
         })
         .catch((error) => {
-          console.log(error);
+          swalAlert("Error", "Ha ocurrido un Error al hacer el registro");
         })
     },
     mostrarImagen(){
@@ -486,9 +447,11 @@ const ProductoCrud = defineComponent({
 
   },
   mounted() {
+    window.localStorage.removeItem,
       this.llenarCategorias(),
       this.llenarTematica()
       this.id = this.$route.params.id;
+
 
     if (this.$route.params.id !== null && this.$route.params.trueorfalse == "true") {
         this.updateProductos()
@@ -621,7 +584,6 @@ const ProductoCrud = defineComponent({
                   </div>
 
                   <div class="mb-3">
-                      <button onClick={()=>this.AgregarFotos(null, null)} id="crear-input" type="button" onChange={(e) => this.handlerchange(e)} class="btn btn-cruds">Añadir otra</button>
                     <input type="text" value={this.$route.params.id} class="form-control" style="display:none" />
 
 
@@ -636,7 +598,7 @@ const ProductoCrud = defineComponent({
                 <button onClick={this.borrarProducto} id="crear-inpust" type="button" class="btn btn-cruds">Cancelar</button>
                 &nbsp;
                 <div>
-                  <button onClick={() => this.AgregarFotos(null, null)} id="crear-input" type="button" onChange={(e) => this.handlerchange(e)} class="btn btn-cruds">Añadir otra</button>
+                  <button onClick={() => this.AgregarFotos()} id="crear-input" type="button" onChange={(e) => this.handlerchange(e)} class="btn btn-cruds">Añadir otra</button>
                   <input type="text" value={this.$route.params.id} class="form-control" style="display:none" />
                 </div>
               </div>

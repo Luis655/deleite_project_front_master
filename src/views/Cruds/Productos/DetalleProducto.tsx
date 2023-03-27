@@ -8,13 +8,13 @@ interface ProductoImagenes {
 var cont = 0;
 let ingreselectPesonalizado: string[] = [];
 interface ProductoDatos {
-    base64Origihal?: string,
+    imagenPrincipal?: string,
     tipo?:string,
     nombreP?: string,
     descripcionP?: string,
     precio?:string,
-    categoria?:string,
-    tematica?:string,
+    nombreCategoria?:string,
+    nombreTematica?:string,
     popular?: boolean,
     saludable?: boolean,
     ingredienteselect?: string,
@@ -78,39 +78,44 @@ const DetalleProducto = defineComponent({
                   const myArray = ingreselectPesonalizado;
                   //const mensajeIngredientes = ingreselectPesonalizado[0].split(/\s*,\s*/);
                   const telefono = '9995901375'; // reemplazar con el número de teléfono de tu empresa
-                  const mensaje = `¡Hola! Estoy interesado en el producto ${this.productoDatos.nombreP}, con el precio de ${this.productoDatos.precio}, de la categoria "${this.productoDatos.categoria}", y la tematica "${this.productoDatos.tematica} " con los siguientes ingredientes: ${mensajeIngredientes}`; // reemplazar con el mensaje que quieras enviar
+                  const mensaje = `¡Hola! Estoy interesado en el producto ${this.productoDatos.nombreP}, con el precio de ${this.productoDatos.precio}, de la categoria "${this.productoDatos.nombreCategoria}", y la tematica "${this.productoDatos.nombreCategoria} " con los siguientes ingredientes: ${mensajeIngredientes}`;
                   const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
                   window.open(url, '_blank');
                 });
               }
         },
         async crearCategoria() {
+            oCall.cenisFetch('GET', `api/Producto/getById/${this.id}`, "", "")
+            .then(async (response) => {
+              //console.log(response.Data.$values);
+              if(response.status ==200){
+                
+              this.productoDatos = response.Data;
+              if(this.productoDatos.ingredienteselect !==null){
+                  this.ingre = this.productoDatos.ingredienteselect?.split(/\s*,\s*/);
+                  
+                  //.log(this.ingre[0])
+              }else{
+                  this.ingre = [] 
+              }
+          }else{
+              this.$router.push({name:'Error404'})
+
+          }
+              })
+            .catch((error) => {
+              console.error('Ha ocurrido un error al crear una nueva categoría:', error);
+            });
 
             oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
               .then(async (response) => {
                 //console.log(response.Data.$values);
                 if(response.status ==200){
                 this.productoImagenes = response.Data.$values;
-                this.productoDatos = response.Data.$values[1];
-                if(this.productoDatos.ingredienteselect !==null){
-                    this.ingre = this.productoDatos.ingredienteselect?.split(/\s*,\s*/);
-                    
-                    //.log(this.ingre[0])
-                }else{
-                    this.ingre = [] 
-                }
             }else{
                 this.$router.push({name:'Error404'})
 
             }
-
-                //console.log(this.productoDatos.precio);
-                //console.log(response.Data.$values[1].nombreP);
-                //imagenPrincipal = response.Data.$values[1].base64Origihal;
-                //console.log("jhghjghjghjghj"+this.tematicas)
-                  /*  this.tematicas.map((item)=>{
-                        console.log("foreach  " +  item.nombreP )
-                    });*/
                 })
               .catch((error) => {
                 console.error('Ha ocurrido un error al crear una nueva categoría:', error);
@@ -134,7 +139,7 @@ const DetalleProducto = defineComponent({
                             <div>
                             
                                 <div class="alert alert-deleite" role="alert">
-                                    Temática: <span>{this.productoDatos.tematica}</span>
+                                    Temática: <span>{this.productoDatos.nombreTematica}</span>
                                     {this.$route.query.id}
                                 </div>
                                 <div class="alert recomendado" role="alert">
@@ -184,7 +189,7 @@ const DetalleProducto = defineComponent({
                                             </div>
                                             <div class="row g-0 d-flex justify-content-center">
                                         <a href="#" data-bs-toggle="modal" data-bs-target={`#modalImage1`}>
-                                            <img src={this.productoDatos.base64Origihal} class="img-min2 item" />
+                                            <img src={this.productoDatos.imagenPrincipal} class="img-min2 item" />
                                         </a>
                                     </div>
                                       
@@ -258,7 +263,7 @@ const DetalleProducto = defineComponent({
                 <div tabindex="-1" aria-labelledby="modalImage1" arial-hidden="true" class="modal fade" id="modalImage1">
                     <div class="modal-dialog modal-lg modal-dialog-center">
                         <div class="modal-content">
-                            <img src={this.productoDatos.base64Origihal}  />
+                            <img src={this.productoDatos.imagenPrincipal}  />
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ interface Categoria {
   idCategoria?: number,
   nombre?: string,
   imagenPrincipalchar?: string,
+  imagen?: string
 }
 let oCall = new Call();
 function readFileAsBase64(file?: File): Promise<string | undefined> {
@@ -84,18 +85,7 @@ const CategoriaCrud = defineComponent({
       }
 
     },
-
-    firtRefresh() {
-      this.accion = this.$route.query.accion || "";
-      this.id = this.$route.query.id;
- 
-      if (this.accion === "editar") {
-        oCall.cenisFetch('GET', `api/Categoria/${this.id}`, "", '')
-          .then((response) => {
-            console.log(response)
-            if (response.status === 200) {
-              this.categoria = response.Data
-              this.valores = response.Data
+    mostrarImagen(){
       const $seleccionArchivos = document.querySelector("#imagen") as HTMLInputElement, 
       $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion") as HTMLImageElement;
       if($seleccionArchivos!=null){
@@ -108,6 +98,21 @@ const CategoriaCrud = defineComponent({
           const objectUrl = URL.createObjectURL(firstImage);
           $imagenPrevisualizacion.src=objectUrl;
           }
+      
+    },
+
+    firtRefresh() {
+      this.accion = this.$route.query.accion || "";
+      this.id = this.$route.query.id;
+ 
+      if (this.accion === "editar") {
+        oCall.cenisFetch('GET', `api/Categoria/${this.id}`, "", '')
+          .then((response) => {
+            console.log(response)
+            if (response.status === 200) {
+              this.categoria = response.Data
+              this.valores = response.Data
+
             }
             else {
 
@@ -150,8 +155,8 @@ const CategoriaCrud = defineComponent({
 
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label LabelsForms">Imagen</label>
-                <input type="file" class="form-control" id="imagen" name="imagen" required/>
-                <img id="imagenPrevisualizacion" alt="sin imagenes seleccionadas" class="img-fluid"/>
+                <input type="file" class="form-control" id="imagen" name="imagen" required onChange={() => this.mostrarImagen()}/>
+                <img id="imagenPrevisualizacion" src={this.categoria.imagen} alt="sin imagenes seleccionadas" class="img-fluid"/>
               </div>
 
 
