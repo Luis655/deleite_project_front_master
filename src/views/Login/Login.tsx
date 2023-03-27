@@ -76,6 +76,7 @@ const login = defineComponent({
                         localStorage.setItem("token", token);
                         console.log(response.Data)
                         this.$router.push("/inicio")
+                        console.log('Hola')
                     }
 
                     else {
