@@ -1,0 +1,77 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+.imglogo {
+    border-radius: 50%;
+    width: 150px;
+}
+
+.icons-redes {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
+
+/* Style all font awesome icons */
+.fa {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+    display: flex;
+    border-radius: 50%;
+    padding: 20px;
+    font-size: 25px;
+    width: 50px !important;
+    height: 50px !important;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+    opacity: 0.7;
+}
+
+
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+
+.fa-instagram {
+    background: #E1306C;
+    color: white;
+}
+
+.fa-whatsapp {
+    background: #25D366;
+    color: white;
+}
+
+.fa-tiktok {
+    background: #000000;
+    color: white;
+}
+
+.DeleiMail{
+    text-decoration: none;
+    color: white;
+    margin-bottom: 1rem;
+    width: auto;
+}
+
+.DelePhone{
+    text-decoration: none;
+    color: white;
+    margin-bottom: 1rem;
+    width: auto;
+}
+
+.contactos{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
