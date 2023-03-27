@@ -478,7 +478,6 @@ const ProductoCrud = defineComponent({
           const firstImage = archivos[0];
           const objectUrl = URL.createObjectURL(firstImage);
           $imagenPrevisualizacion.src=objectUrl;
-
           }
       
     },

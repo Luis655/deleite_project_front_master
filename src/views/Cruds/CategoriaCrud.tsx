@@ -88,7 +88,7 @@ const CategoriaCrud = defineComponent({
     firtRefresh() {
       this.accion = this.$route.query.accion || "";
       this.id = this.$route.query.id;
-
+ 
       if (this.accion === "editar") {
         oCall.cenisFetch('GET', `api/Categoria/${this.id}`, "", '')
           .then((response) => {
@@ -96,6 +96,18 @@ const CategoriaCrud = defineComponent({
             if (response.status === 200) {
               this.categoria = response.Data
               this.valores = response.Data
+      const $seleccionArchivos = document.querySelector("#imagen") as HTMLInputElement, 
+      $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion") as HTMLImageElement;
+      if($seleccionArchivos!=null){
+          const archivos = $seleccionArchivos.files;
+          if (!archivos || !archivos.length) {
+                $imagenPrevisualizacion.src = "";
+                return;
+          }
+          const firstImage = archivos[0];
+          const objectUrl = URL.createObjectURL(firstImage);
+          $imagenPrevisualizacion.src=objectUrl;
+          }
             }
             else {
 
@@ -139,6 +151,7 @@ const CategoriaCrud = defineComponent({
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label LabelsForms">Imagen</label>
                 <input type="file" class="form-control" id="imagen" name="imagen" required/>
+                <img id="imagenPrevisualizacion" alt="sin imagenes seleccionadas" class="img-fluid"/>
               </div>
 
 
