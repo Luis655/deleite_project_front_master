@@ -157,12 +157,8 @@ const CategoriaCrud = defineComponent({
 
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label LabelsForms">Imagen</label>
-<<<<<<< HEAD
-                <input type="file" class="form-control" id="imagen" name="imagen" required />
-=======
                 <input type="file" class="form-control" id="imagen" name="imagen" required onChange={() => this.mostrarImagen()}/>
                 <img id="imagenPrevisualizacion" src={this.categoria.imagen} alt="sin imagenes seleccionadas" class="img-fluid"/>
->>>>>>> 239e5c6f9c5cc8ac2bedbc43ae1de6d43fc5f2c6
               </div>
 
 

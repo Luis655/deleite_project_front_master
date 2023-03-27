@@ -9,10 +9,6 @@ import 'datatables.net-buttons/js/buttons.html5.mjs';
 import 'datatables.net-keytable-dt';
 import 'datatables.net-select-dt';
 import { swalAlert } from "@/components/alerts";
-<<<<<<< HEAD
-=======
-
->>>>>>> 239e5c6f9c5cc8ac2bedbc43ae1de6d43fc5f2c6
 
 interface ProductImage {
   idProducto?: number;
@@ -84,11 +80,8 @@ const ProductosList = defineComponent({
             oCall.cenisFetch('Delete', url, "", "")
               .then(async (response) => {
                 location.assign(window.location.href);
-<<<<<<< HEAD
-=======
                 swalAlert("Exito", "se borro exitosamente el producto");
 
->>>>>>> 239e5c6f9c5cc8ac2bedbc43ae1de6d43fc5f2c6
               })
 
             swalAlert("Exito", "Se eliminó exitosamente")
