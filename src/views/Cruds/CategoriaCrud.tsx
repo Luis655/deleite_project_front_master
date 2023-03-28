@@ -114,7 +114,8 @@ const CategoriaCrud = defineComponent({
             if (response.status === 200) {
               this.categoria = response.Data
               this.valores = response.Data
-
+              const $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion") as HTMLImageElement;
+              $imagenPrevisualizacion.src = response.Data.imagen;
             }
             else {
 
@@ -162,7 +163,7 @@ const CategoriaCrud = defineComponent({
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label LabelsForms">Imagen</label>
                 <input type="file" class="form-control" id="imagen" name="imagen" required onChange={() => this.mostrarImagen()} />
-
+                  <img id="imagenPrevisualizacion" style="width:50px; height:50px"  />
               </div>
 
 
