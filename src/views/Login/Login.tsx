@@ -78,7 +78,7 @@ const login = defineComponent({
                         console.log(response.Data)
                         this.$router.push("/")
                         swalAlert("Exito", "¡Bienvenido! acceso correcto")
-                        
+
                     }
 
                     else {
@@ -94,15 +94,18 @@ const login = defineComponent({
     render() {
         return (
             <>
-                <section class="LoginCentrado">
+                <section class="LoginCentrado" >
                     <div class="container-fluid h-custom backgroundLogin">
-                        <div>
-                            <h1>¡Bienvenido!</h1>
+                        <div data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
+                            <h4 class="display-4">¡Bienvenido!</h4>
+                            <di class="d-flex justify-content-center">
+                                <hr class="solid" />
+                            </di>
                             <h4>Acceso restringido y único para Administradores del sitio</h4>
                             &nbsp;
                         </div>
                         &nbsp;
-                        <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="row d-flex justify-content-center align-items-center h-100" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
                             &nbsp;
                             <div class="col-md-9 col-lg-6 col-xl-5">
                                 <img src="src/assets/Deleite_logo.jpg" class="img-fluid" />
@@ -115,7 +118,7 @@ const login = defineComponent({
                                     <h2 class="display-6 tituloLogin" style="color: #724a3a">INICIAR SESIÓN</h2>
                                     <br></br>
                                     <div class="form-outline mb-4">
-                                        <input for="validationCustom01" type="email" id="form3Example3" name="correo" value={this.login.correo}  onChange={(e) => this.handlerChange(e)} class={`form-control ${this.errors['correo'] ? "is-invalid" : ""}`}
+                                        <input for="validationCustom01" type="email" id="form3Example3" name="correo" value={this.login.correo} onChange={(e) => this.handlerChange(e)} class={`form-control ${this.errors['correo'] ? "is-invalid" : ""}`}
                                             placeholder="Correo" aria-label="correo" required />
                                         <div class="invalid-feedback">
                                             {this.errors['correo']}

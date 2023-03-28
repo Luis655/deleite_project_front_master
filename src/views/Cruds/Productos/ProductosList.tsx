@@ -62,13 +62,14 @@ const ProductosList = defineComponent({
       this.valores = ({ ...this.valores, [name]: value });
 
     },
+
     updateProducto(id: any, idConfirmacionT: any) {
       if (idConfirmacionT == null)
         idConfirmacionT = true;
       this.$router.push({ name: 'ProductoCrudActualizar', params: { id: id, trueorfalse: idConfirmacionT } })
 
-      alert(id);
     },
+
     borrarProductos(idproducto: any) {
       //var nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
       const id = parseInt(idproducto);
@@ -80,8 +81,6 @@ const ProductosList = defineComponent({
             oCall.cenisFetch('Delete', url, "", "")
               .then(async (response) => {
                 location.assign(window.location.href);
-                swalAlert("Exito", "se borro exitosamente el producto");
-
               })
 
             swalAlert("Exito", "Se eliminó exitosamente")
@@ -150,11 +149,17 @@ const ProductosList = defineComponent({
           <div class="row">
             <div class="col-lg-12">
               <div class="row-lg-12">
-                <div class="TituloProductos">
+                <div class="TituloProductos" data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
 
-                  <h2> PRODUCTOS</h2>
+                  <h2 class="display-4"> PRODUCTOS</h2>
+
+                  <di class="d-flex justify-content-center">
+                    <hr class="solid" />
+                  </di>
+                  &nbsp;
                   <input id="nombreid" name="nombreid" type="number" value={this.$route.params.id} disabled style="display:none" />
-                  <h6 style="width:600px">
+
+                  <h6>
                     Los productos que registres se categorizarán automáticamente según las preferencias y datos que registres
                   </h6>
 
@@ -164,7 +169,7 @@ const ProductosList = defineComponent({
 
               <div class="row display-flex justify-content-center">
                 <div class="col-11">
-                  <div class="table-responsive">
+                  <div class="table-responsive" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
                     <table id="miTabla" class="table table-bordered" data-order='[[ 1, "asc" ]]' data-page-length='3'>
                       <thead>
                         <tr>
@@ -194,11 +199,11 @@ const ProductosList = defineComponent({
                                 <div class="row">
 
                                   <button onClick={() => {
-                                    swalAlert("Confirmacion", "¿desea actualizar el producto?", ()=> this.updateProducto(item.idProducto, item.idConfirmacionT))
-                                    }} class="btn btn-cruds" id="whatsapp-button">Actualizar</button>
+                                    swalAlert("Confirmacion", "¿Desea actualizar el producto?", () => this.updateProducto(item.idProducto, item.idConfirmacionT))
+                                  }} class="btn btn-cruds" id="whatsapp-button">Actualizar</button>
                                   <button onClick={() => {
-                                    swalAlert("Confirmacion", "¿desea borrar este producto?", ()=> this.borrarProductos(item.idProducto))
-                                     }} class="btn btn-cruds" id="whatsapp-button">Borrar</button>
+                                    swalAlert("Confirmacion", "¿Desea borrar este producto?", () => this.borrarProductos(item.idProducto))
+                                  }} class="btn btn-cruds" id="whatsapp-button">Borrar</button>
 
                                   <button onClick={() => {
                                     const id = item.idProducto; alert(id)

@@ -3,6 +3,11 @@ import { Call } from "../../../../helpers/calls/Call"
 import { validaciones } from "../../../../helpers/calls/Validaciones"
 import { swalAlert } from "@/components/alerts";
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+AOS.init();
+
+
 interface ProductImage {
   IdProducto?: number;
   idCategoria?: number;
@@ -345,7 +350,8 @@ const ProductoCrud = defineComponent({
                           try {
                             if (response.status == 200) {
 
-                            } else {
+                            }
+                            else {
                               swalAlert("Error", "Ha ocurrido un Error al hacer el registro1");
                             }
                           } catch (error) {
@@ -423,7 +429,7 @@ const ProductoCrud = defineComponent({
           }
         })
         .catch((error) => {
-          swalAlert("Error", "Ha ocurrido un Error al hacer el registro");
+
         })
     },
     mostrarImagen() {
@@ -461,10 +467,14 @@ const ProductoCrud = defineComponent({
     return (
       <>
         <body>
-          <div class="TituloProductos">
+          <div class="TituloProductos" data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
 
-            <h1>PRODUCTOS</h1>
+            <h4 class="display-4">PRODUCTOS</h4>
 
+            <di class="d-flex justify-content-center">
+              <hr class="solid" />
+            </di>
+            &nbsp;
             <input id="nombreid" name="nombreid" type="number" value={this.$route.params.id} disabled style="display:none" />
 
             <h5>
@@ -474,7 +484,7 @@ const ProductoCrud = defineComponent({
           </div>
 
 
-          <div class="Productos_Create">
+          <div class="Productos_Create" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
             <div class="FormularioProductos row">
 
 

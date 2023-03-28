@@ -77,7 +77,7 @@ const DetalleProducto = defineComponent({
                   const mensajeIngredientes = ingreselectPesonalizado.length > 0 ? ingreselectPesonalizado.join(', ') : this.productoDatos.ingredienteselect;
                   const myArray = ingreselectPesonalizado;
                   //const mensajeIngredientes = ingreselectPesonalizado[0].split(/\s*,\s*/);
-                  const telefono = '9995901375'; // reemplazar con el número de teléfono de tu empresa
+                  const telefono = '5219993893779'; // reemplazar con el número de teléfono de tu empresa
                   const mensaje = `¡Hola! Estoy interesado en el producto ${this.productoDatos.nombreP}, con el precio de ${this.productoDatos.precio}, de la categoria "${this.productoDatos.nombreCategoria}", y la tematica "${this.productoDatos.nombreCategoria} " con los siguientes ingredientes: ${mensajeIngredientes}`;
                   const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
                   window.open(url, '_blank');

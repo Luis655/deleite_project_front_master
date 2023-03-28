@@ -3,6 +3,10 @@ import { defineComponent } from "vue";
 import { Call } from "../../../helpers/calls/Call"
 import * as yup from 'yup'
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+AOS.init();
+
 interface Tematica {
 
     idTematica?: number,
@@ -134,7 +138,7 @@ const tematicaCrud = defineComponent({
         return (
             <>
                 <div class="Container_Create">
-                    <div>
+                    <div data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
 
                         <h2>TEMATICAS</h2>
                         <h6 style="width:600px">Las tematicas te permiten administrar y controlar la vista de los productos que ofreces y tienes
@@ -142,7 +146,7 @@ const tematicaCrud = defineComponent({
 
                     </div>
                     &nbsp;
-                    <div class="Create_Form">
+                    <div class="Create_Form" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
 
                         <form>
 

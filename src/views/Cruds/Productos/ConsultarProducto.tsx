@@ -102,27 +102,31 @@ const ConsultarProducto = defineComponent({
                     </div>
 
                     <div class="card-body">
-                        <h5 class="card-title">${response.Data.$values[index].nombreP}</h5>
-                        <p class="card-text">$ ${response.Data.$values[index].precio}</p>
 
                         <div>
-                            <h6 style="font-size: 15px">Temática</h6>
-                            <p class="card-text text-muted" style="font-size: 12px">${response.Data.$values[index].nombreTematica}</p>
-                            </div>
+                            <h5 class="card-title" style="font-weight: 600;">${response.Data.$values[index].nombreP}</h5>
+                        </div>
+
+                            <p class="card-text" style="font-size: 22px;">$ ${response.Data.$values[index].precio}.00</p>
+
+                        <div>
                             <div>
-                            <h6 style="font-size: 15px">Categoria</h6>
-                            <p class="card-text text-muted" style="font-size: 12px">${response.Data.$values[index].nombreCategoria}</p>
+                                <h6 style="font-size: 15px; font-weight: 600;">Temática</h6>
+                                <p class="card-text text-muted" style="font-size: 16px">${response.Data.$values[index].nombreTematica}</p>
+                            </div>
+                            &nbsp;
+                            <div>
+                                <h6 style="font-size: 15px; font-weight: 600;">Categoria</h6>
+                                <p class="card-text text-muted" style="font-size: 16px">${response.Data.$values[index].nombreCategoria}</p>
                             </div>
                             &nbsp;
                             <div>                          
-                                <a class="btn btn-productos btn-productos2" href="/detalleproducto/${response.Data.$values[index].idProducto}">Ver más</a>
+                                <a class="btn btn-productos btn-productos2" href="/detalleproducto/${response.Data.$values[index].idProducto}">Detalles</a>
                             </div>
 
                         </div>
-                        
-    
                     </div>
-                    
+
                     `;
 
 
@@ -173,35 +177,35 @@ const ConsultarProducto = defineComponent({
                 paginatelinum.className = 'page-item';
                 paginatelinum.innerHTML = `<li class="page-item"><a class="page-link" href="#">${index}</a></li>`;
 
-            paginatelinum.addEventListener('click', () => {
-                const numeroiniciopagina = index*elementosDisplay;
-                finalPagina = numeroiniciopagina-1;
-                inicioPagina = finalPagina+1-elementosDisplay;
-                paginaSiguiente = paginaSiguiente > 2 ? index+1:paginaSiguiente;
-                pagianAnterior = pagianAnterior==1 ? pagianAnterior : pagianAnterior-1;
-                paginateul.remove();
-                alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + "pagina siguiente: " + paginaSiguiente);
+                paginatelinum.addEventListener('click', () => {
+                    const numeroiniciopagina = index * elementosDisplay;
+                    finalPagina = numeroiniciopagina - 1;
+                    inicioPagina = finalPagina + 1 - elementosDisplay;
+                    paginaSiguiente = paginaSiguiente > 2 ? index + 1 : paginaSiguiente;
+                    pagianAnterior = pagianAnterior == 1 ? pagianAnterior : pagianAnterior - 1;
+                    paginateul.remove();
+                    alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + "pagina siguiente: " + paginaSiguiente);
 
-                for (let index = 0; index <= this.produc.length; index++) {
-                const divproductos = document.getElementById(`divproductos${index}`);
-                divproductos?.remove();
-                }
-                this.llamarProductos(null);
-                
-            });
+                    for (let index = 0; index <= this.produc.length; index++) {
+                        const divproductos = document.getElementById(`divproductos${index}`);
+                        divproductos?.remove();
+                    }
+                    this.llamarProductos(null);
+
+                });
 
                 paginateul.appendChild(paginatelinum);
 
             }
 
-        paginationNxt.addEventListener('click', () => {
-            const numeroiniciopagina = paginaSiguiente*elementosDisplay;
-            finalPagina = numeroiniciopagina-1;
-            inicioPagina = finalPagina+1-elementosDisplay;
-            paginaSiguiente = paginaSiguiente > 2 ? paginaSiguiente+1:paginaSiguiente;
-            pagianAnterior = pagianAnterior==1 ? pagianAnterior : pagianAnterior-1;
-            paginateul.remove();
-            alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + ", pagina siguiente " + paginaSiguiente);
+            paginationNxt.addEventListener('click', () => {
+                const numeroiniciopagina = paginaSiguiente * elementosDisplay;
+                finalPagina = numeroiniciopagina - 1;
+                inicioPagina = finalPagina + 1 - elementosDisplay;
+                paginaSiguiente = paginaSiguiente > 2 ? paginaSiguiente + 1 : paginaSiguiente;
+                pagianAnterior = pagianAnterior == 1 ? pagianAnterior : pagianAnterior - 1;
+                paginateul.remove();
+                alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + ", pagina siguiente " + paginaSiguiente);
 
                 for (let index = 0; index <= this.produc.length; index++) {
                     const divproductos = document.getElementById(`divproductos${index}`);
@@ -211,16 +215,16 @@ const ConsultarProducto = defineComponent({
 
             });
 
-        paginationBf.addEventListener('click', () => {
-            
-            if(indexActula<=1){
-                indexActula =2;
-            }
-            const numeroiniciopagina = (indexActula-1)*elementosDisplay;
-            finalPagina = numeroiniciopagina-1;
-            inicioPagina = finalPagina+1-elementosDisplay;
-            paginateul.remove();
-            indexActula--;
+            paginationBf.addEventListener('click', () => {
+
+                if (indexActula <= 1) {
+                    indexActula = 2;
+                }
+                const numeroiniciopagina = (indexActula - 1) * elementosDisplay;
+                finalPagina = numeroiniciopagina - 1;
+                inicioPagina = finalPagina + 1 - elementosDisplay;
+                paginateul.remove();
+                indexActula--;
 
                 for (let index = 0; index <= this.produc.length; index++) {
                     const divproductos = document.getElementById(`divproductos${index}`);
@@ -249,7 +253,7 @@ const ConsultarProducto = defineComponent({
                     <div class="ConsultaProductos">
                         <div class="ListadoProductos">
 
-                            <div>
+                            <div data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
                                 <h2 class="display-4">{this.nombreCategoria.name != "String" ? this.nombreCategoria : 'Catalogo Deleite'}</h2>
                                 <h5>Del horno a tu mesa</h5>
                                 <di class="d-flex justify-content-center">
@@ -259,14 +263,9 @@ const ConsultarProducto = defineComponent({
                                 <h5>Elige entre nuestra gran variedad de sabores y presentaciones, listos para consentir tu paladar</h5>
                             </div>
 
-                            <div class="container container-fluid">
-
-
+                            <div class="container container-fluid" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
                                 <div class="row rowcards" id="productospaginados">
-
-
-
-
+                                    
                                 </div>
                             </div>
 

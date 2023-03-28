@@ -50,9 +50,12 @@ const ConsultarTematica = defineComponent({
             <>
                 <body>
 
-                    <div class="TituloTematica">
+                    <div class="TituloTematica" data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
 
-                        <h2>TEMÁTICAS</h2>
+                        <h4 class="display-4">TEMÁTICAS</h4>
+                        <di class="d-flex justify-content-center">
+                            <hr class="solid" />
+                        </di>
                         &nbsp;
                         <h6>
                             Las temáticas te permiten darle un valor agregado a tus productos, darles un significado más especial.
@@ -60,7 +63,7 @@ const ConsultarTematica = defineComponent({
 
                     </div>
 
-                    <div class="ContainerTematica">
+                    <div class="ContainerTematica" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
                         <div class="row">
                             {this.tematicas.map((item) => {
                                 return (
@@ -70,7 +73,7 @@ const ConsultarTematica = defineComponent({
                                             <div class="card-body">
 
                                                 <div class="headerCard">
-                                                    <a  class="btn-close" onClick={() => this.eliminarTematica(item.idTematica)} aria-label="Close"></a>
+                                                    <a class="btn-close" onClick={() => this.eliminarTematica(item.idTematica)} aria-label="Close"></a>
                                                 </div>
                                                 <div>
                                                     <h5 class="card-title">{item.nombreT}</h5>

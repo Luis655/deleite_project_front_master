@@ -87,26 +87,26 @@ const CategoriaCrud = defineComponent({
       }
 
     },
-    mostrarImagen(){
-      const $seleccionArchivos = document.querySelector("#imagen") as HTMLInputElement, 
-      $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion") as HTMLImageElement;
-      if($seleccionArchivos!=null){
-          const archivos = $seleccionArchivos.files;
-          if (!archivos || !archivos.length) {
-                $imagenPrevisualizacion.src = "";
-                return;
-          }
-          const firstImage = archivos[0];
-          const objectUrl = URL.createObjectURL(firstImage);
-          $imagenPrevisualizacion.src=objectUrl;
-          }
-      
+    mostrarImagen() {
+      const $seleccionArchivos = document.querySelector("#imagen") as HTMLInputElement,
+        $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion") as HTMLImageElement;
+      if ($seleccionArchivos != null) {
+        const archivos = $seleccionArchivos.files;
+        if (!archivos || !archivos.length) {
+          $imagenPrevisualizacion.src = "";
+          return;
+        }
+        const firstImage = archivos[0];
+        const objectUrl = URL.createObjectURL(firstImage);
+        $imagenPrevisualizacion.src = objectUrl;
+      }
+
     },
 
     firtRefresh() {
       this.accion = this.$route.query.accion || "";
       this.id = this.$route.query.id;
- 
+
       if (this.accion === "editar") {
         oCall.cenisFetch('GET', `api/Categoria/${this.id}`, "", '')
           .then((response) => {
@@ -138,15 +138,19 @@ const CategoriaCrud = defineComponent({
 
       <>
         <div class="Container_Create">
-          <div>
+          <div data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
 
-            <h2>CATEGORIAS</h2>
-            <h6 style="width:600px">Las categorias te permiten administrar y controlar la vista de los productos que ofreces y tienes
+            <h4 class="display-4">CATEGORIAS</h4>
+            <di class="d-flex justify-content-center">
+              <hr class="solid" />
+            </di>
+            &nbsp;
+            <h6>Las categorias te permiten administrar y controlar la vista de los productos que ofreces y tienes
               disponibles en la sección del "catalogo"</h6>
 
           </div>
           &nbsp;
-          <div class="Create_Form">
+          <div class="Create_Form" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
 
             <form method="POST" id="Formproduct" name="Formproduct">
 
@@ -157,8 +161,8 @@ const CategoriaCrud = defineComponent({
 
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label LabelsForms">Imagen</label>
-                <input type="file" class="form-control" id="imagen" name="imagen" required onChange={() => this.mostrarImagen()}/>
-                <img id="imagenPrevisualizacion" src={this.categoria.imagen} alt="sin imagenes seleccionadas" class="img-fluid"/>
+                <input type="file" class="form-control" id="imagen" name="imagen" required onChange={() => this.mostrarImagen()} />
+
               </div>
 
 

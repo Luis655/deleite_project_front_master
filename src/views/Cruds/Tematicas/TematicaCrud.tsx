@@ -136,15 +136,18 @@ const TematicaCrud = defineComponent({
         return (
             <>
                 <div class="Container_Create">
-                    <div>
-
-                        <h2>TEMATICAS</h2>
-                        <h6 style="width:600px">Las tematicas te permiten administrar y controlar la vista de los productos que ofreces y tienes
+                    <div data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
+                        <h4 class="display-4">TEMATICAS</h4>
+                        <di class="d-flex justify-content-center">
+                            <hr class="solid" />
+                        </di>
+                        &nbsp;
+                        <h6>Las tematicas te permiten administrar y controlar la vista de los productos que ofreces y tienes
                             disponibles en la sección del "Catálogo"</h6>
 
                     </div>
                     &nbsp;
-                    <div class="Create_Form">
+                    <div class="Create_Form" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
 
                         <form>
 

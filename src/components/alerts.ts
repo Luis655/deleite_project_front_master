@@ -32,7 +32,7 @@ export function swalAlert(type: string, text: string, confirmFunction?: Function
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Si',
                 cancelButtonText: 'No', 
-                timer:1500
+                timer: 6000
             }).then((result) => {
                 if (result.isConfirmed && confirmFunction) {
                 confirmFunction();
