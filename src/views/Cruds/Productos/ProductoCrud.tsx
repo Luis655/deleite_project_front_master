@@ -72,6 +72,7 @@ const ProductoCrud = defineComponent({
       categoria: Object as ProductImage,
       accion: Object as any,
       id: Object as any,
+      trueorfalse: Object as any,
       countimagesArray: [] as []
 
     }
@@ -84,7 +85,7 @@ const ProductoCrud = defineComponent({
     },
 
     async llenarimagenes() {
-      oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
+      oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}/${this.trueorfalse}`, "", "")
         .then((response) => {
           const datos: [] = response.Data.$values;
           this.countimagesArray = [];
@@ -153,6 +154,7 @@ const ProductoCrud = defineComponent({
           input.type = 'file';
           input.id = `input-${inputCount}`;
           input.name = `input-${inputCount}`;
+          input.className = 'form-control';
           const cont = inputCount;
           input.addEventListener('change', () => {
             mostrarImagen(`input-${cont}`, `img-${cont}`)
@@ -402,9 +404,8 @@ const ProductoCrud = defineComponent({
       oCall.cenisFetch("GET", url, "", "")
         .then(async (response) => {
           console.log(response.status);
-          
+
           if (response.status == 200) {
-            alert("mnj")
 
             nombreP.value = response.Data["nombreP"];
             ingredienteselect.value = response.Data["ingredienteselect"];
@@ -418,8 +419,8 @@ const ProductoCrud = defineComponent({
 
             oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
               .then((response) => {
-                console.log("kjhjvhhgvjhghjkjh "+ response);
-                
+                console.log("kjhjvhhgvjhghjkjh " + response);
+
                 this.countimagesArray = response.Data.$values;
                 if (response.Data.$values.length >= 3) {
                   const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
@@ -463,6 +464,7 @@ const ProductoCrud = defineComponent({
       this.llenarCategorias(),
       this.llenarTematica()
     this.id = this.$route.params.id;
+    this.trueorfalse = this.$route.params.trueorfalse;
 
 
     if (this.$route.params.id !== null && this.$route.params.trueorfalse == "true") {
@@ -543,12 +545,15 @@ const ProductoCrud = defineComponent({
                     <input type="text" class="form-control" name="nombreP" id="nombreP" onChange={(e) => this.handlerchange(e)} required />
                     <div id="nombrePvalidacion"></div>
                   </div>
+                  
                   <div class="mb-3">
                     <div class="row" id="contenedor-inputs">
                       <div id="mensajeimagenes" class="col">
                         Solo se puede agregar un máximo de 3 imágenes
                       </div>
+                      
                     </div>
+                    <img id="imagenPrevisualizacion" src="" height="100" width="100" alt="sin imagenes" />
                   </div>
 
                 </form>
@@ -578,33 +583,31 @@ const ProductoCrud = defineComponent({
 
                   <div class="row display-flex align-items-end g-2">
 
-                    <div class="col-12">
+                    <div class="col-10">
                       <label id="label5" class="form-label" for="file-5"></label>
                       <input type="file" name="file-5" id="file-5" class="form-control" onChange={() => this.mostrarImagen()} />
-                      <img id="imagenPrevisualizacion" src="" height="100" width="100" alt="sin imagenes" />
+
                     </div>
 
-                    <div class="col-1">
-                      <div>
-                        <input type="text" value={this.$route.params.id} class="form-control" style="display:none" />
-                        <button onClick={() => this.AgregarFotos(null, null)} id="crear-input" type="button" onChange={(e) => this.handlerchange(e)} class="btn-inputProd btn-inputProd2">Añadir +</button>
-                      </div>
+                    <div class="col-2">
+                      <input type="text" value={this.$route.params.id} class="form-control" style="display:none" />
+                      <button onClick={() => this.AgregarFotos(null, null)} id="crear-input" type="button" onChange={(e) => this.handlerchange(e)} class="btn-inputProd btn-inputProd2">Añadir +</button>
+                    </div>
+
+                    <div class="mb-3">
+                      <button onClick={this.crearCategoria} type="button" class="btn btn-cruds btn-mediaProd" onChange={(e) => this.handlerchange(e)}>Enviar</button>
                     </div>
 
                   </div>
 
                   <div class="mb-3">
                     <input type="text" value={this.$route.params.id} class="form-control" style="display:none" />
-
-
                   </div>
 
                 </form>
               </div>
 
-              <div class="mb-3">
-                <button onClick={this.crearCategoria} type="button" class="btn btn-cruds btn-mediaProd" onChange={(e) => this.handlerchange(e)}>Enviar</button>
-              </div>
+
 
 
             </div>
