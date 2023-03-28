@@ -12,9 +12,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
 
 //import './assets/js/scripts.js'
-
-
 import './assets/css/navbar.css'
+
+
+import './assets/css/calificacion.css'
 import './assets/css/footer.css'
 import './assets/css/login.css'
 import './assets/css/productos.css'

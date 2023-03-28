@@ -40,6 +40,11 @@ interface Produc {
   base64?: string;
 }
 
+interface calificacion {
+    idproducto?: number;
+    estrellas?: number;
+}
+
 let inicioPagina = 0;
 let finalPagina = 11;
 const elementosDisplay = 12;
@@ -51,7 +56,9 @@ const ConsultarProducto = defineComponent({
             produc: [] as Produc[],
             id: Object as any,
             Response: {} as response,
-            nombreCategoria: String as any
+            nombreCategoria: String as any,
+            valores: {} as calificacion,
+
         }},
     methods:{
         Detallerir(id:any){
