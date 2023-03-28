@@ -121,7 +121,22 @@ const DetalleProducto = defineComponent({
                 .catch((error) => {
                     console.error('Ha ocurrido un error al crear una nueva categoría:', error);
                 });
-        }
+        },
+
+        calificar(e: any) {
+            e.preventDefault();
+            const estrellasInput = document.querySelector<HTMLInputElement>('input[name="estrellas"]:checked');
+            const estrellas = estrellasInput?.value;
+            alert('El usuario ha calificado con ' + estrellas + ' estrellas');
+            oCall.cenisFetch('GET', `api/Calificacion/create`, "", "")
+                .then(async (response) => {
+                    console.log(response.Data);
+
+                })
+                .catch((error) => {
+                    console.error('Ha ocurrido un error al crear una nueva categoría:', error);
+                });
+        },
 
     },
 
@@ -195,6 +210,34 @@ const DetalleProducto = defineComponent({
                                     </div>
 
 
+                                    <div class="row g-0 d-flex justify-content-center">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target={`#modalImage11`}> hola
+                                        </a>
+                                    </div>
+
+                                    <div tabindex="-1" aria-labelledby="modalImage1" arial-hidden="true" class="modal fade" id="modalImage11">
+                                        <div class="modal-dialog modal-lg modal-dialog-center">
+                                            <div class="modal-content">
+                                                Denos su opinios calificandonos
+                                                <form action="" method="POST">
+                                                    <p class="clasificacion">
+                                                        <input id="radio1" type="radio" name="estrellas" value="5" />
+                                                        <label for="radio1">★</label>
+                                                        <input id="radio2" type="radio" name="estrellas" value="4" />
+                                                        <label for="radio2">★</label>
+                                                        <input id="radio3" type="radio" name="estrellas" value="3" />
+                                                        <label for="radio3">★</label>
+                                                        <input id="radio4" type="radio" name="estrellas" value="2" />
+                                                        <label for="radio4">★</label>
+                                                        <input id="radio5" type="radio" name="estrellas" value="1" />
+                                                        <label for="radio5">★</label>
+                                                    </p>
+                                                    <p>
+                                                        <button onClick={(e) => this.calificar(e)} value="Enviar" name="">Enviar</button>
+                                                    </p>
+                                                </form>                        </div>
+                                        </div>
+                                    </div>
 
 
                                     &nbsp;

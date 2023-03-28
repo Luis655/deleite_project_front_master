@@ -401,7 +401,11 @@ const ProductoCrud = defineComponent({
 
       oCall.cenisFetch("GET", url, "", "")
         .then(async (response) => {
+          console.log(response.status);
+          
           if (response.status == 200) {
+            alert("mnj")
+
             nombreP.value = response.Data["nombreP"];
             ingredienteselect.value = response.Data["ingredienteselect"];
             precio.value = response.Data["precio"];
@@ -411,8 +415,11 @@ const ProductoCrud = defineComponent({
             popular.value = response.Data["popular"] == "1" ? "1" : "0";
             saludable.value = response.Data["saludable"] == "1" ? "1" : "0";
             imagen.src = response.Data["imagenPrincipal"];
+
             oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
               .then((response) => {
+                console.log("kjhjvhhgvjhghjkjh "+ response);
+                
                 this.countimagesArray = response.Data.$values;
                 if (response.Data.$values.length >= 3) {
                   const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
@@ -539,7 +546,7 @@ const ProductoCrud = defineComponent({
                   <div class="mb-3">
                     <div class="row" id="contenedor-inputs">
                       <div id="mensajeimagenes" class="col">
-                        Solo se puede agregar un máximo de 4 imágenes
+                        Solo se puede agregar un máximo de 3 imágenes
                       </div>
                     </div>
                   </div>
@@ -574,6 +581,7 @@ const ProductoCrud = defineComponent({
                     <div class="col-12">
                       <label id="label5" class="form-label" for="file-5"></label>
                       <input type="file" name="file-5" id="file-5" class="form-control" onChange={() => this.mostrarImagen()} />
+                      <img id="imagenPrevisualizacion" src="" height="100" width="100" alt="sin imagenes" />
                     </div>
 
                     <div class="col-1">

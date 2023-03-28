@@ -40,6 +40,11 @@ interface Produc {
     base64?: string;
 }
 
+interface calificacion {
+    idproducto?: number;
+    estrellas?: number;
+}
+
 let inicioPagina = 0;
 let finalPagina = 11;
 const elementosDisplay = 12;
@@ -51,11 +56,12 @@ const ConsultarProducto = defineComponent({
             produc: [] as Produc[],
             id: Object as any,
             Response: {} as response,
-            nombreCategoria: String as any
-        }
-    },
-    methods: {
-        Detallerir(id: any) {
+            nombreCategoria: String as any,
+            valores: {} as calificacion,
+
+        }},
+    methods:{
+        Detallerir(id:any){
             alert(id);
             //this.$router.push({ name: 'detalleproducto', params: { id: id}})
         },
@@ -181,10 +187,8 @@ const ConsultarProducto = defineComponent({
                     const numeroiniciopagina = index * elementosDisplay;
                     finalPagina = numeroiniciopagina - 1;
                     inicioPagina = finalPagina + 1 - elementosDisplay;
-                    paginaSiguiente = paginaSiguiente > 2 ? index + 1 : paginaSiguiente;
-                    pagianAnterior = pagianAnterior == 1 ? pagianAnterior : pagianAnterior - 1;
+                    indexActula = index;
                     paginateul.remove();
-                    alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + "pagina siguiente: " + paginaSiguiente);
 
                     for (let index = 0; index <= this.produc.length; index++) {
                         const divproductos = document.getElementById(`divproductos${index}`);
@@ -199,14 +203,14 @@ const ConsultarProducto = defineComponent({
             }
 
             paginationNxt.addEventListener('click', () => {
-                const numeroiniciopagina = paginaSiguiente * elementosDisplay;
-                finalPagina = numeroiniciopagina - 1;
-                inicioPagina = finalPagina + 1 - elementosDisplay;
-                paginaSiguiente = paginaSiguiente > 2 ? paginaSiguiente + 1 : paginaSiguiente;
-                pagianAnterior = pagianAnterior == 1 ? pagianAnterior : pagianAnterior - 1;
+                if(indexActula>=numlipagination){
+                    indexActula = indexActula-1;
+                }
+                const numeroiniciopagina = (indexActula+1)*elementosDisplay;
+                finalPagina = numeroiniciopagina-1;
+                inicioPagina = finalPagina+1-elementosDisplay;
                 paginateul.remove();
-                alert("final pagina; " + finalPagina + ", inicio pagina: " + inicioPagina + ", pagina siguiente " + paginaSiguiente);
-
+                indexActula++;
                 for (let index = 0; index <= this.produc.length; index++) {
                     const divproductos = document.getElementById(`divproductos${index}`);
                     divproductos?.remove();
