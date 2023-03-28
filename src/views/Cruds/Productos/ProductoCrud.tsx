@@ -417,7 +417,7 @@ const ProductoCrud = defineComponent({
             saludable.value = response.Data["saludable"] == "1" ? "1" : "0";
             imagen.src = response.Data["imagenPrincipal"];
 
-            oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
+            oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}/${this.trueorfalse}`, "", "")
               .then((response) => {
                 console.log("kjhjvhhgvjhghjkjh " + response);
 

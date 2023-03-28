@@ -181,7 +181,7 @@ const router = createRouter({
     },
 
     {
-      path: '/detalleproducto/:id', //URL
+      path: '/detalleproducto/:id/:trueorfalse', //URL
       name: 'detalleproducto',
       component: detalleproducto
     },

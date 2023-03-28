@@ -69,6 +69,12 @@ const ProductosList = defineComponent({
       this.$router.push({ name: 'ProductoCrudActualizar', params: { id: id, trueorfalse: idConfirmacionT } })
 
     },
+    LlamarDetalles(id: any, idConfirmacionT: any) {
+      if (idConfirmacionT == null)
+        idConfirmacionT = true;
+      this.$router.push({ name: 'detalleproducto', params: { id: id, trueorfalse: idConfirmacionT } })
+
+    },
 
     borrarProductos(idproducto: any) {
       //var nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
@@ -206,8 +212,7 @@ const ProductosList = defineComponent({
                                   }} class="btn btn-cruds" id="whatsapp-button">Borrar</button>
 
                                   <button onClick={() => {
-                                    const id = item.idProducto; alert(id)
-                                    this.$router.push({ name: 'detalleproducto', params: { id: id } })
+                                    this.LlamarDetalles(item.idProducto, item.idConfirmacionT)
 
                                   }} class="btn btn-cruds" id="whatsapp-button">Detalles</button>
 

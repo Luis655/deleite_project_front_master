@@ -25,6 +25,7 @@ const DetalleProducto = defineComponent({
     data() {
         return {
             id: Object as any,
+            trueorfalse: Object as any,
             productoImagenes: [] as ProductoImagenes[],
             productoDatos: [] as ProductoDatos,
             ingre: [] as any,
@@ -108,7 +109,7 @@ const DetalleProducto = defineComponent({
                     console.error('Ha ocurrido un error al crear una nueva categoría:', error);
                 });
 
-            oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}`, "", "")
+            oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}/${this.trueorfalse}`, "", "")
                 .then(async (response) => {
                     //console.log(response.Data.$values);
                     if (response.status == 200) {
@@ -142,6 +143,7 @@ const DetalleProducto = defineComponent({
 
     mounted() {
         this.id = this.$route.params.id;
+        this.trueorfalse = this.$route.params.trueorfalse;
         console.log("sdflsldfksd " + this.id)
         this.crearCategoria()
     },

@@ -127,7 +127,7 @@ const ConsultarProducto = defineComponent({
                             </div>
                             &nbsp;
                             <div>                          
-                                <a class="btn btn-productos btn-productos2" href="/detalleproducto/${response.Data.$values[index].idProducto}">Detalles</a>
+                                <a class="btn btn-productos btn-productos2" href="/detalleproducto/${response.Data.$values[index].idProducto}/${response.Data.$values[index].idConfirmacionT}">Detalles</a>
                             </div>
 
                         </div>
