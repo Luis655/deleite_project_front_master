@@ -1,5 +1,6 @@
 import { defineComponent } from "vue";
 import { Call } from "../../helpers/calls/Call"
+import { swalAlert } from "@/components/alerts";
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -51,6 +52,8 @@ const Catalogo = defineComponent({
             let oCall = new Call();
             oCall.cenisFetch("DELETE", `api/Categoria/delete/${id}`, "", "").then((respuesta) => {
                 this.recuperar()
+                swalAlert("Exito", "Se eliminó la categoria exitosamente")
+
             })
         },
 
@@ -93,7 +96,7 @@ const Catalogo = defineComponent({
                         <h2 class="Ticatalogo display-3" style="font-weight: 600" data-aos="zoom-out" data-aos-duration="3000">EL PAN DEL BUEN SABOR</h2>
                     </div>
                     &nbsp;
-                    <div class="CarouselInicio"  data-aos="fade" data-aos-duration="3000" data-aos-delay="1000">
+                    <div class="CarouselInicio" data-aos="fade" data-aos-duration="3000" data-aos-delay="1000">
                         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">

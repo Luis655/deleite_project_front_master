@@ -58,7 +58,7 @@ const TematicaCrud = defineComponent({
         },
 
 
-       async crearTematica() {
+        async crearTematica() {
             let esvalido = await this.SchemaValidation()
             if (esvalido == 0) {
                 return
@@ -89,7 +89,7 @@ const TematicaCrud = defineComponent({
                         if (response.status === 201) {
                             console.log(response, "Holaaaaaaaa")
                             console.log("Se ha creado una nueva tematica")
-                        
+
                             this.$router.push("/Tematicas")
                             swalAlert("Exito", "Creado exitosamente")
 
@@ -131,26 +131,29 @@ const TematicaCrud = defineComponent({
     },
     mounted() {
         this.firtRefresh()
-      },
+    },
     render() {
         return (
             <>
                 <div class="Container_Create">
-                    <div>
-
-                        <h2>TEMATICAS</h2>
-                        <h6 style="width:600px">Las tematicas te permiten administrar y controlar la vista de los productos que ofreces y tienes
+                    <div data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
+                        <h4 class="display-4">TEMATICAS</h4>
+                        <di class="d-flex justify-content-center">
+                            <hr class="solid" />
+                        </di>
+                        &nbsp;
+                        <h6>Las tematicas te permiten administrar y controlar la vista de los productos que ofreces y tienes
                             disponibles en la sección del "Catálogo"</h6>
 
                     </div>
                     &nbsp;
-                    <div class="Create_Form">
+                    <div class="Create_Form" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
 
                         <form>
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label LabelsForms">Nombre de la Tematica</label>
-                                <input type="text"class={`form-control ${this.errors['nombreT'] ? "is-invalid" : ""}`} autocomplete="off" value={this.tematica.nombreT} name="nombreT" onChange={(e) => this.handlerChange(e)} aria-describedby="emailHelp" />
+                                <input type="text" class={`form-control ${this.errors['nombreT'] ? "is-invalid" : ""}`} autocomplete="off" value={this.tematica.nombreT} name="nombreT" onChange={(e) => this.handlerChange(e)} aria-describedby="emailHelp" />
                                 <div class="invalid-feedback">
                                     {this.errors['nombreT']}
                                 </div>
@@ -167,4 +170,4 @@ const TematicaCrud = defineComponent({
     }
 
 })
-export default TematicaCrud
+export default TematicaCrud

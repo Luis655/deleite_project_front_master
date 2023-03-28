@@ -1,6 +1,7 @@
 import { defineComponent } from "vue";
 import { Call } from "../../../helpers/calls/Call"
 import * as yup from 'yup'
+import { swalAlert } from "@/components/alerts";
 
 
 interface Resgistrar {
@@ -75,11 +76,12 @@ const registrarse = defineComponent({
                         console.log(Response),
                             console.log("Se ha creado un nuevo usuario", Response)
                         console.log(Response)
-                        this.$router.push("/inicio")
+                        this.$router.push("Login")
+                        swalAlert("Exito", "Registro completado exitosamente")
 
                     }
                     else {
-                        console.log("Error")
+                        swalAlert("Error", "Hubo un problema, intentelo de nuevo")
                     }
 
                 })
@@ -92,20 +94,23 @@ const registrarse = defineComponent({
         return (
             <>
                 <section class="LoginCentrado">
-                    <div class="container-fluid h-custom backgroundLogin">
+                    <div class="container-fluid h-custom backgroundLogin" data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
                         <div>
-                            <h1>Registro de cuenta</h1>
-                            <h6>No comparta su cuenta de acceso y mantenga su contraseña única y segura</h6>
+                            <h4 class="display-4">Registro de cuenta</h4>
+                            <di class="d-flex justify-content-center">
+                                <hr class="solid" />
+                            </di>
+                            <h4>No comparta su cuenta de acceso y mantenga su contraseña única y segura</h4>
                             &nbsp;
                         </div>
                         &nbsp;
-                        <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="row d-flex justify-content-center align-items-center h-100" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
                             <div class="col-md-9 col-lg-6 col-xl-5">
                                 <img src="src/assets/Deleite_logo.jpg" class="img-fluid" />
                             </div>
 
-                            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                                <form>
+                            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" >
+                                <form >
 
                                     <h2 class="display-6 tituloLogin" style="color: #724a3a">REGISTRO</h2>
                                     <br></br>
@@ -132,6 +137,11 @@ const registrarse = defineComponent({
                                         <div class="invalid-feedback">
                                             {this.errors['contraseña']}
                                         </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        ¿Ya tienes una cuenta?
+                                        <a href="/Login" class="text-body">Inicia sesión</a>
                                     </div>
 
                                     <div class="text-center text-lg-start mt-4 pt-2">

@@ -1,5 +1,9 @@
 @media (max-width: 992px) {
 
+    .btn-mediaProd{
+        margin: 15px;
+    }
+
 
     .contactos {
         display: flex;

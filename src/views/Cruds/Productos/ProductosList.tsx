@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 import { Call } from "../../../../helpers/calls/Call"
 import DataTable from 'datatables.net-dt'
-import jQuery from "jquery";
+
 import 'datatables.net-autofill-dt';
 import 'datatables.net-buttons-dt';
 import 'datatables.net-buttons/js/buttons.colVis.mjs';
@@ -9,7 +9,6 @@ import 'datatables.net-buttons/js/buttons.html5.mjs';
 import 'datatables.net-keytable-dt';
 import 'datatables.net-select-dt';
 import { swalAlert } from "@/components/alerts";
-
 
 interface ProductImage {
   idProducto?: number;
@@ -41,46 +40,8 @@ interface Fotos {
   imagenPrincipalchar?: string
 };
 
-/*
-function borrarProducto() {
-  alert("joasdasd");
-  // Código para borrar el producto
-}
-
-function guardarDatosAntesDeSalir(event: BeforeUnloadEvent) {
-  // Guardar los datos del formulario en el almacenamiento local (si es necesario)
-  borrarProducto();
-  // Mostrar un mensaje al usuario para confirmar si desea salir de la página o no
-  event.preventDefault();
-  event.returnValue = "¿lmhjhjhhghggvgvgvgvgvgvgvgvgvgvgv?";
-}
-
-function habilitarSalida() {
-  borrarProducto();
-  // Permitir que el usuario abandone la página
-  window.removeEventListener("beforeunload", guardarDatosAntesDeSalir);
-}
-
-function deshabilitarSalida() {
-  // Impedir que el usuario abandone la página
-  window.addEventListener("beforeunload", guardarDatosAntesDeSalir);
-}
-
-// Impedir que el usuario abandone la página al cargarla por primera vez
-deshabilitarSalida();*/
-
-
-// Para habilitar la salida, llama a la función habilitarSalida()
-// Para deshabilitar la salida, llama a la función deshabilitarSalida()
-
-
 let oCall = new Call();
 let inputCount = 0;
-
-
-
-
-
 
 const ProductosList = defineComponent({
 
@@ -101,13 +62,14 @@ const ProductosList = defineComponent({
       this.valores = ({ ...this.valores, [name]: value });
 
     },
+
     updateProducto(id: any, idConfirmacionT: any) {
       if (idConfirmacionT == null)
         idConfirmacionT = true;
       this.$router.push({ name: 'ProductoCrudActualizar', params: { id: id, trueorfalse: idConfirmacionT } })
 
-      alert(id);
     },
+
     borrarProductos(idproducto: any) {
       //var nombreid = (document.getElementById('idProducto') as HTMLInputElement).value;
       const id = parseInt(idproducto);
@@ -119,12 +81,15 @@ const ProductosList = defineComponent({
             oCall.cenisFetch('Delete', url, "", "")
               .then(async (response) => {
                 location.assign(window.location.href);
-                swalAlert("Exito", "se borro exitosamente el producto");
-
               })
+
+            swalAlert("Exito", "Se eliminó exitosamente")
+          }
+          else {
+            swalAlert("Error", "Hubo un problema. Favor de contactar a un desarrollador del sitio")
           }
         });
-      alert("joasdasd");
+
       // Código para borrar el producto
     },
     dtatable() {
@@ -134,35 +99,35 @@ const ProductosList = defineComponent({
         searching: true,
         paging: true,
         pageLength: 3,
-        ordering:  true,
-        order: [[ 3, 'desc' ], [ 0, 'asc' ]]
-    });
-    
+        ordering: true,
+        order: [[3, 'desc'], [0, 'asc']]
+      });
+
 
 
     },
 
     async crearCategoria() {
-      
+
 
       oCall.cenisFetch('GET', 'api/Producto/get', "", "")
         .then(async (response) => {
           //console.log(response.Data.$values);
           this.produc = await response.Data.$values;
           return Promise.resolve();
-          
+
         })
         .catch((error) => {
           console.error('Ha ocurrido un error al crear una nueva categoría:', error);
         });
     },
-    validarProducto(){
+    validarProducto() {
       oCall.cenisFetch('GET', 'api/Producto/veriicarProductos', "", "")
-      .then((response) => {
-        response.Data;
-      })
+        .then((response) => {
+          response.Data;
+        })
     },
-   
+
   },
   /*get methods() {
     return this._methods;
@@ -171,7 +136,7 @@ const ProductosList = defineComponent({
     this._methods = value;
   },*/
 
- async mounted() {
+  async mounted() {
     this.validarProducto();
     setTimeout(await this.crearCategoria, 200)
     setTimeout(this.dtatable, 500);
@@ -181,47 +146,30 @@ const ProductosList = defineComponent({
     return (
       <>
         <body>
-
-<br />
-<br />
-<br />
-
-
-
-
-
-
-
-
           <div class="row">
             <div class="col-lg-12">
-
               <div class="row-lg-12">
-                <div class="TituloProductos">
+                <div class="TituloProductos" data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
 
-                  <h2> PRODUCTOS</h2>
+                  <h2 class="display-4"> PRODUCTOS</h2>
+
+                  <di class="d-flex justify-content-center">
+                    <hr class="solid" />
+                  </di>
+                  &nbsp;
                   <input id="nombreid" name="nombreid" type="number" value={this.$route.params.id} disabled style="display:none" />
-                  <h6 style="width:600px">
+
+                  <h6>
                     Los productos que registres se categorizarán automáticamente según las preferencias y datos que registres
                   </h6>
 
 
                 </div>
               </div>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <button onClick={this.dtatable} class="btn btn-cruds" id="whatsapp-button">tabla</button>
 
-              <br />
-              <br />
-              <center>
+              <div class="row display-flex justify-content-center">
                 <div class="col-11">
-                  <div class="table-responsive">
+                  <div class="table-responsive" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
                     <table id="miTabla" class="table table-bordered" data-order='[[ 1, "asc" ]]' data-page-length='3'>
                       <thead>
                         <tr>
@@ -246,16 +194,16 @@ const ProductosList = defineComponent({
                               <td>{item.ingredienteselect}</td>
                               <td>{item.nombreCategoria}</td>
                               <td>{item.nombreTematica}</td>
-                              <td><img src={item.base64} height="50" class="rounded-circle mt-n3" alt="N/A" /></td>
+                              <td><img src={item.base64} height="100" class="square-circle" alt="N/A" /></td>
                               <td>
                                 <div class="row">
 
                                   <button onClick={() => {
-                                    swalAlert("Confirmacion", "¿desea actualizar el producto?", ()=> this.updateProducto(item.idProducto, item.idConfirmacionT))
-                                    }} class="btn btn-cruds" id="whatsapp-button">Actualizar</button>
+                                    swalAlert("Confirmacion", "¿Desea actualizar el producto?", () => this.updateProducto(item.idProducto, item.idConfirmacionT))
+                                  }} class="btn btn-cruds" id="whatsapp-button">Actualizar</button>
                                   <button onClick={() => {
-                                    swalAlert("Confirmacion", "¿desea borrar este producto?", ()=> this.borrarProductos(item.idProducto))
-                                     }} class="btn btn-cruds" id="whatsapp-button">Borrar</button>
+                                    swalAlert("Confirmacion", "¿Desea borrar este producto?", () => this.borrarProductos(item.idProducto))
+                                  }} class="btn btn-cruds" id="whatsapp-button">Borrar</button>
 
                                   <button onClick={() => {
                                     const id = item.idProducto; alert(id)
@@ -277,14 +225,9 @@ const ProductosList = defineComponent({
                   </div>
 
                 </div>
-              </center>
+              </div>
+              &nbsp;
 
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
 
             </div>
           </div>

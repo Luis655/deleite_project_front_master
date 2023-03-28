@@ -29,15 +29,15 @@ interface lsProduct {
     base64?: string;
 }
 interface Produc {
-  idProducto?: number;
-  idConfirmacionT?: boolean;
-  nombreP?: string;
-  descripcionP?: string;
-  precio?: string;
-  ingredienteselect?: string;
-  nombreCategoria?: string;
-  nombreTematica?: string;
-  base64?: string;
+    idProducto?: number;
+    idConfirmacionT?: boolean;
+    nombreP?: string;
+    descripcionP?: string;
+    precio?: string;
+    ingredienteselect?: string;
+    nombreCategoria?: string;
+    nombreTematica?: string;
+    base64?: string;
 }
 
 interface calificacion {
@@ -52,7 +52,7 @@ let indexActula = 1;
 
 const ConsultarProducto = defineComponent({
     data() {
-        return{
+        return {
             produc: [] as Produc[],
             id: Object as any,
             Response: {} as response,
@@ -65,42 +65,42 @@ const ConsultarProducto = defineComponent({
             alert(id);
             //this.$router.push({ name: 'detalleproducto', params: { id: id}})
         },
-        
-        
-    async llamarProductos(consulta:any){
-        const productosDiv = document.getElementById('productospaginados') as HTMLElement;
-        let url ='api/Producto/get';
-        if (this.$route.query.idCategoria) {
-            this.nombreCategoria = this.$route.query.nombreCategoria;
-            url = `api/Categoria/productos/${this.$route.query.idCategoria}`
-        }else if (this.$route.query.idTematica) {
-            url = `api/Categoria/${this.$route.query.idTematica}`
-        }else if(consulta) {
-            url = 'api/Producto/get';
-        }else{
-            url = 'api/Producto/get';
-        }
-        oCall.cenisFetch('GET', url, "", "" )
-        .then(async (response) =>{
-           //console.log(response.Data.$values);
-           this.produc = await response.Data.$values;
 
-           this.paginacion();
 
-           //console.log(this.produc);
-           console.log(this.nombreCategoria );
-           
-                for (let index = 0; index <= this.produc.length; index++) {
-                    
-                if(index>=inicioPagina &&index<=finalPagina){
-                
+        async llamarProductos(consulta: any) {
+            const productosDiv = document.getElementById('productospaginados') as HTMLElement;
+            let url = 'api/Producto/get';
+            if (this.$route.query.idCategoria) {
+                this.nombreCategoria = this.$route.query.nombreCategoria;
+                url = `api/Categoria/productos/${this.$route.query.idCategoria}`
+            } else if (this.$route.query.idTematica) {
+                url = `api/Categoria/${this.$route.query.idTematica}`
+            } else if (consulta) {
+                url = 'api/Producto/get';
+            } else {
+                url = 'api/Producto/get';
+            }
+            oCall.cenisFetch('GET', url, "", "")
+                .then(async (response) => {
+                    //console.log(response.Data.$values);
+                    this.produc = await response.Data.$values;
 
-                const newDiv = document.createElement('div');
-                newDiv.id=`divproductos${index}`;
-                newDiv.className='col-md-4  centercards';
-                
-                newDiv.innerHTML=
-                `
+                    this.paginacion();
+
+                    //console.log(this.produc);
+                    console.log(this.nombreCategoria);
+
+                    for (let index = 0; index <= this.produc.length; index++) {
+
+                        if (index >= inicioPagina && index <= finalPagina) {
+
+
+                            const newDiv = document.createElement('div');
+                            newDiv.id = `divproductos${index}`;
+                            newDiv.className = 'col-md-4  centercards';
+
+                            newDiv.innerHTML =
+                                `
                 <div class="card item" style="width: 18rem;">
 
                     <div class="imgsize">
@@ -108,142 +108,147 @@ const ConsultarProducto = defineComponent({
                     </div>
 
                     <div class="card-body">
-                        <h5 class="card-title">${response.Data.$values[index].nombreP}</h5>
-                        <p class="card-text">$ ${response.Data.$values[index].precio}</p>
 
                         <div>
-                            <h6 style="font-size: 15px">Temática</h6>
-                            <p class="card-text text-muted" style="font-size: 12px">${response.Data.$values[index].nombreTematica}</p>
-                            </div>
+                            <h5 class="card-title" style="font-weight: 600;">${response.Data.$values[index].nombreP}</h5>
+                        </div>
+
+                            <p class="card-text" style="font-size: 22px;">$ ${response.Data.$values[index].precio}.00</p>
+
+                        <div>
                             <div>
-                            <h6 style="font-size: 15px">Categoria</h6>
-                            <p class="card-text text-muted" style="font-size: 12px">${response.Data.$values[index].nombreCategoria}</p>
+                                <h6 style="font-size: 15px; font-weight: 600;">Temática</h6>
+                                <p class="card-text text-muted" style="font-size: 16px">${response.Data.$values[index].nombreTematica}</p>
+                            </div>
+                            &nbsp;
+                            <div>
+                                <h6 style="font-size: 15px; font-weight: 600;">Categoria</h6>
+                                <p class="card-text text-muted" style="font-size: 16px">${response.Data.$values[index].nombreCategoria}</p>
                             </div>
                             &nbsp;
                             <div>                          
-                                <a class="btn btn-productos btn-productos2" href="/detalleproducto/${response.Data.$values[index].idProducto}">Ver más</a>
+                                <a class="btn btn-productos btn-productos2" href="/detalleproducto/${response.Data.$values[index].idProducto}">Detalles</a>
                             </div>
 
                         </div>
-                        
-    
                     </div>
-                    
+
                     `;
-                    
-                
-            
-                productosDiv?.appendChild(newDiv);
-            }else{
-                console.log("hola");
-                
+
+
+
+                            productosDiv?.appendChild(newDiv);
+                        } else {
+                            console.log("hola");
+
+                        }
+                    }    //console.log(this.produc);
+                    return Promise.resolve();
+
+                })
+                .catch((error) => {
+                    console.log(error.Data);
+                })
+        },
+
+        paginacion() {
+
+
+
+            const elements = this.produc.length;
+            const numlipagination = Math.ceil(elements / elementosDisplay)
+
+            console.log("numero de paginas: " + numlipagination);
+
+
+
+            const paginatecontent = document.getElementById('paginacionelement') as HTMLElement;
+
+            const paginateul = document.createElement('ul');
+            paginateul.className = 'pagination';
+
+            const paginationBf = document.createElement('li');
+            paginationBf.className = 'page-item';
+            paginationBf.innerHTML = '<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
+
+
+            const paginationNxt = document.createElement('li');
+            paginationNxt.className = 'page-item';
+            paginationNxt.innerHTML = '<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>'
+
+            paginateul.appendChild(paginationBf);
+
+            for (let index = 1; index <= numlipagination; index++) {
+                const paginatelinum = document.createElement('li');
+                paginatelinum.className = 'page-item';
+                paginatelinum.innerHTML = `<li class="page-item"><a class="page-link" href="#">${index}</a></li>`;
+
+                paginatelinum.addEventListener('click', () => {
+                    const numeroiniciopagina = index * elementosDisplay;
+                    finalPagina = numeroiniciopagina - 1;
+                    inicioPagina = finalPagina + 1 - elementosDisplay;
+                    indexActula = index;
+                    paginateul.remove();
+
+                    for (let index = 0; index <= this.produc.length; index++) {
+                        const divproductos = document.getElementById(`divproductos${index}`);
+                        divproductos?.remove();
+                    }
+                    this.llamarProductos(null);
+
+                });
+
+                paginateul.appendChild(paginatelinum);
+
             }
-        }    //console.log(this.produc);
-        return Promise.resolve();
 
-            })
-            .catch((error)=>{
-                console.log(error.Data);
-            })},
-    
-    paginacion(){
-
-
-
-        const elements = this.produc.length;
-        const numlipagination =  Math.ceil(elements/elementosDisplay)
-
-        console.log("numero de paginas: " + numlipagination);
-        
-
-
-        const paginatecontent = document.getElementById('paginacionelement') as HTMLElement;
-
-        const paginateul = document.createElement('ul');
-        paginateul.className='pagination';
-
-        const paginationBf = document.createElement('li');
-        paginationBf.className = 'page-item';
-        paginationBf.innerHTML= '<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
-
-
-        const paginationNxt = document.createElement('li');
-        paginationNxt.className = 'page-item';
-        paginationNxt.innerHTML= '<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>'
-        
-        paginateul.appendChild(paginationBf);
-
-        for (let index = 1; index <= numlipagination; index++) {
-            const paginatelinum = document.createElement('li');
-            paginatelinum.className = 'page-item';
-            paginatelinum.innerHTML =  `<li class="page-item"><a class="page-link" href="#">${index}</a></li>`;
-
-            paginatelinum.addEventListener('click', () => {
-                const numeroiniciopagina = index*elementosDisplay;
+            paginationNxt.addEventListener('click', () => {
+                if(indexActula>=numlipagination){
+                    indexActula = indexActula-1;
+                }
+                const numeroiniciopagina = (indexActula+1)*elementosDisplay;
                 finalPagina = numeroiniciopagina-1;
                 inicioPagina = finalPagina+1-elementosDisplay;
-                indexActula = index;
                 paginateul.remove();
+                indexActula++;
                 for (let index = 0; index <= this.produc.length; index++) {
-                const divproductos = document.getElementById(`divproductos${index}`);
-                divproductos?.remove();
+                    const divproductos = document.getElementById(`divproductos${index}`);
+                    divproductos?.remove();
                 }
                 this.llamarProductos(null);
-                
+
             });
 
-            paginateul.appendChild(paginatelinum);
-            
-        }
+            paginationBf.addEventListener('click', () => {
 
-        paginationNxt.addEventListener('click', () => {
-            if(indexActula>=numlipagination){
-                indexActula = indexActula-1;
-            }
-            const numeroiniciopagina = (indexActula+1)*elementosDisplay;
-            finalPagina = numeroiniciopagina-1;
-            inicioPagina = finalPagina+1-elementosDisplay;
-            paginateul.remove();
-            indexActula++;
+                if (indexActula <= 1) {
+                    indexActula = 2;
+                }
+                const numeroiniciopagina = (indexActula - 1) * elementosDisplay;
+                finalPagina = numeroiniciopagina - 1;
+                inicioPagina = finalPagina + 1 - elementosDisplay;
+                paginateul.remove();
+                indexActula--;
 
-            for (let index = 0; index <= this.produc.length; index++) {
-            const divproductos = document.getElementById(`divproductos${index}`);
-            divproductos?.remove();
-            }
-            this.llamarProductos(null);
-            
-        });
+                for (let index = 0; index <= this.produc.length; index++) {
+                    const divproductos = document.getElementById(`divproductos${index}`);
+                    divproductos?.remove();
+                }
+                this.llamarProductos(null);
 
-        paginationBf.addEventListener('click', () => {
-            
-            if(indexActula<=1){
-                indexActula =2;
-            }
-            const numeroiniciopagina = (indexActula-1)*elementosDisplay;
-            finalPagina = numeroiniciopagina-1;
-            inicioPagina = finalPagina+1-elementosDisplay;
-            paginateul.remove();
-            indexActula--;
+            });
 
-            for (let index = 0; index <= this.produc.length; index++) {
-            const divproductos = document.getElementById(`divproductos${index}`);
-            divproductos?.remove();
-            }
-            this.llamarProductos(null);
-            
-        });
-      
-        paginateul.appendChild(paginationNxt);
-        paginatecontent.appendChild(paginateul);
+            paginateul.appendChild(paginationNxt);
+            paginatecontent.appendChild(paginateul);
 
-        
 
+
+        },
     },
-},
     async mounted() {
         await this.llamarProductos(null);
         oCall.cenisFetch('GET', 'api/Producto/veriicarProductos', "", "")
-        .then((response) => {});
+            .then((response) => { });
     },
     render() {
         return (
@@ -252,7 +257,7 @@ const ConsultarProducto = defineComponent({
                     <div class="ConsultaProductos">
                         <div class="ListadoProductos">
 
-                            <div>
+                            <div data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
                                 <h2 class="display-4">{this.nombreCategoria.name != "String" ? this.nombreCategoria : 'Catalogo Deleite'}</h2>
                                 <h5>Del horno a tu mesa</h5>
                                 <di class="d-flex justify-content-center">
@@ -262,14 +267,9 @@ const ConsultarProducto = defineComponent({
                                 <h5>Elige entre nuestra gran variedad de sabores y presentaciones, listos para consentir tu paladar</h5>
                             </div>
 
-                            <div class="container container-fluid">
-
-
+                            <div class="container container-fluid" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
                                 <div class="row rowcards" id="productospaginados">
-
-
-
-                                   
+                                    
                                 </div>
                             </div>
 
@@ -279,7 +279,7 @@ const ConsultarProducto = defineComponent({
 
                     <div class="Paginacion">
                         <nav aria-label="Page navigation example" id="paginacionelement">
-                          
+
                         </nav>
                     </div>
 
