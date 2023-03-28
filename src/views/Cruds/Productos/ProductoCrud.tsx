@@ -100,12 +100,14 @@ const ProductoCrud = defineComponent({
       const addInputBtn = document.getElementById('crear-input');
       const mensageimagen = document.getElementById('mensajeimagenes');
       if (imagen) {
+        //numImagenes = this.countimagesArray.length + countimages;
+
         mensageimagen?.remove();
         if (container) {
           if (numImagenes >= 3) {
             const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
             imagenButtonAdd.disabled = true;
-            imagenButtonAdd.innerText = 'solo puedes tener 3 imagenes por productos'
+            imagenButtonAdd.innerText = 'Max'
           }
           const img = document.createElement('img');
           img.src = imagen;
@@ -136,10 +138,13 @@ const ProductoCrud = defineComponent({
       } else {
         countimages++;
         numImagenes = this.countimagesArray.length + countimages;
+        if(this.id && this.trueorfalse==false){
+
+        }
         if (numImagenes >= 3) {
           const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
           imagenButtonAdd.disabled = true;
-          imagenButtonAdd.innerText = 'Max.'
+          imagenButtonAdd.innerText = 'Max'
         }
         mensageimagen?.remove();
         if (addInputBtn && container) {
@@ -400,7 +405,7 @@ const ProductoCrud = defineComponent({
             swalAlert("Error", "Ha ocurrido un Error al hacer el registro5");
           });
       } else {
-        swalAlert("Error", "Ha ocurrido un Error al hacer el registro6");
+        swalAlert("Error", "Llena los campos correctamente");
       }
     },
 
@@ -443,7 +448,7 @@ const ProductoCrud = defineComponent({
                 if (response.Data.$values.length >= 3) {
                   const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
                   imagenButtonAdd.disabled = true;
-                  imagenButtonAdd.innerText = 'solo puedes tener 3 imagenes por productos'
+                  imagenButtonAdd.innerText = 'Max'
                 }
                 response.Data.$values.map((data: any) => {
                   this.AgregarFotos(data['base64'], data['idimgProducto']);
@@ -474,10 +479,10 @@ const ProductoCrud = defineComponent({
 
     },
 
-    imagensvg() { },
-
   },
   mounted() {
+    countimages = 0;
+    numImagenes = 0;
     window.localStorage.removeItem,
       this.llenarCategorias(),
       this.llenarTematica()
