@@ -138,3 +138,36 @@
     height: 200px !important;
     width: 200px !important;
 }
+
+
+.btn-cards {
+    color: black;
+
+    border-radius: 0%;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+
+    background-color: transparent;
+    width: 120px;
+    height:38px;
+
+
+}
+
+.btn-cards:focus {
+    outline: 0;
+}
+
+.btn-cards2 {
+    border-color: black;
+    transition: box-shadow 0.2s ease-in-out;
+
+}
+
+.btn-cards2:hover {
+    box-shadow: 0 0 40px 40px #724a3a inset;
+    border-color: #724a3a !important;
+    color: white !important;
+    background-color: #724a3a;
+}

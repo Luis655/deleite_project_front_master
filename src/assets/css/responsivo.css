@@ -1,9 +1,29 @@
 @media (max-width: 992px) {
 
-    .btn-mediaProd{
-        margin: 15px;
+
+    .Padre{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
     }
 
+    .Hija{
+        display: flex;
+        justify-content: center;
+    }
+
+    .imgPrin {
+        width: 200px !important;
+        height: 200px !important;
+
+        margin-left: 50%;
+        margin-right: 50%;
+    }
+
+    .btn-mediaProd {
+        margin: 15px;
+    }
 
     .contactos {
         display: flex;

@@ -101,7 +101,7 @@ const ConsultarProducto = defineComponent({
 
                             newDiv.innerHTML =
                                 `
-                <div class="card item" style="width: 18rem;">
+                <div class="card item cardsRespon" style="width: 18rem;">
 
                     <div class="imgsize">
                         <img src=${response.Data.$values[index].base64} class="card-img-top" />
@@ -127,7 +127,7 @@ const ConsultarProducto = defineComponent({
                             </div>
                             &nbsp;
                             <div>                          
-                                <a class="btn btn-productos btn-productos2" href="/detalleproducto/${response.Data.$values[index].idProducto}/${response.Data.$values[index].idConfirmacionT}">Detalles</a>
+                                <a class="btn btn-cards btn-cards2" href="/detalleproducto/${response.Data.$values[index].idProducto}/${response.Data.$values[index].idConfirmacionT}">Detalles</a>
                             </div>
 
                         </div>
@@ -139,7 +139,6 @@ const ConsultarProducto = defineComponent({
 
                             productosDiv?.appendChild(newDiv);
                         } else {
-                            console.log("hola");
 
                         }
                     }    //console.log(this.produc);

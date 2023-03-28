@@ -96,6 +96,7 @@ const ProductoCrud = defineComponent({
 
     async AgregarFotos(imagen: any, idimagen: any) {
       const container = document.getElementById('contenedor-inputs');
+      const container2 = document.getElementById('contenedor-inputs2');
       const addInputBtn = document.getElementById('crear-input');
       const mensageimagen = document.getElementById('mensajeimagenes');
       if (imagen) {
@@ -142,19 +143,24 @@ const ProductoCrud = defineComponent({
         }
         mensageimagen?.remove();
         if (addInputBtn && container) {
+          let count = 1;
+          count++;
           const input = document.createElement('input');
           const img = document.createElement('img');
           input.innerText = '...'
           img.src = imagen;
 
-          img.width = 100;
+
+          img.width = 150;
+          img.height = 150;
+
           img.id = `img-${++inputCount}`;
 
 
           input.type = 'file';
           input.id = `input-${inputCount}`;
           input.name = `input-${inputCount}`;
-          input.className = 'form-control';
+          input.className = 'form-control btn-respons';
           const cont = inputCount;
           input.addEventListener('change', () => {
             mostrarImagen(`input-${cont}`, `img-${cont}`)
@@ -164,17 +170,27 @@ const ProductoCrud = defineComponent({
 
           const deleteBtn = document.createElement('button');
           deleteBtn.textContent = 'Eliminar';
+          deleteBtn.className = 'btn btn-inputProd btn-inputProd2';
+
           deleteBtn.addEventListener('click', () => {
-            deleteInput(input, deleteBtn);
+            console.log(`img-${cont}`);
+            const imgDelete = document.getElementById(`img-${cont}`) as HTMLImageElement;
+            deleteInput(input, deleteBtn, imgDelete);
           });
 
           const wrapper = document.createElement('div');
-          wrapper.appendChild(input);
-          wrapper.appendChild(deleteBtn);
+          const wrapper2 = document.createElement('div');
+          wrapper.id = `div-${idimagen}`;
+          wrapper.className = 'col-4';
+          wrapper2.className = 'col-4'
+          wrapper2.appendChild(input);
+          wrapper2.appendChild(deleteBtn);
           wrapper.appendChild(img);
 
 
           container.appendChild(wrapper);
+          container2?.appendChild(wrapper2);
+
         } else {
           swalAlert("Error", "Hubo un error al cargar sus imagenes");
         }
@@ -203,7 +219,7 @@ const ProductoCrud = defineComponent({
       }
 
 
-      const deleteInput = (input: HTMLInputElement, button: HTMLButtonElement) => {
+      const deleteInput = (input: HTMLInputElement, button: HTMLButtonElement, idimagen: HTMLImageElement) => {
         const wrapper = button.parentElement;
         if (wrapper) {
           countimages--;
@@ -214,7 +230,11 @@ const ProductoCrud = defineComponent({
             imagenButtonAdd.innerText = 'Añadir +';
           }
           this.llenarimagenes();
+          const deleteimg = idimagen.parentElement;
+
           wrapper.remove();
+          deleteimg?.remove();
+          console.log("ID de la imagen " + idimagen);
         } else {
           swalAlert("Error", "Error al eliminar el elemento");
         }
@@ -419,8 +439,6 @@ const ProductoCrud = defineComponent({
 
             oCall.cenisFetch('GET', `api/Producto/getimages/${this.id}/${this.trueorfalse}`, "", "")
               .then((response) => {
-                console.log("kjhjvhhgvjhghjkjh " + response);
-
                 this.countimagesArray = response.Data.$values;
                 if (response.Data.$values.length >= 3) {
                   const imagenButtonAdd = document.getElementById('crear-input') as HTMLInputElement;
@@ -545,15 +563,17 @@ const ProductoCrud = defineComponent({
                     <input type="text" class="form-control" name="nombreP" id="nombreP" onChange={(e) => this.handlerchange(e)} required />
                     <div id="nombrePvalidacion"></div>
                   </div>
-                  
+
                   <div class="mb-3">
                     <div class="row" id="contenedor-inputs">
-                      <div id="mensajeimagenes" class="col">
-                        Solo se puede agregar un máximo de 3 imágenes
+                      <div>
+                        <img id="imagenPrevisualizacion" class="img-fluid imgPrin" width="200" />
                       </div>
-                      
+                      <div id="mensajeimagenes" class="col">
+
+                      </div>
+
                     </div>
-                    <img id="imagenPrevisualizacion" src="" height="100" width="100" alt="sin imagenes" />
                   </div>
 
                 </form>
@@ -578,36 +598,56 @@ const ProductoCrud = defineComponent({
                   <div class="mb-3">
                     <label class="LabelsForms">Descripción</label>
                     <textarea rows="3" class="form-control" type="text" id="descripcionP" name="descripcionP" onChange={(e) => this.handlerchange(e)} required />
-                    <div id="descripcionPvalidacion"></div>
+                    <div id="descripcionPvalidacion">
+
+                    </div>
                   </div>
 
-                  <div class="row display-flex align-items-end g-2">
+                  <div class="row g-2">
 
-                    <div class="col-10">
+                    <div class="col-12">
                       <label id="label5" class="form-label" for="file-5"></label>
                       <input type="file" name="file-5" id="file-5" class="form-control" onChange={() => this.mostrarImagen()} />
-
                     </div>
 
                     <div class="col-2">
                       <input type="text" value={this.$route.params.id} class="form-control" style="display:none" />
+
+                    </div>
+
+                  </div>
+
+                  <div class="Padre">
+                    <div class="Hija">
                       <button onClick={() => this.AgregarFotos(null, null)} id="crear-input" type="button" onChange={(e) => this.handlerchange(e)} class="btn-inputProd btn-inputProd2">Añadir +</button>
                     </div>
-
-                    <div class="mb-3">
-                      <button onClick={this.crearCategoria} type="button" class="btn btn-cruds btn-mediaProd" onChange={(e) => this.handlerchange(e)}>Enviar</button>
-                    </div>
-
                   </div>
 
                   <div class="mb-3">
                     <input type="text" value={this.$route.params.id} class="form-control" style="display:none" />
                   </div>
 
+                  <div class="col" id="contenedor-inputs2">
+                    <div id="mensajeimagenes" class="col">
+
+                    </div>
+                  </div>
                 </form>
+
+
               </div>
 
+              <div class="row">
+                <div class="Padre">
+                  <div class="Hija">
+                    <h6 class="maximgs">Solo se puede agregar un máximo de 3 imágenes</h6>
+                  </div>
+                </div>
+              </div>
 
+              <div class="mb-3" style="margin-top: 2%">
+                <button onClick={this.crearCategoria} type="button" class="btn btn-cruds btn-mediaProd" onChange={(e) => this.handlerchange(e)}>Enviar</button>
+              </div>
 
 
             </div>

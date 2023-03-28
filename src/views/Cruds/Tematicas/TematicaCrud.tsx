@@ -68,11 +68,8 @@ const TematicaCrud = defineComponent({
                 oCall.cenisFetch("PUT", `api/Tematica/${this.id}`, "", this.valores)
                     .then((Response) => {
                         console.log("Mensaje DE Tematicas: " + Response)
-                        if (Response.status === 200) {
-                            console.log(Response),
-                                console.log("Se ha editado la tematica")
-                            console.log(Response),
-                                this.$router.push("/Cruds/Tematicas/CosultarTematica")
+                        if (Response) {
+                                this.$router.push("/Tematicas")
                             swalAlert("Exito", "Se actualizo correctamente la tematica")
                         }
                     })
@@ -87,8 +84,6 @@ const TematicaCrud = defineComponent({
                     .then((response) => {
                         console.log(response, "Pelana")
                         if (response.status === 201) {
-                            console.log(response, "Holaaaaaaaa")
-                            console.log("Se ha creado una nueva tematica")
 
                             this.$router.push("/Tematicas")
                             swalAlert("Exito", "Creado exitosamente")

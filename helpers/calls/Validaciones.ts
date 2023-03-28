@@ -69,13 +69,13 @@ export class validaciones {
                     //nombreP.addEventListener('change', (event)=>{
 
                     if (!valor.match(/^[0-9]+$/)) {
-                      alert("Ingrese solo números");
+
                       nombreP.className = 'form-control is-invalid';
                       labeMessage.textContent ='solo se aceptan numeros';
                       nombrePmessage?.appendChild(labeMessage);
                       return false;
                     }else if(valor == ''){
-                        alert("Ingrese solo números");
+
                         nombreP.className = 'form-control is-invalid';
                         labeMessage.textContent ='asigna un valor numerico valido';
                         nombrePmessage?.appendChild(labeMessage);

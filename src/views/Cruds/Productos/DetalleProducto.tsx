@@ -213,7 +213,7 @@ const DetalleProducto = defineComponent({
 
 
                                     <div class="row g-0 d-flex justify-content-center">
-                                        <a href="#" data-bs-toggle="modal" data-bs-target={`#modalImage11`}> hola
+                                        <a href="#" data-bs-toggle="modal" data-bs-target={`#modalImage11`}>
                                         </a>
                                     </div>
 
