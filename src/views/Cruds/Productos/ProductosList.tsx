@@ -9,6 +9,7 @@ import 'datatables.net-buttons/js/buttons.html5.mjs';
 import 'datatables.net-keytable-dt';
 import 'datatables.net-select-dt';
 import { swalAlert } from "@/components/alerts";
+import { string } from "yup";
 
 interface ProductImage {
   idProducto?: number;
@@ -47,6 +48,7 @@ const ProductosList = defineComponent({
 
   data() {
     return {
+      token: string as any,
       valores: Object as ProductImage,
       categoria: Object as ProductImage,
       accion: Object as any,
@@ -143,6 +145,8 @@ const ProductosList = defineComponent({
   },*/
 
   async mounted() {
+    const tokenJSON = localStorage.getItem('token');
+    this.token = tokenJSON;
     this.validarProducto();
     setTimeout(await this.crearCategoria, 200)
     setTimeout(this.dtatable, 500);
@@ -152,7 +156,9 @@ const ProductosList = defineComponent({
     return (
       <>
         <body>
+
           <div class="row">
+        {this.token !== null ? 
             <div class="col-lg-12">
               <div class="row-lg-12">
                 <div class="TituloProductos" data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
@@ -235,6 +241,18 @@ const ProductosList = defineComponent({
 
 
             </div>
+            :
+             
+            <div class="col">
+              <br />
+              <br /><br />
+              <h1>USTED NO TIENE ACCESO A ESTA PAGINA, INICIA SESION CON UNA CUENTA DE ADMINISTRADOR.</h1>
+            <div class="col">
+                        <p><img src="src/assets/images/error404.jpg" alt="" clas="img-fluid" height="600"/></p>
+                        </div>
+            </div>
+                        
+            }
           </div>
 
         </body>

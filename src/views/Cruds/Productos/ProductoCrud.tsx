@@ -5,6 +5,7 @@ import { swalAlert } from "@/components/alerts";
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { string } from "yup";
 AOS.init();
 
 
@@ -68,6 +69,7 @@ const ProductoCrud = defineComponent({
 
   data() {
     return {
+      tokes: string as any,
       valores: {} as ProductImage,
       categoria: Object as ProductImage,
       accion: Object as any,
@@ -481,6 +483,8 @@ const ProductoCrud = defineComponent({
 
   },
   mounted() {
+    const tokenJSON = localStorage.getItem('token');
+    this.tokes = tokenJSON;
     countimages = 0;
     numImagenes = 0;
     window.localStorage.removeItem,
@@ -499,6 +503,10 @@ const ProductoCrud = defineComponent({
     return (
       <>
         <body>
+
+          {this.tokes !==null ? 
+          <div class="row">
+
           <div class="TituloProductos" data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
 
             <h4 class="display-4">PRODUCTOS</h4>
@@ -508,18 +516,12 @@ const ProductoCrud = defineComponent({
             </di>
             &nbsp;
             <input id="nombreid" name="nombreid" type="number" value={this.$route.params.id} disabled style="display:none" />
-
             <h5>
               Los productos que registres se categorizarán automáticamente según las preferencias y datos que registres
             </h5>
-
           </div>
-
-
           <div class="Productos_Create" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
             <div class="FormularioProductos row">
-
-
               <div class="col">
                 <form id="Formproduct" name="Formproduct">
 
@@ -656,7 +658,16 @@ const ProductoCrud = defineComponent({
 
 
             </div>
+
           </div>
+          </div>
+         
+
+
+
+
+          : <div><h1>USTED NO TIENE ACCESO A ESTE PAGINA, POR FAVOR INICIA SESION CON CON UNA CUENTA DE ADMINISTRADOR</h1></div>}
+
         </body>
       </>
 
