@@ -21,5 +21,5 @@ jobs:
         server: 'win5004.site4now.net'
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: '/wwwroot/site1/'
+        server-dir: '/www/site1/'
         local-dir: './dist/'
