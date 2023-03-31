@@ -1,0 +1,25 @@
+name: Deploy to SmartASP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install
+    - name: Build
+      run: npm run build
+    - name: Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        server: 'win5004.site4now.net'
+        username: ${{ secrets.luis655-001 }}
+        password: ${{ secrets.ripazhaa611 }}
+        server-dir: '/wwwroot/site1'
+        local-dir: './dist'
