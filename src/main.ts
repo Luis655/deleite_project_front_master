@@ -12,14 +12,19 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
 
 //import './assets/js/scripts.js'
-
-
 import './assets/css/navbar.css'
+
+
+import './assets/css/calificacion.css'
 import './assets/css/footer.css'
 import './assets/css/login.css'
 import './assets/css/productos.css'
 import './assets/css/tematicas.css'
 import './assets/css/micuenta.css'
+import './assets/css/imagenes.css'
+import './assets/css/catalogo.css'
+import './assets/css/responsivo.css'
+
 
 import './assets/css/cruds.css'
 

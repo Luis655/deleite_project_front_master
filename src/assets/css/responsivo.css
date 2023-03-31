@@ -1,0 +1,69 @@
+@media (max-width: 992px) {
+
+
+    .Padre{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+
+    .Hija{
+        display: flex;
+        justify-content: center;
+    }
+
+    .imgPrin {
+        width: 200px !important;
+        height: 200px !important;
+
+        margin-left: 50%;
+        margin-right: 50%;
+    }
+
+    .btn-mediaProd {
+        margin: 15px;
+    }
+
+    .contactos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Ticatalogo {
+        padding-top: 5%;
+        font-size: 40px;
+    }
+
+    .img-catalogo {
+        width: 100%;
+        height: 300px;
+    }
+
+    .div-btn-catalogo {
+        display: flex;
+        justify-content: center;
+
+        padding-top: 5%;
+        padding-bottom: 5%;
+    }
+
+    .p-5 {
+        padding: 0.5rem !important;
+    }
+
+    .Ticatalogo2 {
+        font-size: 50px;
+        padding-bottom: 2%;
+    }
+
+    .NF-titulo {
+        font-size: 38px;
+    }
+
+    .NF-titulo2 {
+        font-size: 20px;
+    }
+
+}

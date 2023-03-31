@@ -1,11 +1,7 @@
+import { swalAlert } from "@/components/alerts";
 import { defineComponent } from "vue";
-
-import { Call } from "../../../helpers/calls/Call"
+import { Call } from "../../../../helpers/calls/Call"
 import * as yup from 'yup'
-
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-AOS.init();
 
 interface Tematica {
 
@@ -16,7 +12,7 @@ interface FormErrors {
     [key: string]: string;
 }
 let oCall = new Call()
-const tematicaCrud = defineComponent({
+const TematicaCrud = defineComponent({
     data() {
         return {
             valores: {} as Tematica,
@@ -43,7 +39,7 @@ const tematicaCrud = defineComponent({
             try {
                 const schema = yup.object().shape({
                     nombreT: yup.string()
-                    .required('El nombre es requerido.'),
+                        .required('El nombre es requerido.'),
                 });
                 await schema.validate(this.valores, { abortEarly: false })
             } catch (err) {
@@ -61,40 +57,37 @@ const tematicaCrud = defineComponent({
             return Promise.resolve(isValid);
         },
 
-       async crearTematica(e: any) {
+
+        async crearTematica() {
             let esvalido = await this.SchemaValidation()
-            if(esvalido == 0){
+            if (esvalido == 0) {
                 return
             }
-            console.log('Guardado')
-            return
             if (this.accion === 'editar') {
-                e.preventDefault(),
-                    oCall.cenisFetch("PUT", `api/Tematica/${this.id}`, "", this.valores)
-                        .then((Response) => {
-                            console.log("Mensaje DE Tematicas: " + Response)
-                            if(Response.status === 200){
-                                console.log(Response),
-                                console.log("Se ha editado la tematica")
-                                console.log(Response),
-                                this.$router.push("/consultartematica")
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Ha ocurrido un error al crear una nueva categoria', error)
-                        });
+
+                oCall.cenisFetch("PUT", `api/Tematica/${this.id}`, "", this.valores)
+                    .then((Response) => {
+                        console.log("Mensaje DE Tematicas: " + Response)
+                        if (Response) {
+                                this.$router.push("/Tematicas")
+                            swalAlert("Exito", "Se actualizo correctamente la tematica")
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Ha ocurrido un error al crear una nueva categoria', error)
+                    });
 
 
             }
             else {
                 oCall.cenisFetch('POST', 'api/Tematica/create', '', this.valores)
                     .then((response) => {
-                        console.log(response)
+                        console.log(response, "Pelana")
                         if (response.status === 201) {
-                            console.log(response)
-                            console.log("Se ha creado una nueva tematica")
-                            console.log(response)
-                            this.$router.push('/consultartematica')
+
+                            this.$router.push("/Tematicas")
+                            swalAlert("Exito", "Creado exitosamente")
+
                         }
                         else {
                             console.log("Error")
@@ -133,15 +126,18 @@ const tematicaCrud = defineComponent({
     },
     mounted() {
         this.firtRefresh()
-      },
+    },
     render() {
         return (
             <>
                 <div class="Container_Create">
                     <div data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
-
-                        <h2>TEMATICAS</h2>
-                        <h6 style="width:600px">Las tematicas te permiten administrar y controlar la vista de los productos que ofreces y tienes
+                        <h4 class="display-4">TEMATICAS</h4>
+                        <di class="d-flex justify-content-center">
+                            <hr class="solid" />
+                        </di>
+                        &nbsp;
+                        <h6>Las tematicas te permiten administrar y controlar la vista de los productos que ofreces y tienes
                             disponibles en la sección del "Catálogo"</h6>
 
                     </div>
@@ -152,13 +148,13 @@ const tematicaCrud = defineComponent({
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label LabelsForms">Nombre de la Tematica</label>
-                                <input type="text"  autocomplete="off" class={`form-control ${this.errors['nombreT'] ? "is-invalid" : ""}`} value={this.tematica.nombreT} name="nombreT" onChange={(e) => this.handlerChange(e)} aria-describedby="emailHelp" />
+                                <input type="text" class={`form-control ${this.errors['nombreT'] ? "is-invalid" : ""}`} autocomplete="off" value={this.tematica.nombreT} name="nombreT" onChange={(e) => this.handlerChange(e)} aria-describedby="emailHelp" />
                                 <div class="invalid-feedback">
                                     {this.errors['nombreT']}
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <button onClick={(e) => this.crearTematica(e)} class="btn btn-cruds">Enviar</button>
+                                <a onClick={() => this.crearTematica()} class="btn btn-cruds">Enviar</a>
                             </div>
 
                         </form>
@@ -169,4 +165,4 @@ const tematicaCrud = defineComponent({
     }
 
 })
-export default tematicaCrud
+export default TematicaCrud

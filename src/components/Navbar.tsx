@@ -1,6 +1,7 @@
 import { Call } from "../../helpers/calls/Call";
 
 import { defineComponent } from "vue";
+import { swalAlert } from "@/components/alerts";
 
 import router from "@/router";
 interface producto {
@@ -22,6 +23,7 @@ const Navbar = defineComponent({
         cerrarsesion() {
             localStorage.removeItem("token");
             this.$router.push("/login")
+            swalAlert("Exito", "Sesión cerrada exitosamente")
 
         },
 
@@ -29,13 +31,12 @@ const Navbar = defineComponent({
             oCall.cenisFetch('POST', 'api/Producto/create', "", { "idProducto": null })
                 .then((response) => {
                     console.log(response)
-                    if (response.status === 200) {
-                        console.log('Se ha creado una nueva categoría:', response.Data.idProducto);
-                        console.log(response)
-                        this.$router.push({ name: 'crearproducto', params: { id: response.Data.idProducto, trueorfalse: response.Data.idConfirmacionT } })
+                    if (response.status === 201) {
+                        this.$router.push({ name: 'ProductoCrud', params: { id: response.Data, trueorfalse: "false" } })
                     }
                     else {
                         console.log("Error")
+
                     }
                 })
                 .catch((error) => {
@@ -54,8 +55,16 @@ const Navbar = defineComponent({
                     console.error('Error al analizar el token JSON: ', error);
                 }
             }
+            else {
+                this.token = "";
+            }
+
 
         },
+    },
+    mounted() {
+        oCall.cenisFetch('GET', 'api/Producto/veriicarProductos', "", "")
+            .then((response) => { })
     },
     render() {
         return (
@@ -64,67 +73,46 @@ const Navbar = defineComponent({
                 &nbsp;
                 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
                     <div class="container px-4">
-                        <a href="/Inicio"><img src="src/assets/D_Deleite.svg" width="50" /></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
                                 class="navbar-toggler-icon"></span></button>
                         <div class="collapse navbar-collapse" id="navbarResponsive">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/inicio">Inicio</a>
+                                    <a class="nav-link" href="/">Inicio</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <router-link to="/catalogo" class="nav-link">catalogo</router-link>
+                                    <router-link to="/Catalogo" class="nav-link">Catálogo</router-link>
                                 </li>
 
                                 <li class="nav-item">
-                                    <router-link to="/contacto" class="nav-link">Contacto</router-link>
+                                    <router-link to="/Contacto" class="nav-link">Contacto</router-link>
                                 </li>
 
-                                <li class="nav-item">
-                                    <router-link to="/testimonios" class="nav-link">Testimonios</router-link>
-                                </li>
-
-                                <li class="nav-item">
-
-                                </li>
                                 {this.token !== "" ?
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Administrador</a>
                                         <ul class="dropdown-menu">
 
-                                            <li><router-link class="dropdown-item" to="/micuenta">Mi cuenta</router-link></li>
+                                            <li><button class="dropdown-item" onClick={ () => this.crearProducto()}>Crear Producto</button></li>
+                                            <li><router-link class="dropdown-item" to="/CrearCategoria">Crear Categoria</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/CrearTematica">Crear Temática</router-link></li>
 
                                             <li><hr class="dropdown-divider" /></li>
-
-                                            <li><router-link class="dropdown-item" to="/login">Iniciar sesión</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/registro">Registrar</router-link></li>
-                                            <li><a class="dropdown-item" onClick={this.cerrarsesion}>Cerrar sesión</a></li>
-
-                                            <li><hr class="dropdown-divider" /></li>
-
-                                            <li><router-link class="dropdown-item" to="/crearproducto">Crear producto</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/consultarproducto">Consultar productos</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/detalleproducto">Detalle productos</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/Tematicas">Temáticas</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/ConsultarProducto">Productos</router-link></li>
+                                            <li><router-link class="dropdown-item" to="/VistaDeProductos_Tabla">Tabla de Productos</router-link ></li>
 
                                             <li><hr class="dropdown-divider" /></li>
-
-                                            <li><router-link to="/crearcategoria" class="dropdown-item">Crear categoria</router-link></li>
-
-                                            <li><hr class="dropdown-divider" /></li>
-
-                                            <li><router-link class="dropdown-item" to="/creartematica">Crear tematica</router-link></li>
-                                            <li><router-link class="dropdown-item" to="/consultartematica">Consultar Temáticas</router-link></li>
-
-                                            <li><hr class="dropdown-divider" /></li>
-
-                                            <li><button class="dropdown-item" onClick={this.crearProducto}>Crear producto</button></li>
-                                            <li><router-link class="dropdown-item" to="/products/view">Ver Productos</router-link ></li>
+                                            <li><button class="dropdown-item" onClick={this.cerrarsesion}>Cerrar sesión</button></li>
 
                                         </ul>
                                     </li>
-                                    : ""
+                                    :
+                                    <li class="nav-item">
+                                        <router-link to="/Login" class="nav-link">Iniciar sesión</router-link>
+                                    </li>
                                 }
 
                             </ul>

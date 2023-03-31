@@ -1,10 +1,12 @@
 import { Call } from "../../../helpers/calls/Call"
 import { defineComponent } from "vue";
+import { swalAlert } from "@/components/alerts";
 interface Categoria {
 
   idCategoria?: number,
   nombre?: string,
   imagenPrincipalchar?: string,
+  imagen?: string
 }
 let oCall = new Call();
 function readFileAsBase64(file?: File): Promise<string | undefined> {
@@ -51,7 +53,9 @@ const CategoriaCrud = defineComponent({
       if (this.accion === "editar") {
         oCall.cenisFetch('POST', `api/Categoria/create`, "", this.valores)
           .then((response) => {
-            console.log(response) 
+            console.log(response)
+            this.$router.push("Catalogo")
+            swalAlert("Exito", "Se modificó la categoria exitosamente")
           })
 
           .catch((error) => {
@@ -67,13 +71,12 @@ const CategoriaCrud = defineComponent({
             if (response.status === 201) {
               console.log('Se ha creado una nueva categoría:', response.Data);
               console.log(response)
-              this.$router.push("/catalogo")
-              //alert(",jbakdakd")
+              this.$router.push("Catalogo")
+              swalAlert("Exito", "Se creó la categoria exitosamente")
 
             }
             else {
               console.log(response)
-
             }
 
           })
@@ -81,6 +84,21 @@ const CategoriaCrud = defineComponent({
           .catch((error) => {
             console.error('Ha ocurrido un error al crear una nueva categoría:', error);
           });
+      }
+
+    },
+    mostrarImagen() {
+      const $seleccionArchivos = document.querySelector("#imagen") as HTMLInputElement,
+        $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion") as HTMLImageElement;
+      if ($seleccionArchivos != null) {
+        const archivos = $seleccionArchivos.files;
+        if (!archivos || !archivos.length) {
+          $imagenPrevisualizacion.src = "";
+          return;
+        }
+        const firstImage = archivos[0];
+        const objectUrl = URL.createObjectURL(firstImage);
+        $imagenPrevisualizacion.src = objectUrl;
       }
 
     },
@@ -96,6 +114,8 @@ const CategoriaCrud = defineComponent({
             if (response.status === 200) {
               this.categoria = response.Data
               this.valores = response.Data
+              const $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion") as HTMLImageElement;
+              $imagenPrevisualizacion.src = response.Data.imagen;
             }
             else {
 
@@ -119,15 +139,19 @@ const CategoriaCrud = defineComponent({
 
       <>
         <div class="Container_Create">
-          <div>
+          <div data-aos="fade" data-aos-duration="2000" data-aos-delay="300">
 
-            <h2>CATEGORIAS</h2>
-            <h6 style="width:600px">Las categorias te permiten administrar y controlar la vista de los productos que ofreces y tienes
+            <h4 class="display-4">CATEGORIAS</h4>
+            <di class="d-flex justify-content-center">
+              <hr class="solid" />
+            </di>
+            &nbsp;
+            <h6>Las categorias te permiten administrar y controlar la vista de los productos que ofreces y tienes
               disponibles en la sección del "catalogo"</h6>
 
           </div>
           &nbsp;
-          <div class="Create_Form">
+          <div class="Create_Form" data-aos="fade" data-aos-duration="2000" data-aos-delay="800">
 
             <form method="POST" id="Formproduct" name="Formproduct">
 
@@ -138,7 +162,8 @@ const CategoriaCrud = defineComponent({
 
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label LabelsForms">Imagen</label>
-                <input type="file" class="form-control" id="imagen" name="imagen" required/>
+                <input type="file" class="form-control" id="imagen" name="imagen" required onChange={() => this.mostrarImagen()} />
+                  <img id="imagenPrevisualizacion" style="width:50px; height:50px"  />
               </div>
 
 

@@ -47,15 +47,14 @@ const Footer = defineComponent({
                                     <div class="col-md-2 col-lg-3 col-xl-3 mx-auto mb-4">
 
                                         <h6 class="text-uppercase fw-bold text-white">Contacto</h6>
-                                        <hr
-                                            class="mb-4 mt-0 d-inline-block mx-auto"
-                                            style="width: 60px; background-color: #724a3a; height: 2px"
-                                        />
+                                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #724a3a; height: 2px" />
+
                                         <div class="row d-flex justify-content-center">
                                             <div class="contactos">
-                                                <p class="text-white"><FontAwesomeIcon icon={faLocationDot}></FontAwesomeIcon> Mérida, yucatán</p>
+                                                <p class="text-white"><FontAwesomeIcon icon={faLocationDot}></FontAwesomeIcon> Calle 123 #709 x 72d y 72e, Cerrada Arboleda Sian Kaan II, Caucel.
+</p>
                                                 <a href="mailto:deleitelzt@gmail.com" class="DeleiMail"><FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon> deleitelzt@gmail.com</a>
-                                                <a href="tel:9993893779" class="DelePhone"><FontAwesomeIcon icon={faPhone}></FontAwesomeIcon>+52 999 389 37 79 </a>
+                                                <a href="tel:9993893779" class="DelePhone"><FontAwesomeIcon icon={faPhone}></FontAwesomeIcon> +52 999 389 37 79 </a>
                                             </div>
                                         </div>
 

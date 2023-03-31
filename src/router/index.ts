@@ -1,4 +1,4 @@
-import HomeView from '@/views/HomeView'
+/*import HomeView from '@/views/HomeView'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -79,12 +79,7 @@ const router = createRouter({
       component: () => import('@/views/Cruds/Tematicas/ConsultarTematica')
     },
     //CRUD PRODUCTOS
-    /*{
-      path: '/crearproducto',
-      name: 'crearproducto',
 
-      component: () => import('@/views/Cruds/Productos/ProductoCrud')
-    },*/
     {
       path: '/crearproducto/:id/:trueorfalse?',
       name: 'crearproducto',
@@ -121,3 +116,143 @@ const router = createRouter({
 })
 
 export default router
+*/
+import { createRouter, createWebHistory } from 'vue-router';
+import Inicio from '../views/HomeView';
+import Catalogo from '../views/Catalogo';
+import Contacto from '../views/Contacto';
+
+import TematicaCrud from '../views/Cruds/Tematicas/TematicaCrud'
+import ConsultarTematica from '../views/Cruds/Tematicas/ConsultarTematica'
+import CrearProducto from '../views/Cruds/Productos/ProductoCrud'
+import ActualizarProductos from '../views/Cruds/Productos/ProductoCrud'
+import VerProductos from '../views/Cruds/Productos/ProductosList'
+import detalleproducto from '../views/Cruds/Productos/DetalleProducto'
+import ConsultarProducto from '../views/Cruds/Productos/ConsultarProducto'
+import CrearCategoria from '../views/Cruds/CategoriaCrud'
+
+
+
+import Error404 from '../Error404'
+import Testimonios from '@/views/Testimonios';
+import login from '@/views/Login/Login';
+import registrarse from '@/views/Login/Registrarse';
+
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    //Crud productos
+    {
+      path: '/Crearproducto/:id/:trueorfalse', //URL
+      name: 'ProductoCrud',
+      component: CrearProducto
+    },
+
+    {
+      path: '/CrearCategoria', //URL
+      name: 'CrearCategoria',
+      component: CrearCategoria
+    },
+
+    {
+      path: '/Actualizarproducto/:id/:trueorfalse', //URL
+      name: 'ProductoCrudActualizar',
+      component: ActualizarProductos,
+      props: true,
+      beforeEnter: (to, from, next)=>{
+        const id = Array.isArray(to.params.id) ? to.params.id.join('') : to.params.id;
+        const trueOrFalse = Array.isArray(to.params.trueorfalse) ? to.params.trueorfalse.join('') : to.params.trueorfalse;
+        const idPattern = /^[a-zA-Z0-9]+$/;
+        const trueOrFalsePattern = /^(true|false)$/;
+        if (idPattern.test(id) && trueOrFalsePattern.test(trueOrFalse)) {
+          next();
+        } else {
+          next('/Error404');
+        }
+      }
+      
+    },
+
+    {
+      path: '/VistaDeProductos_Tabla', //URL
+      name: 'Productos_tabla',
+      component: VerProductos
+    },
+
+    {
+      path: '/detalleproducto/:id/:trueorfalse', //URL
+      name: 'detalleproducto',
+      component: detalleproducto
+    },
+
+    //End productos
+    {
+      path: '/', //URL
+      name: 'Inicio',
+      component: Inicio
+    },
+
+    {
+      path: '/Login', //URL
+      name: 'Login',
+      component: login
+    },
+
+    {
+      path: '/Registro', //URL
+      name: 'Registro',
+      component: registrarse
+    },
+
+    {
+      path: '/Contacto', //URL
+      name: 'Contacto',
+      component: Contacto
+    },
+
+    {
+      path: '/Testimonios', //URL
+      name: 'Testimonios',
+      component: Testimonios
+    },
+
+    {
+      path: '/Error404', //URL
+      name: 'Error404',
+      component: Error404
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: Error404,
+    },
+
+    {
+      path: '/Catalogo', //URL
+      name: 'Catalogo',
+      component: Catalogo
+    },
+
+    {
+      path: '/CrearTematica', //URL
+      name: 'TematicaCrud',
+      component: TematicaCrud
+    },
+
+    {
+      path: '/Tematicas', //URL
+      name: 'ConsultarTematicas',
+      component: ConsultarTematica
+    },
+
+    {
+      path: '/ConsultarProducto', //URL
+      name: 'ConsultarProducto',
+      component: ConsultarProducto
+    },
+
+  ]
+})
+
+export default router;
